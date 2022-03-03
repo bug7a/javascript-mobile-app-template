@@ -3,6 +3,8 @@ Simple and fully customizable user interface template. Design for mobile app dev
 
 - Plaftorms: iOS, Android<br><br>
 
+NOTE: This is Alpha version:
+
 ### ScreenShots
 
 ![alt tag](https://bug7a.github.io/cordova-mobile-app-ui-template/preview.png)
