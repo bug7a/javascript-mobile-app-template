@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        
+        <title>Mobile App UI Template for Apache Cordova (iOS, Android)</title>
+        
+        <meta charset="UTF-8">
+        <meta name="description" content="Simple and fully customizable user interface component. Design for mobile (iOS, Android) app development on Apache Cordova framework.">
+        <meta name="keywords" content="Select Text, Combobox, searchable, JavaScript, JS, UI, UX, User Interface, Component, Apache, Cordova, Mobile, iOS, Android, simple, fully customizable" >
+        <meta name="author" content="Bugra Ozden">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+
+        <!-- LIBRARY FILES -->
+        <script src="library/src-noconflict/ace.js" type="text/javascript" charset="utf-8"></script>
+        <link rel="stylesheet" type="text/css" href="library/basic.min.css">
+        <script src="library/basic.min.js" type="text/javascript" charset="utf-8"></script>
+
+        <style>
+
+            body {
+                overflow: hidden;
+            }
+
+            .basic_box::-webkit-scrollbar {
+                width: 10px;
+                height: 10px;
+            }
+
+            .basic_box::-webkit-scrollbar-track {
+                border-radius: 10px;
+                border: 3px solid rgba(0, 0, 0, 0);
+                background-clip: padding-box;
+            }
+
+            .basic_box::-webkit-scrollbar-thumb {
+                background: rgba(0, 0, 0, 0.4);
+                border-radius: 10px;
+                border: 3px solid rgba(0, 0, 0, 0);
+                background-clip: padding-box;
+            }
+
+            .basic_box::-webkit-scrollbar-thumb:hover {
+                background: rgba(0, 0, 0, 0.6);
+                border-radius: 10px;
+                border: 3px solid rgba(0, 0, 0, 0);
+                background-clip: padding-box;
+            }
+
+            .text-highlight {
+                font-family: opensans-bold;
+                /* color: #41AC9F; */
+                /* background-color: #FFF0C2; */
+                border-radius: 4px;
+                padding: 0px 8px;
+            }
+
+            .editor { 
+                position:relative;
+                margin:0px;
+                border-radius: 6px;
+                /* margin-left: 5px;margin-right: 0px; */
+                height:200px;
+                font-size: 16px;
+            }
+
+        </style>
+
+        <script>
+            
+        // VARIABLES
+        var boxContent
+        var editor1
+        
+        // First running function.
+        var start = function() {
+
+            page.fit(600)
+
+            // BOX: main view
+            boxContent = createBox(0, 0, page.width, page.height)
+            that.scrollY = 1
+            that.visible = 1
+
+            // LABEL: Title text
+            boxContent.lblTitle = createLabel(0, 104, 600, "auto")
+            that.text = document.getElementById("htm-title").innerHTML
+            that.fontSize = 70
+            that.textAlign = "center"
+            that.opacity = 0.8
+            that.textColor = "black"
+            that.element.style.fontFamily = "opensans-bold"
+            that.center("left")
+
+            // LABEL: Description text
+            boxContent.lblDesc = createLabel(0, 200, 600, "auto")
+            that.text = document.getElementById("htm-desc").innerHTML
+            that.fontSize = 35
+            that.textAlign = "center"
+            that.opacity = 0.6
+            that.textColor = "black"
+            that.center("left")
+
+            // BOX: sample1 iframe content
+            boxContent.boxSample1 = createBox(0, 370, 360, 640)
+            that.text = document.getElementById("htm-sample1").innerHTML
+            that.clickable = 1
+            that.round = 12
+            that.color = "white"
+            that.center("left")
+
+            // IMAGE: phone template
+            boxContent.imgPhone = createImage(0, 370, 360, 640)
+            that.load("image/phone.svg")
+            that.center("left")
+            that.width += 10 
+            that.height += 8
+            that.top -= 4
+            that.left -= 5
+
+            // LABEL: info 1 text
+            boxContent.lblInfo1 = createLabel(0, 1050, 600, "auto")
+            // that.text = document.getElementById("htm-info1").innerHTML + "<br><br>" + document.getElementById("htm-info2").innerHTML
+            that.text = document.getElementById("htm-info1").innerHTML
+            that.fontSize = 20
+            that.textAlign = "center"
+            that.opacity = 0.6
+            that.textColor = "black"
+            that.center("left")
+
+            // BOX: GİtHub Button
+            boxContent.btnGitHub = createCard("View on GitHub", 1, "https://github.com/bug7a/cordova-mobile-app-ui-template")
+            that.center("left")
+            that.top = boxContent.lblInfo1.top + 100
+
+            // BOX: code box
+            boxContent.boxEditor = createBox(0, 1300, 600, 400)
+            that.element.setAttribute("id", "editor1")
+            that.element.setAttribute("class", "editor")
+            that.onResize(function(self) {
+                boxContent.boxFooter.top = self.top + self.height + 20
+            })
+            that.center("left")
+            
+            // BOX: Footer box
+            boxContent.boxFooter = createBox(0, 2200, 600, 200)
+            that.color = "transparent"
+            that.center("left")
+
+            // OBJECT: Mobile App Template Button
+            // boxContent.boxFooter.btn3 = createCard("Mobile App Template", 2, "https://github.com/bug7a/cordova-mobile-app-ui-template")
+            that.center()
+
+            // OBJECT: All Components Button
+            boxContent.boxFooter.btn2 = createCard("All Components", 2, "https://github.com/bug7a/ui-components")
+            that.center()
+            that.left -= 100
+
+            // OBJECT: basic.js Technique Button
+            boxContent.boxFooter.btn4 = createCard("basic.js Technique", 2, "https://github.com/bug7a/basic.js")
+            that.center()
+            that.left += 100
+
+            // Code Editor
+            editor1 = ace.edit("editor1");
+            editor1.setReadOnly(true);
+            editor1.setTheme("ace/theme/twilight");
+            editor1.session.setMode("ace/mode/javascript");
+            editor1.setOption("minLines", 8);
+            editor1.setOption("maxLines", 500);
+            editor1.renderer.setShowGutter(false);
+            // document.getElementById("editor"+$editorNumber).style.zoom = (1 / App.screenRatio);
+            editor1.setValue(document.getElementById("code-example1").innerHTML);
+            editor1.gotoLine(2);
+
+            page.onResize(function() {
+                
+                page.fit(600)
+                boxContent.width = page.width
+                boxContent.height = page.height
+                boxContent.lblTitle.center("left")
+                boxContent.lblDesc.center("left")
+                boxContent.boxSample1.center("left")
+                boxContent.imgPhone.center("left")
+                boxContent.lblInfo1.center("left")
+                boxContent.btnGitHub.center("left")
+                boxContent.boxEditor.center("left")
+                boxContent.boxFooter.center("left")
+            })
+            
+        }
+        
+        // OTHER FUNCTIONS
+        
+        var createCard = function(name, type = 1, link = "") {
+            
+            var ui = createBox(0, 0, 210, 70)
+            that.color = "white"
+            that.round = 8
+            that.border = 2
+            that.borderColor = "gray"
+            that.link = link
+            that.onClick(function(self) {
+                if (self.link != "") {
+                    window.open(self.link, "_blank")
+                }
+            })
+
+            if (type == 2) {
+                that.width = 190
+                that.height = 50
+                that.color = "white"
+                that.border = 1
+                that.borderColor = "lightgray"
+                //that.color = "#EAEAE9"
+                //that.border = 0
+            }
+
+            ui.lblText = createLabel(0, 0, "auto", "auto")
+            that.text = name
+            if (type == 2) {
+
+                that.fontSize = 16
+            }
+            that.onResize(function(self) {
+                self.center()
+            })
+
+            makeBasicObject(ui)
+
+            return ui
+            
+        }
+
+        </script>
+
+    </head>
+    <body>
+        
+        <!-- HTML content -->
+
+        <div id="htm-title" style="display:none">Mobile UI</div>
+        <div id="htm-desc" style="display:none">Simple and fully customizable<br>user interface template.</div>
+        <div id="htm-info1" style="display:none">Design for mobile app development<br>on <span class='text-highlight'>Apache Cordova</span> framework.</div>
+        <div id="htm-sample1" style="display:none"><iframe src="sample1.htm" width="360" height="640" style="border:0px solid lightgray;border-radius:4px;"></iframe></div>
+
+        <div id="code-example1" style="display:none">
+    // DEĞİŞKENLER
+
+    var APP_CONTENT_WIDTH = 600
+
+    // BOX: view types; Tam ekran, yönlendirme çubuğu ile birlikte, yarım ekran.
+    var viewFull, viewNormal, viewSmall
+        
+    // İlk çalışan fonksiyon.
+    var start = function() {
+        
+        page.color = "black"
+        
+        // 600px genişliğindeki içeriği, ekrana sığdır. En fazla 500px genişlet.
+        page.fit(APP_CONTENT_WIDTH, 500)
+
+        // NOT: 500 yerine; desteklemek istediğini maksimum genişliği yazın. 700
+
+        // NESNE: navigationBar ve tabBar kullanılabilen içerik alanı.
+        create_viewNormal()
+
+        // NESNE: Navigation Bar; üst bilg ve butonlar.
+        navigationBar.create()
+        navigationBar.onClick_btnMenu(function() {
+            sideBar.show()
+        })
+        
+        // NESNE: Tab Bar; alt butonlar.
+        tabBar.create()
+        // İkonları oluştur.
+        tabBar.addItem("home")
+        tabBar.addItem("search")
+        tabBar.addItem("alert")
+        tabBar.addItem("fav")
+        tabBar.addItem("setting")
+        tabBar.onClick(openContentByIndex)
+
+        // NESNE: Tam sayfa kullanılabilen içerik alanı. (tabBar ile kullanılabilir.)
+        create_viewFull()
+
+        // NESNE: Küçük içerik alanı.
+        create_viewSmall()
+
+        // NESNE: Side Bar; sağ üst düğme ile açılan menu.
+        sideBar.create()
+        // Menü butonlarını oluştur.
+        sideBar.addItem("Başlangıç", 0)
+        sideBar.addItem("Arama", 1)
+        sideBar.addItem("Bildirimler", 2)
+        sideBar.addItem("Sık Kullanılanlar", 3)
+        sideBar.addItem("Ayarlar", 4)
+        sideBar.addItem("")
+        sideBar.addItem("Tam Ekran", 6)
+        sideBar.addItem("Küçük Ekran", 7)
+        sideBar.onClick(openContentByIndex)
+
+        // NESNE: Kilitleme ekranı.
+        viewLogin.create()
+        //viewLogin.lock()
+
+        sideBar.box.b1.boxLock.onClick(function() {
+            sideBar.hide()
+            viewLogin.lock()
+        })
+
+        // NOT: Nesnelerin oluşturulma sırası, bulundukları katmanları belirler.
+
+
+        // Başlangıç ekranını aç.
+        open_contentHome()            
+        
+    }
+
+    // DİĞER FONKSİYONLAR
+
+    var create_viewNormal = function() {
+
+        // BOX: Normal içerik taşıyıcısı
+        viewNormal = createBox(0, 
+            navigationBar.HEIGHT, 
+            APP_CONTENT_WIDTH, 
+            page.height - navigationBar.HEIGHT - tabBar.HEIGHT
+        )
+        clean_viewNormal()
+
+    }
+
+    var clean_viewNormal = function() {
+
+        viewNormal.text = ""
+        viewNormal.color = "whitesmoke"
+        viewNormal.border = 0
+        viewNormal.scrollX = 1
+
+    }
+
+    var create_viewFull = function() {
+
+        // BOX: Tam sayfa içerik taşıyıcısı
+        viewFull = createBox(0, 0, APP_CONTENT_WIDTH, page.height)
+        clean_viewFull()
+        viewFull.visible = 0
+
+    }
+
+    var clean_viewFull = function() {
+
+        viewFull.text = ""
+        viewFull.color = "whitesmoke"
+        viewFull.border = 0
+        viewFull.scrollX = 1
+
+    }
+
+    var create_viewSmall = function() {
+
+        // BOX: Küçük içerik taşıyıcısı
+        viewSmall = createBox(0, 0, APP_CONTENT_WIDTH, page.height)
+        that.color = "rgba(0, 0, 0, 0.8)"
+
+        viewSmall.box = createBox(0, 0, APP_CONTENT_WIDTH, 500)
+        that.element.style.borderTopLeftRadius = "50px"
+        that.element.style.borderTopRightRadius = "50px"
+        that.bottom = 0
+
+        clean_viewSmall()
+        viewSmall.visible = 0
+
+    }
+
+    var clean_viewSmall = function() {
+
+        viewSmall.box.text = ""
+        viewSmall.box.color = "white"
+        viewSmall.border = 0
+
+    }
+
+    var cleanAndCloseAllView = function() {
+            
+            clean_viewNormal()
+            clean_viewFull()
+            clean_viewSmall()
+
+            viewNormal.visible = 0
+            viewFull.visible = 0
+            viewSmall.visible = 0
+
+    }
+
+    var openContentByIndex = function(index) {
+
+        switch(index) {
+            case 0:
+                open_contentHome()  
+                break
+            case 1:
+                open_contentSearch()
+                break
+            case 2:
+                open_contentAlert()  
+                break
+            case 3:
+                open_contentFav()
+                break
+            case 4:
+                open_contentSetting()
+                break
+            case 6:
+                open_contentNum6()
+                break
+            case 7:
+                open_contentNum7()
+                break
+        }
+
+    }
+
+    var open_contentHome = function() {
+        
+        cleanAndCloseAllView()
+
+        navigationBar.setTitle("Başlangıç")
+        navigationBar.setVisible_backButton(0)
+
+        tabBar.selectItemByIndex(0)
+
+        contentHome.create(viewNormal)
+        viewNormal.visible = 1
+
+    }
+
+    var open_contentSearch = function() {
+        
+        cleanAndCloseAllView()
+
+        navigationBar.setTitle("Meyve ve Sebzeler")
+        navigationBar.setVisible_backButton(0)
+
+        tabBar.selectItemByIndex(1)
+
+        contentSearch.create(viewNormal)
+        viewNormal.visible = 1
+
+    }
+
+    var open_contentAlert = function() {
+        
+        cleanAndCloseAllView()
+
+        navigationBar.setTitle("Bildirimler")
+        navigationBar.setVisible_backButton(0)
+
+        tabBar.selectItemByIndex(2)
+
+        contentAlert.create(viewNormal)
+        viewNormal.visible = 1
+
+    }
+
+    var open_contentFav = function() {
+        
+        cleanAndCloseAllView()
+
+        navigationBar.setTitle("Sık Kullanılanlar")
+        navigationBar.setVisible_backButton(0)
+
+        tabBar.selectItemByIndex(3)
+
+        contentFav.create(viewNormal)
+        viewNormal.visible = 1
+
+    }
+
+    var open_contentSetting = function() {
+        
+        cleanAndCloseAllView()
+
+        navigationBar.setTitle("Ayarlar")
+        navigationBar.setVisible_backButton(0)
+
+        tabBar.selectItemByIndex(4)
+
+        contentSetting.create(viewNormal)
+        viewNormal.visible = 1
+
+    }
+
+    var open_contentNum6 = function() {
+
+        clean_viewFull()
+        
+        contentNum6.create(viewFull)
+        viewFull.visible = 1
+
+    }
+
+    var open_contentNum7 = function() {
+
+        clean_viewSmall()
+
+        contentNum7.create(viewSmall.box)
+        viewSmall.visible = 1
+
+    }
+</div>
+        
+    </body>
+</html>

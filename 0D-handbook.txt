@@ -1,0 +1,669 @@
+
+basic.js KÜTÜPHANESİ (v1.6.3) - EL KİTABI
+
+
+GİRİŞ
+
+Bu kitapta, basic.js kütüphanesi ile kullanabileceğiniz kodların listesi ve kısa açıklamalarını bulacaksınız.
+
+- Kütüphaneyi kullanan bir proje ilk açıldığında; var ise, BİR KERE start() fonksiyonu çağırılır.
+-- Öncesinde, en dışta yazılmış tüm değişken ve fonksiyonlar kullanılmaya hazır hale gelmiş olur.
+-- JavaScript'teki "load" olayını kullanır.
+Boş proje şablonuna bakınız: 0C-bos-proje-sablonu.htm
+Boş mobil uygulama şablonuna bakınız: 35-mobil-uygulama-sablon-v2.htm
+
+
+KULLANILAN VERİ TİPLERİ:
+
+Basit veri tipleri:
+- string, metin. "Bir metin"
+- integer, tam sayı. 10
+- float, ondalıklı sayı. 5.5
+- boolean, 1 veya 0
+
+Gelişmiş veri tipleri:
+- Array, dizi. [ ]
+- Object, nesne. { }
+
+Diğer tipler:
+- BasicObject, temel nesne. Label, Button, TextBox, Image veya Box nesnesi olabilir.
+-- Bu isim, basic.js kütüphanesinde bulunan nesneleri belirtmek için kullanılmış özel bir tanımlamadır.
+- function, fonksiyon. function() { }
+
+
+---
+
+
+TEMEL FONKSİYONLAR:
+
+random(number1:integer, number2:integer) : integer
+- Verilen iki sayı arasında, rasgele bir sayı üretir. 
+-- Verilen sayılar dahildir.
+- Yukarıda, örnek olarak gösterilen kodun anlamları, sırası ile şöyledir;
+random, fonksiyonun ismi.
+number1, birinci parametrenin ismi.
+integer, birinci parametrenin veri tipi.
+number2, ikinci parametrenin ismi.
+integer, ikinci parametrenin veri tipi.
+integer, fonksiyonun geri gönderdiği cevabın veri tipi.
+random(1, 8) --> 5
+Bakınız: 04-zarlar.htm
+
+print(message:string)
+- Konsola bir mesaj gönderilmesini sağlar.
+
+num(text:string) : float
+num(text:string, type:string) : float veya integer
+- Metin tipindeki bir değeri sayı tipine çevirir.
+- type, cevap verilecek sayının tipini belirler.
+"integer" veya "int": tam sayı, "float": ondalıklı sayı verir.
+-- Parametre boş bırakıldığında, "float" olarak kullanılır.
+- Ondalıklı sayılarda, noktadan sonra sadece 2 basamağa izin verilmiştir.
+NOT: Daha fazla basamağa ihtiyacınız var ise parseFloat() fonksiyonunu araştırın.
+Bakınız: 03-hesap-makinesi.htm
+
+str(number:integer veya float) : string
+- Sayı tipindeki bir değeri, metin tipine çevirir.
+
+go(url:string)
+go(url:string, windowType:string)
+- Başka bir .htm dosyasına veya URL adresine yönlendirme yapar.
+- windowType, sayfanın nasıl açılacağını belirler.
+"_self": aynı sayfada aç, "_blank": farklı sayfada aç.
+-- Parametre boş bırakılır ise, "_self" olarak kabul edilir.
+
+twoDigitFormat(number:integer) : string
+- Sayının, 2 basamaklı bir metin haline getirilmesini sağlar.
+twoDigitFormat(4) -> "04"
+twoDigitFormat(12) -> "12"
+NOT: Saat, sayaç, tarih gibi değerler için kullanılabilir.
+
+isMobile() : boolean
+- Cihazın mobil olup olmadığını kontrol eder.
+1: mobil cihaz, 0: bilgisayar
+
+
+---
+
+
+SAYFA NESNESİ (NESNE ADI: page, SINIF ADI: MainBox):
+- Sayfanın yönetimini sağlayan nesnedir.
+- Ekranın görünen alanını temsil eder. Kaydırma Çubuğunu (Scroll Bar) desteklemez.
+-- Kaydırma çubuğu, sadece kutu nesnesi (BOX) ile kullanılabilir.
+
+page.bodyElement
+- Nesneyi, HTML ile bağlayan element nesnesidir.
+- HTML'de <body> elementini kullanır.
+- JavaScript'te document.getElementsByTagName("BODY")[0] ile elde edilen nesnedir.
+
+page.color
+- Sayfa arkaplan rengini belirler.
+
+page.width
+- Sayfa genişliğini almanızı sağlar.
+-- Bu değer DEĞİŞTİRİLEMEZ. Sadece okunabilir.
+
+page.height
+- Sayfa yüksekliğini almanızı sağlar.
+-- Bu değer DEĞİŞTİRİLEMEZ. Sadece okunabilir.
+
+page.fit(originalWidth:integer, maxWidth:integer)
+- İçeriğin genişliğini, ekrana sığacak şekilde ayarlar.
+originalWidth, ekranda görünmesini istediğiniz içeriğin genişliği. (Yanlarda bırakılacak boşluklar dahil.)
+maxWidth, içerik en fazla, ne kadar genişletilebilsin.
+-- Parametre boş bırakılır ise, originalWidth değeri ile aynı kabul edilir.
+-- maxWidth, içeriğin orjinal boyutundan büyük olmak zorunda değildir.
+Bakınız: 20-temel-mobil-uygulama-sablonu.htm
+
+page.zoom
+- Sayfanın büyüme/küçülme oranını ayarlar.
+1: %100 boyut, 0.5: %50 boyut, 1.5: %150 boyut vb.
+- page.fit() fonksiyonu, bu özelliği kullanarak, sayfanın genişliğini ayarlar.
+- Taşıdığı değer float veri tipidir.
+- CSS'te transform:scale() özelliğini kullanır.
+
+page.onClick(func:function)
+- Sayfaya, her basıldığında; belirlenen fonksiyon çağırılır.
+-- Sayfaya eklenen tüm nesneler de sayfanın bir parçasıdır. Sayfa içindeki farklı bir nesneye basıldığında da bu olay tetiklenir.
+-- Eğer, eklenen nesneler dışında, basılma kontrol edilmek isteniyor ise, page nesnesinin içinde, arkada kalacak, şeffaf bir kutu nesnesi ekleyebilirsiniz.
+Bakınız: 65-uzunluk-olcusu-cevirme-uygulamasi.htm
+
+page.onResize(func:function)
+- Sayfa boyutu, her değiştiğinde; belirlenen fonksiyon çağırılır.
+-- Sayfanın yüklendiğindeki ilk boyutu için ÇAĞIRILMAZ.
+
+page.add(object:BasicObject)
+- Bir temel nesneyi, sayfa içine geri taşımak için kullanılır.
+-- Nesneler, varsayılan olarak, page nesnesi içinde oluşturulur.
+
+
+---
+
+
+TEMEL NESNELERİN, ORTAK ÖZELLİK VE METODLARI:
+- 5 temel nesne için de kullanılabilir. Nesneler: Label, Button, TextBox, Image ve Box
+
+that
+- Bir temel nesne oluşturulduğunda, bir başkası oluşturulana kadar; bu nesneye, that ismi ile ulaşılabilir.
+
+object.left
+- Nesnenin, sola olan mesafesini belirler.
+- Taşıdığı değer float veri tipidir.
+-- Konumlandırmanın float olması, daha yumuşak hareketlendirmelere olanak sağlar.
+
+object.top
+- Nesnenin yukarıya olan mesafesini belirler.
+- Taşıdığı değer float veri tipidir.
+
+object.right
+- Sola yaslanma iptal edilir. Ve nesne, verilen değer ile sağa yaslanmaya başlar.
+-- Eğer sayfa veya içinde bulunulan nesne boyutu değişirse, sağa olan mesafe korunur.
+- Taşıdığı değer float veri tipidir.
+
+object.bottom
+- Yukarıya yaslanma iptal edilir. Ve nesne, verilen değer ile aşağıya yaslanmaya başlar.
+- Taşıdığı değer float veri tipidir.
+
+object.width
+- Nesnenin genişliğini belirler.
+- Taşıdığı değer integer veri tipidir.
+
+object.height
+- Nesnenin yüksekliğini belirler.
+- Taşıdığı değer integer veri tipidir.
+
+object.rotate
+- Nesnenin açısını değiştirir.
+0: 0 derece, 90: 90 derece, 360: 360 derece ...
+- 0 ile 360 derece aynı yönü temsil eder.
+- Taşıdığı değer integer veri tipidir.
+- CSS'te transform:rotate() özelliğini kullanır.
+
+object.visible
+- Nesneyi görünür/görünmez yapar.
+1: görünür, 0: görünmez
+- CSS'te display özelliğini kullanır.
+
+object.opacity
+- Nesnenin şeffaf olmayışını belirler.
+1: görünür, 0: görünmez, 0.2: %20 görünür, 0.55: %55 görünür
+
+object.color
+- Nesnenin rengini belirler.
+- CSS'te background-color özelliğini kullanır.
+
+object.border
+- Nesneye kenarlık ekler.
+0: kenarlık yok, 1: 1px kalınlığında kenarlık, 2: 2px kalınlığında, 3: 3px kalınlığında ...
+
+object.borderColor
+- Nesnenin, kenarlık rengini belirler.
+
+object.round
+- Nesnenin kenarlarını yuvarlatır.
+- CSS'te border-radius özelliğini kullanır.
+
+object.fontSize veya object.textSize
+- Nesnenin metin boyutunu belirler.
+
+object.textColor
+- Nesnenin metin rengini belirler.
+- CSS'te color özelliğini kullanır.
+
+object.textAlign
+- Nesne içindeki metnin, pozisyonunu belirler.
+"left": sola yaslanmış, "right": sağa yaslanmış, "center": ortalanmış, "justify": kelimeler arası otomatik boşluk
+
+object.clickable
+- Nesneye tıklanabilir/tıklanamaz yapar.
+1: tıklanabilir, 0: tıklanamaz
+- object.onClick(func:function) fonksiyonu kullanıldığında; nesne, otomatik tıklanılabilir olur.
+-- Buton ve TextBox nesneleri, standart olarak tıklanılabilirdir.
+- CSS'te pointer-events:auto veya none özelliğini kullanır.
+
+object.element
+- Nesneyi, HTML ile bağlayan element nesnesidir.
+- JavaScript'te document.getElementById(id:string) ile elde edilen nesnedir.
+
+object.upperObject
+- Nesnenin, bir üst (içinde bulunduğu) nesnesini verir.
+- En tepedeki nesne page'dir.
+- Oluşturulan nesneler ilk olarak, page nesnesi içine taşınır.
+-- selectBox(target:Box) fonksiyonu ile, ilk taşınılacak nesne değiştirilebilir.
+
+object.onResize(func:function)
+- Nesnenin boyutu, her değiştiğinde; belirlenen fonksiyon çağırılır.
+-- Nesne ilk oluşturulduğunda da çağırılır.
+- Otomatik boyutlandırılan nesnelerin, koordinat sistemindeki konumlarını güncellemek için kullanılabilir.
+-- label.width, label.height, button.width ve box.height özellikleri "auto" olarak belirlenebilir. lblName.width = "auto" gibi.
+-- Çağırılan fonksiyona, nesnenin kendisi gönderilir.
+
+object.center(direction:string)
+- Nesneyi, içinde bulunduğu nesneye göre ortalar.
+- direction, hangi yöne doğru ortalama yapılmak istendiği.
+"left": yatay olarak ortala, "top": dikey olarak ortala
+-- Parametre boş bırakıldığında, iki yöne doğru da ortalar.
+-- Nesnenin .left ve .top değerleri, ortada görünecek şekilde değiştirilir.
+Bakınız: 19-nesneleri-hizalama.htm
+
+object.aline(target:BasicObject, direction:string, space:integer)
+- Bir nesneyi, başka bir nesnenin konumuna göre konumlandırır.
+- target, hangi nesneye göre konumlandırma yapılacağı.
+- direction, hangi yöne doğru konumlandırılacağı.
+"right": sağ, "left": sol, "top": üst, "bottom" alt tarafa konumlandırır.
+-- Parametre boş bırakılır ise, hedef nesnenin tam üstüne konumlandırır.
+- space, nesneler arasında ne kadar boşluk bırakılacağı.
+-- Parametre boş bırakılır ise, 0 olarak kabul edilir.
+-- Hedef nesne, konumlandırma için .right ve/veya .bottom özelliklerini kullanıyor ise, konumlandırılan nesne de bu özellikleri kullanacaktır.
+Bakınız: 19-nesneleri-hizalama.htm
+
+object.remove()
+- Nesneyi siler.
+
+object.prop(properties:Object)
+- Nesnenin özelliklerini, toplu olarak değiştirir.
+object.prop({width: 100, height: 120, color: "red"})
+Bakınız: 20-temel-mobil-uygulama-sablonu.htm
+
+object.setMotion(motionString:string)
+- Nesnenin, belirtilen özelliklerindeki değişimlerin, belirtilen sürede yavaşça olmasını sağlar.
+- motionString, hareketli olması istenen özellikler ve ne süre ile hareketin gerçekleşeceği bilgisi.
+Örnekler:
+"left 1s, opacity 1s": sadece yatay konum değişikliğini ve şeffaflığı yumuşat. 1saniye sürsün.
+"width 2s": sadece nesnenin genişliğindeki değişiklikler hareketli olsun. 2 saniye sürsün.
+"left 1s, top 1s, width 0.5s, height 0.5s, transform 1s, background-color 1s, border-radius 1s, opacity 1s": Bir çok hareket yumuşatılmış.
+-- Bu özelliklik ayarlandıktan sonra, nesnenin söz konusu özelliği her zaman yavaşça değişir. 
+-- Nesnenin, hareket özelliğini iptal etmek için, object.setMotion("none") kullanılır.
+-- Veya geçici olarak duraklatmak için, object.dontMotion() kullanılabilir.
+- CSS'te transition özelliğini kullanır.
+Bakınız: 55-temel-css-hareketlendirmesi.htm
+
+object.getMotion() : string
+- Nesnenin, setMotion() fonksiyonu ile ayarlanmış motionString değerini geri verir.
+
+object.withMotion(func:function)
+- Yeni oluşturulan bir nesnenin, ilk özellikleri verildikten hemen sonra, istenilen hareketin yaptırılması için kullanılır.
+Bakınız: 55-temel-css-hareketlendirmesi.htm
+
+object.dontMotion()
+- Hareket tanımlanmış bir nesnenin; geçici olarak, özelliklerinin hareketsiz değiştirilmesini sağlar.
+Bakınız: 55-temel-css-hareketlendirmesi.htm
+
+object.canMotionNow()
+- Üst satırlarda dontMotion() kullanılmış ama hemen hareket özelliklerinin geri gelmesi isteniyor ise kullanılır.
+
+
+---
+
+
+KUTU NESNESİ (SINIF ADI: Box):
+- Diğer nesneleri gruplamak veya bir şekil oluşturmak için kullanılır.
+
+createBox(left:float, top:float, width:integer, height:integer) : Box
+- Alternatif olarak, cbox(*) veya new Box(*) şeklinde de kullanılabilir.
+- Yeni bir kutu nesnesi oluşturur.
+
+object.text veya object.html
+- Nesnenin, içindeki metni düzenler.
+- HTML kodu kabul eder.
+- HTML içinde oluşturulmuş bir içeriği, kutu nesnesinin içinde göstermek için,
+object.html = document.getElementById("my-html-content").innerHTML
+Bakınız: 24-html-icerigini-bir-kutuya-aktarmak.htm
+
+object.scrollX
+1: Gerekirse kaydırma çubuğu ekle, 0: hiç bir zaman ekleme.
+- Nesneye, gerektiğinde yatay kaydırma çubuğu ekler.
+
+object.scrollY
+- Nesneye, gerektiğinde dikey kaydırma çubuğu ekler.
+
+object.onClick(func:function)
+- Nesneye, her basıldığında; belirlenen fonksiyon çağırılır.
+-- Çağırılan fonksiyona, nesnenin kendisi gönderilir.
+
+object.add(object:BasicObject)
+- Parametre olarak gönderilen nesneyi, bu kutu nesnesinin içine manuel olarak taşır.
+- Otomatik eklemek için; eklenmesi istenen nesne, kutu nesnesinin bir elemanı olarak oluşturulabilir.
+object.txtObject = createTextBox() gibi.
+- HTML içinde oluşturulmuş bir <div> elementine, kutu nesnesi eklemek için,
+document.getElementById("elementID").appendChild(boxObject.element)
+Bakınız: 29-html-ile-birlikte-kullanim.htm
+
+object.element
+- Nesneyi, HTML ile bağlayan element nesnesidir.
+- HTML'de <div> elementini kullanır.
+
+
+---
+
+
+BUTON NESNESİ (SINIF ADI: Button):
+- Kullanıcının; nesnenin üzerine basarak, bir fonksiyonu çalıştırabilmesini sağlar.
+
+createButton(left:float, top:float, width:integer, height:integer) : Button
+- veya cbtn(*) veya new Button(*) şeklinde de kullanılabilir.
+- Yeni bir buton nesnesi oluşturur.
+
+object.text
+- Nesnenin metnini belirler.
+- Taşıdığı değer string tipindedir.
+
+object.enabled
+1: kullanılır, 0: kullanılamaz
+- Nesneyi pasif hale getirir.
+
+object.minimal
+1: düz, 0: makyajlı
+- Nesneyi düz (flat) yapar.
+
+object.onClick(func:function)
+- Nesneye, her basıldığında; belirlenen fonksiyon çağırılır.
+-- Çağırılan fonksiyona, nesnenin kendisi gönderilir.
+
+object.element
+- Nesnenin, taşıyıcı bir elementi olmadığı için, buttonElement ile aynıdır.
+
+object.buttonElement
+- Nesneyi, HTML ile bağlayan element nesnesidir.
+- HTML'de <button> elementini kullanır.
+
+
+---
+
+
+METİN KUTUSU NESNESİ (SINIF ADI: TextBox):
+- Kullanıcıdan, bilgi almak için kullanılır.
+
+createTextBox(left:integer, top:integer, width:integer, height:integer) : TextBox 
+- Alternatif olarak, ctxt(*) veya new TextBox(*) şeklinde de kullanılabilir.
+- Yeni bir metin kutusu nesnesi oluşturur.
+
+object.text
+- Nesnenin metnini belirler.
+- Taşıdığı değer string tipindedir.
+
+object.title
+- Metin kutusunun başlığını belirler.
+
+object.enabled
+- Nesneyi aktif/pasif hale getirir.
+1: kullanılabilir, 0: KULLANILAMAZ
+
+object.minimal
+- Nesneyi düz (flat) yapar.
+1: düz, 0: makyajlı
+
+object.onChange(func:function)
+- Nesne içeriği her değiştiğinde, belirlenen fonksiyon çalıştırılır.
+-- Çağırılan fonksiyona, nesnenin kendisi gönderilir.
+
+object.element
+- Nesnenin taşıyıcısını, HTML ile bağlayan element nesnesidir.
+- HTML'de <div> elementini kullanır.
+
+object.inputElement
+- Nesneyi, HTML ile bağlayan element nesnesidir.
+- HTML'de <input> elementini kullanır.
+
+object.titleElement
+- Nesnenin başlık (title) bölümünü, HTML ile bağlayan element nesnesidir.
+- HTML'de <div> elementini kullanır.
+
+
+---
+
+
+YAZI NESNESİ (SINIF ADI: Label):
+- Yazı yazmak için kullanılır.
+
+createLabel(left:integer, top:integer, width:integer, height:integer) : Label 
+- Alternatif olarak, clbl(*) veya new Label(*) şeklinde de kullanılabilir.
+- Yeni bir yazı nesnesi oluşturur.
+
+object.text
+- Nesne metnini değiştirir.
+- Taşıdığı değer string tipindedir.
+
+object.space
+- İçerik ile nesne sınırı arasında (iç) boşluk bırakır.
+- CSS'te padding özelliğini kullanır.
+
+object.spaceX
+- İçerik ile nesne sınırının, sağ ve solundan boşluk bırakır.
+
+object.spaceY
+- İçerik ile nesne sınırının, üst ve altından boşluk bırakır.
+
+object.onClick(func:function)
+- Nesneye, her basıldığında; belirlenen fonksiyon çağırılır.
+-- Çağırılan fonksiyona, nesnenin kendisi gönderilir.
+
+object.element
+- Nesneyi, HTML ile bağlayan element nesnesidir.
+- HTML'de <div> elementini kullanır.
+
+
+---
+
+
+RESİM NESNESİ (SINIF ADI: Image):
+- Bir resim dosyasını (.png, .jpg, .gif, .svg vb.) ekranda göstermek için kullanılır.
+
+createImage(left:integer, top:integer, width:integer, height:integer) : Image 
+- Alternatif olarak, cimg(*) veya new Image(*) şeklinde de kullanılabilir.
+- Yeni bir resim nesnesi oluşturur.
+
+object.load(filePath:string)
+- Bir resim dosyasını, nesnenin içine yükler.
+- Resim dosyasının yüklenmesi bir zaman alır.
+-- Yükleme tamamlandığında, onLoad() ile tanımlanmış fonksiyon çağırılır.
+
+object.autoSize
+- Yüklenen resmi, otomatik olarak boyutlandırır.
+0: nesnenin belirlenmiş boyutuna sığdır, 1: orjinal boyut, 2: orjinal boyutun yarısı, 3: orjinal boyutun üçte biri ...
+-- Varsayılan autoSize değeri 1 dir.
+-- Resmin, genişliği veya yüksekliği değiştirildiğinde, autoSize değeri 0 olur.
+NOT: Yüksek çözünürlüklü mobil cihazlarda; daha kaliteli görünüm elde etmek için, resim dosyaları büyük kaydedilip, ekrana yüklendiğinde küçültülebilir.
+
+object.naturalWidth
+- Resmin orjinal genişliğini verir. 
+-- onLoad() fonksiyonu içinde, kullanılmalı.
+NOT: Eğer, object.autoSize = 1 ise, resim yüklendiğinde, .width ile .naturalWidth özellikleri aynı değeri taşıyacaktır.
+
+object.naturalHeight
+- Resmin orjinal yüksekliğini verir. 
+-- onLoad() fonksiyonu içinde, kullanılmalı.
+
+object.space
+- Resim ile nesne sınırı arasında (iç) boşluk bırakır.
+- CSS'te padding özelliğini kullanır.
+
+object.spaceX
+- Resim ile nesne sınırının, sağ ve solundan boşluk bırakır.
+
+object.spaceY
+- Resim ile nesne sınırının, üst ve altından boşluk bırakır.
+
+object.onClick(func:function)
+- Nesneye, her basıldığında; belirlenen fonksiyon çağırılır.
+-- Çağırılan fonksiyona, nesnenin kendisi gönderilir.
+
+object.onLoad(func:function)
+- Resim nesnesi yüklendiğinde, fonksiyon çağırılır.
+-- Çağırılan fonksiyona, nesnenin kendisi gönderilir.
+var myImage = createImage()
+that.load("images/roket.png")
+that.onLoad(function(self) {
+	print(self.width)
+	print(self.height)
+})
+
+object.element
+- Nesnenin, taşıyıcı bir elementi olmadığı için, imageElement ile aynıdır.
+
+object.imageElement
+- Nesneyi, HTML ile bağlayan element nesnesidir.
+- HTML'de <img> elementini kullanır.
+
+
+---
+
+
+GENEL FONKSİYONLAR:
+
+setLoopTimer(milisecond:integer)
+- loop() fonksiyonun, ne kadar sıklık ile çalışacağını belirler.
+- Süre milisaniye cinsindendir.
+- Standart değeri, 1000'dir. (1 saniye)
+
+selectBox(boxObject:Box)
+- Oluşturulan nesnelerin ilk taşınacakları kutuyu belirler.
+- Varsayılan değeri, page nesnesidir.
+-- Varsayılan değere geri dönmek için, selectBox(page)
+
+getSelectedBox() : Box veya MainBox
+- Oluşturulan nesnelerin, ilk taşındığı nesneyi verir.
+
+makeBasicObject(object:BasicObject)
+- Oluşturduğunuz özel nesneyi, basic.js kütüphanesinin ekosistemine dahil eder.
+-- Oluşturulan nesne, başka bir kutunun elemanı olarak aktarılır ise, otomatik o kutunun içine taşınır.
+-- Oluşturulan nesne, yeni bir nesne oluşturulana kadar, that değişkeni ile ulaşılabilir.
+- Özel tasarlanan nesneler, birden fazla temel nesneden oluşuyor ise, taşıyıcı nesne olarak; kutu nesnesi kullanılmalı.
+
+
+---
+
+
+SAAT NESNESİ (NESNE ADI: clock):
+- Güncel saat bilgilerini verir.
+Bakınız: 07-duvar-saat.htm
+
+clock.hour
+- Güncel saat bilgisini verir.
+
+clock.minute
+- Güncel dakika bilgisini verir.
+
+clock.second
+- Güncel saniye bilgisini verir.
+
+
+---
+
+
+TARİH NESNESİ (NESNE ADI: date):
+- Güncel tarih bilgilerini verir.
+Bakınız: 41-tarih-ve-saat.htm
+
+date.year
+- 4 haneli, hangi yılda olduğumuz.
+
+date.mouthNumber
+- Sayı olarak, hangi ayda olduğumuz.
+
+date.ayAdi
+- Bulunduğumuz ayın Türkçe ismi.
+
+date.mountName
+- Bulunduğumuz ayın İngilizce ismi.
+
+date.dayNumber
+- Sayı olarak, haftanın hangi gününde olduğumuz.
+
+date.gunAdi
+- Bulunduğumuz günün Türkçe ismi.
+
+date.dayName
+- Bulunduğumuz günün İngilizce ismi.
+
+date.today
+- Ayın kaçı olduğu bilgisi.
+
+date.now
+- Bu anın, benzersiz sayısal karşılığı.
+NOT: Veri tabanlarında Timestamp olarak geçen bilgi.
+
+
+---
+
+
+BİLGİ DEPOLAMA NESNESİ (NESNE ADI: storage):
+- Bir değişkenin taşıdığı değeri, tarayıcı üzerinde depolar.
+- Tarayıcı kapatılıp, tekrar açıldığında; saklanan bilgiler geri yüklenebilir.
+-- Kullanıcı tarafından seçilen ayarların saklanması için kullanılabilir.
+-- Veri tabanına ihtiyaç duyulmayacak basitlikte bilgilerin saklanması için kullanılabilir.
+- JavaScript'te window.localStorage özelliğini kullanır.
+Bakınız: 58-yapilacaklar-listesi-uygulamasi.htm
+
+storage.save(key:string, value:*)
+- Bir değişkeni, anahtar ile kaydeder.
+- key, anahtar değeri. Örnek: "app58-user-name"
+NOT: Anahtar seçerken dikkat edilmeli, başka bir uygulama tarafından aynı anahtar ile bilgi kaydedilebilir.
+- value, kaydedilecek değer. Her hangi bir veri tipi olabilir.
+
+storage.load(key:string) : *
+- Anahtar ile kaydedilmiş değişkenin içeriğini geri döndürür.
+
+storage.remove(key:string)
+- Anahtar ile kaydedilmiş değişkenin içeriğini siler.
+
+
+---
+
+
+SABİTLER:
+- Kütüphanenin kullandığı, bazı sabit değerler.
+
+basic.ACTION_COLOR = "#689BD2"
+basic.ACTION2_COLOR = "cadetblue"
+basic.WARNING_COLOR = "tomato"
+basic.ALERT_COLOR = "gold"
+basic.CANCEL_COLOR = "lightgray"
+basic.TEXT_COLOR = "#4A4A4A"
+basic.BACKGROUND_COLOR = "whitesmoke"
+basic.DARK_BACKGROUND_COLOR = "#141414"
+basic.FONT_SIZE = 20
+basic.BUTTON_WIDTH = 130
+basic.BUTTON_HEIGHT = 50
+basic.BUTTON_COLOR = basic.ACTION_COLOR
+basic.BUTTON_TEXT_COLOR = "rgba(0, 0, 0, 0.65)"
+basic.TEXTBOX_WIDTH = 270
+basic.TEXTBOX_HEIGHT = 50
+basic.LABEL_WIDTH = 270
+basic.LABEL_HEIGHT = "auto"
+basic.BOX_WIDTH = 100
+basic.BOX_HEIGHT = 100
+basic.IMAGE_WIDTH = 50
+basic.IMAGE_HEIGHT = 50
+
+
+---
+
+
+BAZI SIK KARŞILAŞILAN HATALAR:
+- Proje geliştirirken, bir hata ile karşılaştığınızda, konsolda yazan hata mesajının başına JavaScript kelimesini de ekleyerek, Google'da arayabilirsiniz.
+
+Uncaught TypeError: Cannot read properties of undefined (reading 'height')
+Uncaught TypeError: Cannot set properties of undefined (setting 'left')
+- Ulaşmaya çalıştığınız değişkenin içi boş, nesne aktarılmamış. (undefined)
+
+Uncaught SyntaxError: Unexpected identifier
+Uncaught SyntaxError: Unexpected end of input
+Uncaught SyntaxError: Unexpected token ')'
+Uncaught SyntaxError: missing ) after argument list
+- Süslü parantez, parantez ve diğer işaretleri kontrol edin.
+-- Süslü parantez açılmamış ama kapatılmış olabilir.
+-- Fonksiyon çağırılırken, parantezi kapatılmamış olabilir.
+
+
+---
+
+
+YAZAN:
+Buğra Özden <bugra.ozden@gmail.com>
+
+https://bug7a.github.io/basicjs-turkce/
+
+
+
+

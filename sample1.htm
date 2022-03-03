@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        
+        <title>Mobil Uygulama Projesi</title>
+        
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+
+        <link rel="stylesheet" type="text/css" href="kutuphane/basic.min.css">
+        <script src="kutuphane/basic.min.js" type="text/javascript" charset="utf-8"></script>
+
+        <script src="dosyalar/35/ui-navigation-bar.js" type="text/javascript" charset="utf-8"></script>
+        <script src="dosyalar/35/ui-tab-bar.js" type="text/javascript" charset="utf-8"></script>
+        <script src="dosyalar/35/ui-side-bar.js" type="text/javascript" charset="utf-8"></script>
+        <script src="dosyalar/35/ui-back-button.js" type="text/javascript" charset="utf-8"></script>
+        <script src="dosyalar/35/ui-close-button.js" type="text/javascript" charset="utf-8"></script>
+        <script src="dosyalar/35/view-login.js" type="text/javascript" charset="utf-8"></script>
+
+        <script src="dosyalar/35/ui-searchable-list.js" type="text/javascript" charset="utf-8"></script>
+
+        <script src="dosyalar/35/content-home.js" type="text/javascript" charset="utf-8"></script>
+        <script src="dosyalar/35/content-search.js" type="text/javascript" charset="utf-8"></script>
+        <script src="dosyalar/35/content-alert.js" type="text/javascript" charset="utf-8"></script>
+        <script src="dosyalar/35/content-fav.js" type="text/javascript" charset="utf-8"></script>
+        <script src="dosyalar/35/content-setting.js" type="text/javascript" charset="utf-8"></script>
+        <script src="dosyalar/35/content-num6.js" type="text/javascript" charset="utf-8"></script>
+        <script src="dosyalar/35/content-num7.js" type="text/javascript" charset="utf-8"></script>
+        <script src="dosyalar/35/content-num8.js" type="text/javascript" charset="utf-8"></script>
+        
+        <style>
+
+            body {
+                overflow: hidden;
+            }
+
+        </style>
+        
+        <script>
+
+        /*
+
+        MOBİL UYGULAMA ŞABLONU (ANDROID VE iOS)
+            
+        Bu şablon, Apache Cordova veya benzeri bir teknoloji ile 
+        mobil uygulama geliştirmek için kullanılabilir.
+        https://cordova.apache.org/
+
+        Android uygulaması nasıl yapılır?
+        https://www.youtube.com/watch?v=B6x7yKhKZbY
+
+        iOS uygulaması nasıl yapılır?
+        https://www.youtube.com/watch?v=WZZwiI_5WQA
+
+        */
+            
+        // DEĞİŞKENLER
+
+        var APP_CONTENT_WIDTH = 600
+
+        // BOX: view types; Tam ekran, yönlendirme çubuğu ile birlikte, yarım ekran.
+        var viewFull, viewNormal, viewSmall
+            
+        // İlk çalışan fonksiyon.
+        var start = function() {
+            
+            page.color = "black"
+            
+            // 600px genişliğindeki içeriği, ekrana sığdır. En fazla 500px genişlet.
+            page.fit(APP_CONTENT_WIDTH, 500)
+
+            // NOT: 500 yerine; desteklemek istediğini maksimum genişliği yazın. 700
+
+            // NESNE: navigationBar ve tabBar kullanılabilen içerik alanı.
+            create_viewNormal()
+
+            // NESNE: Navigation Bar; üst bilg ve butonlar.
+            navigationBar.create()
+            navigationBar.onClick_btnMenu(function() {
+                sideBar.show()
+            })
+            
+            // NESNE: Tab Bar; alt butonlar.
+            tabBar.create()
+            // İkonları oluştur.
+            tabBar.addItem("home")
+            tabBar.addItem("search")
+            tabBar.addItem("alert")
+            tabBar.addItem("fav")
+            tabBar.addItem("setting")
+            tabBar.onClick(openContentByIndex)
+
+            // NESNE: Tam sayfa kullanılabilen içerik alanı. (tabBar ile kullanılabilir.)
+            create_viewFull()
+
+            // NESNE: Küçük içerik alanı.
+            create_viewSmall()
+
+            // NESNE: Side Bar; sağ üst düğme ile açılan menu.
+            sideBar.create()
+            // Menü butonlarını oluştur.
+            sideBar.addItem("Başlangıç", 0)
+            sideBar.addItem("Arama", 1)
+            sideBar.addItem("Bildirimler", 2)
+            sideBar.addItem("Sık Kullanılanlar", 3)
+            sideBar.addItem("Ayarlar", 4)
+            sideBar.addItem("")
+            sideBar.addItem("Tam Ekran", 6)
+            sideBar.addItem("Küçük Ekran", 7)
+            sideBar.onClick(openContentByIndex)
+
+            // NESNE: Kilitleme ekranı.
+            viewLogin.create()
+            //viewLogin.lock()
+
+            sideBar.box.b1.boxLock.onClick(function() {
+                sideBar.hide()
+                viewLogin.lock()
+            })
+
+            // NOT: Nesnelerin oluşturulma sırası, bulundukları katmanları belirler.
+
+
+            // Başlangıç ekranını aç.
+            open_contentHome()            
+            
+        }
+
+        // DİĞER FONKSİYONLAR
+
+        var create_viewNormal = function() {
+
+            // BOX: Normal içerik taşıyıcısı
+            viewNormal = createBox(0, 
+                navigationBar.HEIGHT, 
+                APP_CONTENT_WIDTH, 
+                page.height - navigationBar.HEIGHT - tabBar.HEIGHT
+            )
+            clean_viewNormal()
+
+        }
+
+        var clean_viewNormal = function() {
+
+            viewNormal.text = ""
+            viewNormal.color = "whitesmoke"
+            viewNormal.border = 0
+            viewNormal.scrollX = 1
+
+        }
+
+        var create_viewFull = function() {
+
+            // BOX: Tam sayfa içerik taşıyıcısı
+            viewFull = createBox(0, 0, APP_CONTENT_WIDTH, page.height)
+            clean_viewFull()
+            viewFull.visible = 0
+
+        }
+
+        var clean_viewFull = function() {
+
+            viewFull.text = ""
+            viewFull.color = "whitesmoke"
+            viewFull.border = 0
+            viewFull.scrollX = 1
+
+        }
+
+        var create_viewSmall = function() {
+
+            // BOX: Küçük içerik taşıyıcısı
+            viewSmall = createBox(0, 0, APP_CONTENT_WIDTH, page.height)
+            that.color = "rgba(0, 0, 0, 0.8)"
+
+            viewSmall.box = createBox(0, 0, APP_CONTENT_WIDTH, 500)
+            that.element.style.borderTopLeftRadius = "50px"
+            that.element.style.borderTopRightRadius = "50px"
+            that.bottom = 0
+
+            clean_viewSmall()
+            viewSmall.visible = 0
+
+        }
+
+        var clean_viewSmall = function() {
+
+            viewSmall.box.text = ""
+            viewSmall.box.color = "white"
+            viewSmall.border = 0
+
+        }
+
+        var cleanAndCloseAllView = function() {
+                
+                clean_viewNormal()
+                clean_viewFull()
+                clean_viewSmall()
+    
+                viewNormal.visible = 0
+                viewFull.visible = 0
+                viewSmall.visible = 0
+    
+        }
+
+        var openContentByIndex = function(index) {
+
+            switch(index) {
+                case 0:
+                    open_contentHome()  
+                    break
+                case 1:
+                    open_contentSearch()
+                    break
+                case 2:
+                    open_contentAlert()  
+                    break
+                case 3:
+                    open_contentFav()
+                    break
+                case 4:
+                    open_contentSetting()
+                    break
+                case 6:
+                    open_contentNum6()
+                    break
+                case 7:
+                    open_contentNum7()
+                    break
+            }
+
+        }
+
+        var open_contentHome = function() {
+            
+            cleanAndCloseAllView()
+
+            navigationBar.setTitle("Başlangıç")
+            navigationBar.setVisible_backButton(0)
+
+            tabBar.selectItemByIndex(0)
+
+            contentHome.create(viewNormal)
+            viewNormal.visible = 1
+
+        }
+
+        var open_contentSearch = function() {
+            
+            cleanAndCloseAllView()
+
+            navigationBar.setTitle("Meyve ve Sebzeler")
+            navigationBar.setVisible_backButton(0)
+
+            tabBar.selectItemByIndex(1)
+
+            contentSearch.create(viewNormal)
+            viewNormal.visible = 1
+
+        }
+
+        var open_contentAlert = function() {
+            
+            cleanAndCloseAllView()
+
+            navigationBar.setTitle("Bildirimler")
+            navigationBar.setVisible_backButton(0)
+
+            tabBar.selectItemByIndex(2)
+
+            contentAlert.create(viewNormal)
+            viewNormal.visible = 1
+
+        }
+
+        var open_contentFav = function() {
+            
+            cleanAndCloseAllView()
+
+            navigationBar.setTitle("Sık Kullanılanlar")
+            navigationBar.setVisible_backButton(0)
+
+            tabBar.selectItemByIndex(3)
+
+            contentFav.create(viewNormal)
+            viewNormal.visible = 1
+
+        }
+
+        var open_contentSetting = function() {
+            
+            cleanAndCloseAllView()
+
+            navigationBar.setTitle("Ayarlar")
+            navigationBar.setVisible_backButton(0)
+
+            tabBar.selectItemByIndex(4)
+
+            contentSetting.create(viewNormal)
+            viewNormal.visible = 1
+
+        }
+
+        var open_contentNum6 = function() {
+
+            clean_viewFull()
+            
+            contentNum6.create(viewFull)
+            viewFull.visible = 1
+
+        }
+
+        var open_contentNum7 = function() {
+
+            clean_viewSmall()
+
+            contentNum7.create(viewSmall.box)
+            viewSmall.visible = 1
+
+        }
+        
+        </script>
+        
+
+    </head>
+    <body>
+        
+        <!-- HTML içeriği -->
+        
+    </body>
+</html>
