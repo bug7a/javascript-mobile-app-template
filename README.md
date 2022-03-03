@@ -1,3 +1,5 @@
+### NOTE: This is Alpha version:
+
 # Mobile App UI Template for Apache Cordova
 Simple and fully customizable user interface template. Design for mobile app development on Apache Cordova framework. Developed with JavaScript and basic.js technique.
 
