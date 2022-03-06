@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        
+        <title>Şarlak Süt ve Süt Ürünleri</title>
+        
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+
+        <!-- LIBRARY FILES -->
+        <link rel="stylesheet" type="text/css" href="library/basic.css">
+        <script src="library/basic.js" type="text/javascript" charset="utf-8"></script>
+
+        <style>
+
+            body {
+                overflow: hidden;
+            }
+
+            /* normal hali */
+            .button-type1 {
+
+                cursor: pointer;
+
+            }
+
+            /* üzerine gelindiğinde */
+            .button-type1:hover {
+
+                transform: scale(1.3);
+                filter: brightness(100%);
+
+            }
+
+            /* basıldığında */
+            .button-type1:active {
+
+                filter: brightness(70%);
+                /* transform: scale(0.90); */
+                transform: scale(0.95);
+
+            }
+
+        </style>
+
+        <script>
+
+        // CONTENTS: 
+        // a1: Menu layer
+            
+        // VARIABLES
+            
+        var VIEW_ORIGINAL_WIDTH = 900
+        var VIEW_ORIGINAL_HEIGHT = 600
+        var PRIMARY_COLOR = "#5ABB9F"
+        var SECONDARY_COLOR = "#4A4A4A"
+    
+        var menuItemDataList = [
+            {id:"1", name:"Kurumsal"},
+            {id:"2", name:"Belgeler"},
+            {id:"3", name:"Ürünler"},
+            {id:"4", name:"Şirketler"},
+            {id:"5", name:"İletişim"}
+        ]
+
+        var menuItemList = []
+        var selectedMenuIndex = -1
+        // Status: 1: center, 2: top
+        var menuStatus = "center"
+        var isMenuOpened = 0
+
+        var a0, a1, a2, a3, a4
+        var imgMenu
+
+        
+        // SPECIAL FUNCTIONS
+            
+        // First running function.
+        var start = function() {
+            
+            // BOX: background view
+            a0 = createBox(0, 0, page.width, page.height)
+            // that.color = "white"
+            that.element.style.backgroundImage = "radial-gradient(white, white, lightgray)"
+            that.visible = 1
+
+            for (var i = 0; i < 5; i++ ) {
+
+                // BOX: dot with motion
+                var randomSize = random(200, 700)
+                a0.b1 = createBox(0, 0, randomSize, randomSize)
+                that.color = "#141414"
+                that.round = 600
+                // that.opacity = random(2, 6) / 100
+                that.opacity = 0.02
+                that.startPoint = {}
+                that.startPoint.left = random(0, page.width + (a0.b1.width * 2)) - a0.b1.width
+                that.startPoint.top = random(0, page.height + (a0.b1.height * 2)) - a0.b1.height
+                that.left = that.startPoint.left
+                that.top = that.startPoint.top
+                that.setMotion("top 30s, left 30s, background-color 2s")
+                that.withMotion(function(self) {
+                    startBackgroundMotion(self, self.startPoint)
+                })
+
+            }
+
+            // IMAGE: Menu açma buton resmi
+            imgMenu = createImage(0, 20, 50, 50)
+            that.load("img/menu-button.svg")
+            that.right = 40
+            that.space = 10
+            that.visible = 0
+            that.onClick(function(self) {
+                isMenuOpened = 1
+                a1.visible = 1
+            })
+
+
+
+
+            // En üstte olmalı:
+            // BOX: Menu view
+            a1 = createBox(0, 0, page.width, page.height)
+            that.color = "transparent"
+            that.setMotion("opacity 0.3s, transform 0.5s")
+            that.element.style.transform = "scale(1.6)"
+            that.opacity = 0.1
+            that.withMotion(function(self) {
+                self.element.style.transform = "scale(1)"
+                self.opacity = 1
+            })
+
+            createMenu()
+
+            // BOX: Menu selected button highlight
+            a1.boxSelected = createBox(0, 0, 10, 10)
+            that.setMotion("left 0.1s, top 0.1s, opacity 0.5s, width 0.2s, height 0.2s")
+            that.color = PRIMARY_COLOR
+            that.round = 4
+            that.opacity = 0
+            that.top = page.height
+            that.center("left")
+
+            // IMAGE: Logo
+            a1.imgLogo = createImage(0, 70, 100, 100)
+            that.load("img/logo.png")
+            that.setMotion("left 0.1s, top 0.1s, opacity 0.5s")
+
+            // LABEL: Şirket ismi
+            a1.lblTitle = createLabel(0, 70, "auto", "auto")
+            that.text = "Şarlak Süt ve Süt Ürünleri"
+            that.fontSize = 38
+            that.textColor = PRIMARY_COLOR
+            that.setMotion("left 0.1s, top 0.1s, opacity 0.5s")
+
+            // IMAGE: Menu kapatma resmi
+            a1.imgClose = createImage(0, 20, 50, 50)
+            that.load("img/close-button.svg")
+            that.right = 40
+            that.space = 10
+            that.visible = 0
+            that.onClick(function(self) {
+                isMenuOpened = 0
+                a1.visible = 0
+                //imgMenu.visible = 0
+            })
+
+            resizeAll()
+            page.onResize(resizeAll)
+            
+        }
+        
+        
+        // OTHER FUNCTIONS
+
+        var resizeAll = function() {
+
+            if ((page.width * page.zoom) >= 700) {
+                // Masaüstü konumlandırma.
+                page.fit(1000)
+
+            } else {
+                // Mobil konumlandırma.
+                page.fit(600)
+
+            }
+            
+            resizeView(a0)
+            resizeView(a1)
+            refresh_a1()
+
+        }
+        
+        var resizeView = function(self) {
+            self.width = page.width
+            self.height = page.height
+        }
+
+        var startBackgroundMotion = function(self, startPoint) {
+            // Hareket et
+            var nextPoint = {}
+            nextPoint.left = random(0, page.width + (self.width * 2)) - self.width
+            nextPoint.top = random(0, page.height + (self.height * 2)) - self.height
+            self.left = nextPoint.left
+            self.top = nextPoint.top
+            setTimeout(function() {
+                // İlk konuma geri dön
+                var nextPoint = {}
+                nextPoint.left = random(0, page.width + (self.width * 2)) - self.width
+                nextPoint.top = random(0, page.height + (self.height * 2)) - self.height
+                self.left = nextPoint.left
+                self.top = nextPoint.top
+                setTimeout(function() {
+                    self.left = startPoint.left
+                    self.top = startPoint.top
+                    setTimeout(function() {
+                        // Tekrar kendini çağırarak,
+                        // hareketin hep devam etmesini sağla.
+                        startBackgroundMotion(self, startPoint)
+                    }, 30000)
+                }, 30000)
+            }, 30000)
+        }
+
+        var createMenu = function() {
+
+            menuItemList = []
+
+            for (var i = 0; i < menuItemDataList.length; i++) {
+
+                a1["lblName" + i] = createLabel(0, 0, "auto", "auto")
+                //that.color = "yellow"
+                that.fontSize = 25
+                that.element.style.fontFamily = "opensans-bold"
+                that.text = menuItemDataList[i].name
+                that.index = i
+                that.setMotion("left 0.1s, top 0.1s, opacity 0.3s, background-color 0.5s, color 0.5s, filter 0.5s, transform 0.5s")
+                // that.setMotion("opacity 0.3s, background-color 0.5s, color 0.5s, filter 0.5s, transform 0.5s")
+                that.clickable = 1
+                that.element.classList.add("button-type1")
+                that.onClick(function(self) {
+                    if (selectedMenuIndex > -1) {
+                        a1["lblName" + selectedMenuIndex].element.classList.add("button-type1")
+                    }
+                    selectedMenuIndex = self.index
+                    self.element.classList.remove("button-type1")
+                    menuStatus = "top"
+                    refresh_a1()
+
+                    if ((page.width * page.zoom) >= 700) {
+                    } else {
+                        if (isMenuOpened) {
+                            isMenuOpened = 0
+                            a1.visible = 0
+                            imgMenu.visible = 0
+                        } else {
+
+                        }
+                    }
+                    
+                    //resfresh_a1_menuItems_highlight(self)
+                })
+                
+                that.onResize(function(self) {
+                    // r_a1_menuItems()
+                    refresh_a1()
+                })
+
+                menuItemList.push(a1["lblName" + i])
+
+            }
+            
+        }
+
+        var refresh_a1 = function() {
+
+            if (a1.resizeTimer) {
+                a1.resizeTimer = 
+                    clearTimeout(a1.resizeTimer);
+            }
+
+            // a1.resizeTimer = setTimeout(function () {
+
+            // a1.color = "red"
+
+            if ((page.width * page.zoom) >= 700) {
+                // Masaüstü konumlandırma.
+                
+
+                if (menuStatus == "center") {
+                    a1.imgLogo.center()
+                    a1.imgLogo.top -= 100
+                    a1.lblTitle.center()
+                    a1.lblTitle.top -= 20
+                } else {
+                    // a1.imgLogo.top -= 100
+                    a1.imgLogo.opacity = 0
+                    // a1.lblTitle.top -= 100
+                    a1.lblTitle.opacity = 0
+                }
+
+            } else {
+                // Mobile konumlandırma.
+                if (menuStatus == "center") {
+                    a1.imgLogo.center()
+                    a1.imgLogo.top -= 200
+                    a1.lblTitle.center()
+                    a1.lblTitle.top -= 120
+                } else {
+                    // a1.imgLogo.top -= 100
+                    a1.imgLogo.opacity = 0
+                    // a1.lblTitle.top -= 100
+                    a1.lblTitle.opacity = 0
+                }
+            }
+
+            refresh_a1_menuItems()
+            resfresh_a1_menuItems_highlight()
+
+            a1.resizeTimer = 0;
+
+            // }, 1);
+
+        }
+
+        var refresh_a1_menuItems = function() {
+
+            if ((page.width * page.zoom) >= 700) {
+
+                // MASAÜSTÜ konumlandırma.
+                var menuWidth = 0
+
+                for( var i = 0; i < menuItemList.length; i++) {
+                    menuWidth += menuItemList[i].width + 45
+                }
+                menuWidth -= 45
+
+                var leftSpace = (page.width - menuWidth) / 2
+                var topSpace
+
+                if (menuStatus == "center") {
+                    topSpace = (page.height - menuItemList[0].height) / 2
+                    topSpace += 80
+
+                    imgMenu.visible = 0
+                    a1.visible = 1
+                    a1.imgClose.visible = 0
+                    a1.color = "transparent"
+
+                } else {
+                    topSpace = 40
+
+                    imgMenu.visible = 0
+                    a1.visible = 1
+                    a1.imgClose.visible = 0
+                    a1.color = "transparent"
+                }
+
+                for( var i = 0; i < menuItemList.length; i++) {
+
+                    menuItemList[i].top = topSpace
+                    var itemWidth = 0
+                    if(i > 0) {
+                        itemWidth = menuItemList[i-1].width + 45
+                    }
+                    leftSpace += itemWidth
+                    menuItemList[i].left = leftSpace
+                    
+                }
+
+            } else {
+                // MOBILE konumlandırma.
+                var menuHeight = 0
+
+                for( var i = 0; i < menuItemList.length; i++) {
+                    menuHeight += menuItemList[i].height + 25
+                }
+                menuHeight -= 45
+
+                var topSpace
+
+                if (menuStatus == "center") {
+                    topSpace = (page.height - menuHeight) / 2
+                    topSpace += 80
+
+                    imgMenu.visible = 0
+                    a1.visible = 1
+                    a1.imgClose.visible = 0
+                    a1.color = "transparent"
+                    
+
+                } else {
+                    topSpace = (page.height - menuHeight) / 2
+                    // topSpace += 80
+
+                    if (isMenuOpened) {
+                        a1.visible = 1
+                        imgMenu.visible = 0
+                    } else {
+                        a1.visible = 0
+                        imgMenu.visible = 1
+                    }
+                    
+                    a1.imgClose.visible = 1
+                    a1.color = "#ffffff55"
+
+                    /*
+                    imgMenu.visible = 1
+                    a1.visible = 0
+                    a1.imgClose.visible = 1
+                    //a1.color = "#ffffff55"
+                    a1.color = "transparent"
+                    a1.clickable = 0
+                    */
+                    
+                }
+                
+                for( var i = 0; i < menuItemList.length; i++) {
+
+                    menuItemList[i].left = (page.width - menuItemList[i].width) / 2
+                    
+                    var itemHeight = 0
+                    if(i > 0) {
+                        itemHeight = menuItemList[i-1].height + 25
+                    }
+                    topSpace += itemHeight
+                    menuItemList[i].top = topSpace
+                    
+                }
+
+            }
+
+        }
+
+        var resfresh_a1_menuItems_highlight = function() {
+
+            if (selectedMenuIndex > -1) {
+
+                var item = a1["lblName" + selectedMenuIndex]
+
+                if ((page.width * page.zoom) >= 700) {
+                    // Masaüstü konumlandırma.
+                    a1.boxSelected.aline(item, "bottom", 8)
+                    a1.boxSelected.width = item.width
+                    a1.boxSelected.height = 3
+                    a1.boxSelected.border = 0
+                    a1.boxSelected.round = 4
+                    a1.boxSelected.opacity = 1
+
+                } else {
+                    // Mobil konumlandırma.
+                    a1.boxSelected.aline(item, "left", 10)
+                    a1.boxSelected.width = 12
+                    a1.boxSelected.height = 12
+                    a1.boxSelected.top = item.top + ((item.height - a1.boxSelected.height) / 2)
+                    a1.boxSelected.border = 0
+                    a1.boxSelected.round = 11
+                    a1.boxSelected.opacity = 1
+                }
+            }
+        }
+
+        </script>
+
+    </head>
+    <body>
+        
+        <!-- HTML content -->
+        
+    </body>
+</html>
