@@ -244,269 +244,76 @@
         <div id="htm-sample1" style="display:none"><iframe src="sample1.htm" width="360" height="640" style="border:0px solid lightgray;border-radius:4px;"></iframe></div>
 
         <div id="code-example1" style="display:none">
-    // DEĞİŞKENLER
+    var tabBarItemList = [
+        { contentId:"home", iconPath:"images/ui-tab-bar/home.svg" },
+        { contentId:"search", iconPath:"images/ui-tab-bar/search.svg" },
+        { contentId:"alert", iconPath:"images/ui-tab-bar/alert.svg" },
+        { contentId:"fav", iconPath:"images/ui-tab-bar/fav.svg" },
+        { contentId:"setting", iconPath:"images/ui-tab-bar/setting.svg" }
+    ]
 
-    var APP_CONTENT_WIDTH = 600
-
-    // BOX: view types; Tam ekran, yönlendirme çubuğu ile birlikte, yarım ekran.
-    var viewFull, viewNormal, viewSmall
+    var menuBarItemList = [
+        { contentId:"home", title:"Home" },
+        { contentId:"search", title:"Search" },
+        { contentId:"alert", title:"Notifications" },
+        { contentId:"fav", title:"Favorites" },
+        { contentId:"setting", title:"Settings" }
+    ]
         
-    // İlk çalışan fonksiyon.
-    var start = function() {
+    // First running function:
+    function start() {
         
-        page.color = "black"
+        page.color = "white"
         
-        // 600px genişliğindeki içeriği, ekrana sığdır. En fazla 500px genişlet.
-        page.fit(APP_CONTENT_WIDTH, 500)
+        // Supports all screen resolutions (Orientation: portrait)
+        page.fit(global.VIEW_WIDTH, global.VIEW_MAX_ZOOMABLE_WIDTH)
 
-        // NOT: 500 yerine; desteklemek istediğini maksimum genişliği yazın. 700
+        // UI OBJECT: Normal content view:
+        normalView.create()
 
-        // NESNE: navigationBar ve tabBar kullanılabilen içerik alanı.
-        create_viewNormal()
-
-        // NESNE: Navigation Bar; üst bilg ve butonlar.
+        // UI OBJECT: Title and buttons:
         navigationBar.create()
-        navigationBar.onClick_btnMenu(function() {
-            sideBar.show()
-        })
+        navigationBar.menuButton.onClick(openMenuBar)
+        navigationBar.backButton.onClick(contentController.goBack)
         
-        // NESNE: Tab Bar; alt butonlar.
+        // UI OBJECT: Image buttons at bottom:
         tabBar.create()
-        // İkonları oluştur.
-        tabBar.addItem("home")
-        tabBar.addItem("search")
-        tabBar.addItem("alert")
-        tabBar.addItem("fav")
-        tabBar.addItem("setting")
-        tabBar.onClick(openContentByIndex)
+        tabBar.setItems(tabBarItemList)
+        tabBar.onClick(contentController.openContentById)
 
-        // NESNE: Tam sayfa kullanılabilen içerik alanı. (tabBar ile kullanılabilir.)
-        create_viewFull()
+        // UI OBJECT: If you need a view without unload normalView object:
+        secondView.create()
 
-        // NESNE: Küçük içerik alanı.
-        create_viewSmall()
+        // UI OBJECT: For small contents, extra info:
+        smallView.create()
 
-        // NESNE: Side Bar; sağ üst düğme ile açılan menu.
-        sideBar.create()
-        // Menü butonlarını oluştur.
-        sideBar.addItem("Başlangıç", 0)
-        sideBar.addItem("Arama", 1)
-        sideBar.addItem("Bildirimler", 2)
-        sideBar.addItem("Sık Kullanılanlar", 3)
-        sideBar.addItem("Ayarlar", 4)
-        sideBar.addItem("")
-        sideBar.addItem("Tam Ekran", 6)
-        sideBar.addItem("Küçük Ekran", 7)
-        sideBar.onClick(openContentByIndex)
+        // UI OBJECT: Right side menu:
+        menuBar.create()
+        menuBar.setItems(menuBarItemList)
+        menuBar.onClick(contentController.openContentById)
 
-        // NESNE: Kilitleme ekranı.
-        viewLogin.create()
-        //viewLogin.lock()
+        // UI OBJECT: Login view:
+        loginView.create()
+        //loginView.lock()
+        menuBar.lockScreenButton.onClick(lockScreen)
 
-        sideBar.box.b1.boxLock.onClick(function() {
-            sideBar.hide()
-            viewLogin.lock()
-        })
-
-        // NOT: Nesnelerin oluşturulma sırası, bulundukları katmanları belirler.
+        clickEffect.create()
+        
+        // Open the start content.
+        contentController.openContentById("home")
 
 
-        // Başlangıç ekranını aç.
-        open_contentHome()            
+        // NOTE: The order in which objects are created determines the layers they are in.
         
     }
 
-    // DİĞER FONKSİYONLAR
-
-    var create_viewNormal = function() {
-
-        // BOX: Normal içerik taşıyıcısı
-        viewNormal = createBox(0, 
-            navigationBar.HEIGHT, 
-            APP_CONTENT_WIDTH, 
-            page.height - navigationBar.HEIGHT - tabBar.HEIGHT
-        )
-        clean_viewNormal()
-
+    function openMenuBar() {
+        menuBar.show()
     }
 
-    var clean_viewNormal = function() {
-
-        viewNormal.text = ""
-        viewNormal.color = "whitesmoke"
-        viewNormal.border = 0
-        viewNormal.scrollX = 1
-
-    }
-
-    var create_viewFull = function() {
-
-        // BOX: Tam sayfa içerik taşıyıcısı
-        viewFull = createBox(0, 0, APP_CONTENT_WIDTH, page.height)
-        clean_viewFull()
-        viewFull.visible = 0
-
-    }
-
-    var clean_viewFull = function() {
-
-        viewFull.text = ""
-        viewFull.color = "whitesmoke"
-        viewFull.border = 0
-        viewFull.scrollX = 1
-
-    }
-
-    var create_viewSmall = function() {
-
-        // BOX: Küçük içerik taşıyıcısı
-        viewSmall = createBox(0, 0, APP_CONTENT_WIDTH, page.height)
-        that.color = "rgba(0, 0, 0, 0.8)"
-
-        viewSmall.box = createBox(0, 0, APP_CONTENT_WIDTH, 500)
-        that.element.style.borderTopLeftRadius = "50px"
-        that.element.style.borderTopRightRadius = "50px"
-        that.bottom = 0
-
-        clean_viewSmall()
-        viewSmall.visible = 0
-
-    }
-
-    var clean_viewSmall = function() {
-
-        viewSmall.box.text = ""
-        viewSmall.box.color = "white"
-        viewSmall.border = 0
-
-    }
-
-    var cleanAndCloseAllView = function() {
-            
-            clean_viewNormal()
-            clean_viewFull()
-            clean_viewSmall()
-
-            viewNormal.visible = 0
-            viewFull.visible = 0
-            viewSmall.visible = 0
-
-    }
-
-    var openContentByIndex = function(index) {
-
-        switch(index) {
-            case 0:
-                open_contentHome()  
-                break
-            case 1:
-                open_contentSearch()
-                break
-            case 2:
-                open_contentAlert()  
-                break
-            case 3:
-                open_contentFav()
-                break
-            case 4:
-                open_contentSetting()
-                break
-            case 6:
-                open_contentNum6()
-                break
-            case 7:
-                open_contentNum7()
-                break
-        }
-
-    }
-
-    var open_contentHome = function() {
-        
-        cleanAndCloseAllView()
-
-        navigationBar.setTitle("Başlangıç")
-        navigationBar.setVisible_backButton(0)
-
-        tabBar.selectItemByIndex(0)
-
-        contentHome.create(viewNormal)
-        viewNormal.visible = 1
-
-    }
-
-    var open_contentSearch = function() {
-        
-        cleanAndCloseAllView()
-
-        navigationBar.setTitle("Meyve ve Sebzeler")
-        navigationBar.setVisible_backButton(0)
-
-        tabBar.selectItemByIndex(1)
-
-        contentSearch.create(viewNormal)
-        viewNormal.visible = 1
-
-    }
-
-    var open_contentAlert = function() {
-        
-        cleanAndCloseAllView()
-
-        navigationBar.setTitle("Bildirimler")
-        navigationBar.setVisible_backButton(0)
-
-        tabBar.selectItemByIndex(2)
-
-        contentAlert.create(viewNormal)
-        viewNormal.visible = 1
-
-    }
-
-    var open_contentFav = function() {
-        
-        cleanAndCloseAllView()
-
-        navigationBar.setTitle("Sık Kullanılanlar")
-        navigationBar.setVisible_backButton(0)
-
-        tabBar.selectItemByIndex(3)
-
-        contentFav.create(viewNormal)
-        viewNormal.visible = 1
-
-    }
-
-    var open_contentSetting = function() {
-        
-        cleanAndCloseAllView()
-
-        navigationBar.setTitle("Ayarlar")
-        navigationBar.setVisible_backButton(0)
-
-        tabBar.selectItemByIndex(4)
-
-        contentSetting.create(viewNormal)
-        viewNormal.visible = 1
-
-    }
-
-    var open_contentNum6 = function() {
-
-        clean_viewFull()
-        
-        contentNum6.create(viewFull)
-        viewFull.visible = 1
-
-    }
-
-    var open_contentNum7 = function() {
-
-        clean_viewSmall()
-
-        contentNum7.create(viewSmall.box)
-        viewSmall.visible = 1
-
+    function lockScreen() {
+        menuBar.hide()
+        loginView.lock()
     }
 </div>
         

@@ -1,0 +1,27 @@
+
+- Bu projede kullanılan küçük resimler, flaticon sitesinden alınmıştır.
+https://www.flaticon.com/
+
+
+- Küçük resimleri üreten tasarımcıların listesi:
+
+Freepik
+https://www.flaticon.com/authors/freepik
+
+Google
+https://www.flaticon.com/authors/google
+
+Smashicons
+https://www.flaticon.com/authors/smashicons
+
+Vectors Market
+https://www.flaticon.com/authors/vectors-market
+
+Pixel Perfect
+https://www.flaticon.com/authors/pixel-perfect
+
+Good Ware
+https://www.flaticon.com/authors/good-ware
+
+Kiranshastry
+https://www.flaticon.com/authors/kiranshastry
