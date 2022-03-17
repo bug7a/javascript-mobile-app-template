@@ -8,7 +8,6 @@ favContent.createIn = function(boxView) {
 
     favContent.box = boxView
 
-    page.color = "white"
     favContent.box.color = "white"
     
     // LABEL: Sayfanın ortasındaki yazı
@@ -37,8 +36,8 @@ favContent.open = function() {
     navigationBar.setVisible(0)
     tabBar.setVisible(1)
     tabBar.setSelectedIndex(3)
-    normalView.resize(0, tabBar.HEIGHT)
-    normalView.loadContent(favContent)
+    defaultView.setTopAndBottomSpaces(0, tabBar.HEIGHT)
+    defaultView.createAndShowContent(favContent)
 }
 
 favContent.writeMessage = function() {

@@ -8,7 +8,6 @@ alertContent.createIn = function(boxView) {
 
     alertContent.box = boxView
 
-    page.color = "#EB6853"
     alertContent.box.color = "#EB6853"
 
     alertContent.box.b1 = createBox(0, 0, 250, 104)
@@ -42,8 +41,8 @@ alertContent.open = function() {
     navigationBar.menuButton.setVisible(1)
     tabBar.setVisible(1)
     tabBar.setSelectedIndex(2)
-    normalView.resize(navigationBar.HEIGHT, tabBar.HEIGHT)
-    normalView.loadContent(alertContent)
+    defaultView.setTopAndBottomSpaces(navigationBar.HEIGHT, tabBar.HEIGHT)
+    defaultView.createAndShowContent(alertContent)
 }
 
 alertContent.writeMessage = function() {

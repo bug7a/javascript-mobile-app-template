@@ -1,5 +1,17 @@
 <!-- Bismillah -->
 
+<!-- 
+
+    v1.0.1
+
+
+    Cordova Mobile App UI Template
+    
+    - defaultView.loadContentFromURL(url) fonksiyonu ekle.
+    - 
+
+ -->
+
 <!DOCTYPE html>
 <html>
     <head>
@@ -7,23 +19,26 @@
         <title>Cordova Mobile App UI Template</title>
         
         <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, viewport-fit=cover">
+        <meta name="format-detection" content="telephone=no">
+        <meta name="msapplication-tap-highlight" content="no">
 
+        <script src="cordova.js" type="text/javascript" charset="utf-8"></script>
         <link rel="stylesheet" type="text/css" href="library/basic.min.css">
         <script src="library/basic.min.js" type="text/javascript" charset="utf-8"></script>
 
         <script src="js/global.js" type="text/javascript" charset="utf-8"></script>
+        <script src="js/ui-click-effect.js" type="text/javascript" charset="utf-8"></script>
+        <script src="js/ui-search-box.js" type="text/javascript" charset="utf-8"></script>
         <script src="js/ui-navigation-bar.js" type="text/javascript" charset="utf-8"></script>
         <script src="js/ui-tab-bar.js" type="text/javascript" charset="utf-8"></script>
-        <script src="js/ui-menu-bar.js" type="text/javascript" charset="utf-8"></script>
-        <script src="js/ui-back-button.js" type="text/javascript" charset="utf-8"></script>
         <script src="js/ui-close-button.js" type="text/javascript" charset="utf-8"></script>
-        <script src="js/ui-searchable-list.js" type="text/javascript" charset="utf-8"></script>
+        <script src="js/ui-menu-bar.js" type="text/javascript" charset="utf-8"></script>
+        <script src="js/ui-item-list.js" type="text/javascript" charset="utf-8"></script>
         <script src="js/ui-select-text.js" type="text/javascript" charset="utf-8"></script>
-        <script src="js/ui-click-effect.js" type="text/javascript" charset="utf-8"></script>
 
         <script src="js/shared.js" type="text/javascript" charset="utf-8"></script>
-        <script src="js/view-normal.js" type="text/javascript" charset="utf-8"></script>
+        <script src="js/view-default.js" type="text/javascript" charset="utf-8"></script>
         <script src="js/view-second.js" type="text/javascript" charset="utf-8"></script>
         <script src="js/view-small.js" type="text/javascript" charset="utf-8"></script>
         <script src="js/view-login.js" type="text/javascript" charset="utf-8"></script>
@@ -68,6 +83,7 @@
         - Add these settings to your cordova project config.xml file:
             <preference name="DisallowOverscroll" value="true" />
             <preference name="StatusBarOverlaysWebView" value="false" />
+            <preference name="StatusBarStyle" value="darkcontent" />
             <preference name="Orientation" value="portrait" />
         - Add these plugins to your cordova project:
             cordova plugin add cordova-plugin-statusbar
@@ -76,32 +92,34 @@
             
         // VARIABLES:
 
-        var tabBarItemList = [
-            { contentId:"home", iconPath:"images/ui-tab-bar/home.svg" },
-            { contentId:"search", iconPath:"images/ui-tab-bar/search.svg" },
-            { contentId:"alert", iconPath:"images/ui-tab-bar/alert.svg" },
-            { contentId:"fav", iconPath:"images/ui-tab-bar/fav.svg" },
-            { contentId:"setting", iconPath:"images/ui-tab-bar/setting.svg" }
+        var tabBarItemDataList = [
+            { contentId: "home", iconPath: "images/ui-tab-bar/home.svg" },
+            { contentId: "search", iconPath: "images/ui-tab-bar/search.svg" },
+            { contentId: "alert", iconPath: "images/ui-tab-bar/alert.svg" },
+            { contentId: "fav", iconPath: "images/ui-tab-bar/fav.svg" },
+            { contentId: "setting", iconPath: "images/ui-tab-bar/setting.svg" }
         ]
 
-        var menuBarItemList = [
-            { contentId:"home", title:"Home" },
-            { contentId:"search", title:"Search" },
-            { contentId:"alert", title:"Notifications" },
-            { contentId:"fav", title:"Favorites" },
-            { contentId:"setting", title:"Settings" }
+        var menuBarItemDataList = [
+            { contentId: "home", title: "Home" },
+            { contentId: "search", title: "Search" },
+            { contentId: "alert", title: "Notifications" },
+            { contentId: "fav", title: "Favorites" },
+            { contentId: "setting", title: "Settings" }
         ]
             
         // First running function:
-        function start() {
-            
-            page.color = "white"
-            
-            // Supports all screen resolutions (Orientation: portrait)
-            page.fit(global.VIEW_WIDTH, global.VIEW_MAX_ZOOMABLE_WIDTH)
+        function startApp() {
 
-            // UI OBJECT: Normal content view:
-            normalView.create()
+            print("App started. Platform: " + shared.getPlatformId())
+
+            // Supports all screen resolutions (Orientation: portrait)
+            page.fit(global.CONTENT_WIDTH, global.MAX_ZOOMABLE_WIDTH)
+
+            page.color = "white"
+
+            // UI OBJECT: Default content view:
+            defaultView.create()
 
             // UI OBJECT: Title and buttons:
             navigationBar.create()
@@ -110,10 +128,10 @@
             
             // UI OBJECT: Image buttons at bottom:
             tabBar.create()
-            tabBar.setItems(tabBarItemList)
+            tabBar.setItems(tabBarItemDataList)
             tabBar.onClick(contentController.openContentById)
 
-            // UI OBJECT: If you need a view without unload normalView object:
+            // UI OBJECT: If you need a view without unload defaultView object:
             secondView.create()
 
             // UI OBJECT: For small contents, extra info:
@@ -121,7 +139,7 @@
 
             // UI OBJECT: Right side menu:
             menuBar.create()
-            menuBar.setItems(menuBarItemList)
+            menuBar.setItems(menuBarItemDataList)
             menuBar.onClick(contentController.openContentById)
 
             // UI OBJECT: Login view:
@@ -129,6 +147,7 @@
             //loginView.lock()
             menuBar.lockScreenButton.onClick(lockScreen)
 
+            // Shows where did you tap.
             clickEffect.create()
             
             // Open the start content.
@@ -136,7 +155,6 @@
 
 
             // NOTE: The order in which objects are created determines the layers they are in.
-            
         }
 
         function openMenuBar() {
@@ -148,9 +166,11 @@
             loginView.lock()
         }
 
+        // Run the startApp() function when the app is ready:
+        shared.cordovaOnDeviceReady(startApp)
+
         </script>
         
-
     </head>
     <body>
         
@@ -160,6 +180,12 @@
             <div id="todo-app">
                 <iframe src="todo.htm" width="100%" height="100%" style="border:0px solid lightgray;border-radius:0px;">
                 </iframe>
+            </div>
+
+            <div id="card-model" class="card-model">
+                <div>{{title}}</div>
+                <div>{{description}}</div>
+                <div>{{date}}</div>
             </div>
             
         </div>

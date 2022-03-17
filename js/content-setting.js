@@ -58,12 +58,11 @@ settingContent.objectTypeList = [
 // BOX: İçerik taşıyıcısı
 settingContent.box
 
-settingContent.createIn = function(boxView) {
+settingContent.createIn = function(box) {
 
-    settingContent.box = boxView
+    settingContent.box = box
 
-    page.color = "whitesmoke"
-    settingContent.box.color = "whitesmoke"
+    box.color = "whitesmoke"
 
     // Global settings
     //SelectText.setSelectedColor("#CADAE0")
@@ -71,25 +70,26 @@ settingContent.createIn = function(boxView) {
     //SelectText.setUIBackgroundColor("white")
 
     // OBJECTS:
-    settingContent.box.b2 = settingContent.createSubTitle("APPEARANCE")
-    settingContent.box.b3 = settingContent.createSelectTextWithTitle("Theme", settingContent.themeList, settingContent.printSelectedName)
-    settingContent.box.b4 = settingContent.createSelectTextWithTitle("Primary Color", settingContent.primaryColorList, settingContent.printSelectedName)
+    box.b2 = settingContent.createSubTitle("APPEARANCE")
+    box.b3 = settingContent.createSelectTextWithTitle("Theme", settingContent.themeList, settingContent.printSelectedName)
+    box.b4 = settingContent.createSelectTextWithTitle("Primary Color", settingContent.primaryColorList, settingContent.printSelectedName)
     
-    settingContent.box.b5 = settingContent.createSubTitle("SYSTEM")
-    settingContent.box.b6 = settingContent.createSelectTextWithTitle("Update", settingContent.updateStatusList, settingContent.printSelectedName)
+    box.b5 = settingContent.createSubTitle("SYSTEM")
+    box.b6 = settingContent.createSelectTextWithTitle("Update", settingContent.updateStatusList, settingContent.printSelectedName)
     
-    settingContent.box.b7 = settingContent.createSelectTextWithTitle("Notifications", settingContent.notificationStatusList, settingContent.printSelectedName)
-    settingContent.box.b8 = settingContent.createSelectTextWithTitle("Sound", settingContent.soundStatusList, settingContent.printSelectedName)
-    settingContent.box.b9 = settingContent.createSelectTextWithTitle("Language", settingContent.languageList, settingContent.printSelectedName)
+    box.b7 = settingContent.createSelectTextWithTitle("Notifications", settingContent.notificationStatusList, settingContent.printSelectedName)
+    box.b8 = settingContent.createSelectTextWithTitle("Sound", settingContent.soundStatusList, settingContent.printSelectedName)
+    box.b9 = settingContent.createSelectTextWithTitle("Language", settingContent.languageList, settingContent.printSelectedName)
     
-    settingContent.box.b10 = settingContent.createSubTitle("OTHERS")
-    settingContent.box.b11 = settingContent.createSelectTextWithTitle("objectType", settingContent.objectTypeList, settingContent.printSelectedName)
-    settingContent.box.b10 = settingContent.createSubTitle(" ")
+    box.b10 = settingContent.createSubTitle("OTHERS")
+    box.b11 = settingContent.createSelectTextWithTitle("objectType", settingContent.objectTypeList, settingContent.printSelectedName)
+    
+    box.b12 = shared.createRelativeUISpace(120, "whitesmoke")
 
-    settingContent.box.b3.uiSelectText.setSelectedIndex(1)
-    settingContent.box.b4.uiSelectText.setSelectedIndex(5)
-    settingContent.box.b6.uiSelectText.setSelectedIndex(1)
-    settingContent.box.b7.uiSelectText.setSelectedIndex(1)
+    box.b3.uiSelectText.setSelectedIndex(1)
+    box.b4.uiSelectText.setSelectedIndex(5)
+    box.b6.uiSelectText.setSelectedIndex(1)
+    box.b7.uiSelectText.setSelectedIndex(1)
 
 }
 
@@ -101,8 +101,8 @@ settingContent.open = function() {
     navigationBar.menuButton.setVisible(1)
     tabBar.setVisible(1)
     tabBar.setSelectedIndex(4)
-    normalView.resize(navigationBar.HEIGHT, tabBar.HEIGHT)
-    normalView.loadContent(settingContent)
+    defaultView.setTopAndBottomSpaces(navigationBar.HEIGHT, tabBar.HEIGHT)
+    defaultView.createAndShowContent(settingContent)
 }
 
 settingContent.printSelectedName = function(self, index) {
@@ -112,10 +112,10 @@ settingContent.printSelectedName = function(self, index) {
 settingContent.createSubTitle = function(title) {
 
     // BOX: object container
-    var box = createBox(0, 0, global.VIEW_WIDTH, 90)
+    var box = createBox(0, 0, global.CONTENT_WIDTH, 90)
     that.color = "whitesmoke"
-    that.borderColor = "lightgray"
-    that.element.style.borderBottomWidth = "1px"
+    that.borderColor = "rgba(0, 0, 0, 0.1)"
+    that.element.style.borderBottomWidth = "3px"
     that.element.style.position = "relative"
     
     // LABEL: object title text
@@ -132,7 +132,7 @@ settingContent.createSubTitle = function(title) {
 settingContent.createSelectTextWithTitle = function(title, list, func) {
 
     // BOX: object container
-    var box = createBox(0, 0, global.VIEW_WIDTH, 70)
+    var box = createBox(0, 0, global.CONTENT_WIDTH, 70)
     that.color = "white"
     that.borderColor = "lightgray"
     that.element.style.borderBottomWidth = "1px"

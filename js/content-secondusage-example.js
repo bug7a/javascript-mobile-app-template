@@ -31,7 +31,7 @@ secondUsageExamContent.createIn = function(boxView) {
 }
 
 secondUsageExamContent.open = function() {
-    secondView.loadContent(secondUsageExamContent)
+    secondView.createAndShowContent(secondUsageExamContent)
 }
 
 secondUsageExamContent.writeMessage = function() {

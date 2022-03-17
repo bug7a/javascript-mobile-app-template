@@ -9,7 +9,7 @@ UI COMPONENT TEMPLATE
 Started Date: 22 February 2022
 Developer: Bugra Ozden
 Email: bugra.ozden@gmail.com
-Project Site: https://bug7a.github.io/ui-select-text.js/
+Site: https://bug7a.github.io/cordova-mobile-app-ui-template/
 
 
 LICENSE:

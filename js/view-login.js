@@ -1,4 +1,21 @@
 
+/* Bismillah */
+
+/*
+
+UI COMPONENT TEMPLATE
+- You can customize, this template code as you need:
+
+
+Started Date: 22 February 2022
+Developer: Bugra Ozden
+Email: bugra.ozden@gmail.com
+Site: https://bug7a.github.io/cordova-mobile-app-ui-template/
+
+
+*/
+
+
 var loginView = {}
 
 loginView.create = function() {
@@ -20,7 +37,7 @@ loginView.create = function() {
 
     // Giriş sayfası logo
     loginView.me.b1.imgLogo = createImage(0, 20, 100, 100)
-    that.load("images/lock.png")
+    that.load("images/view-login/lock.png")
     that.opacity = 1
     that.center("left")
 

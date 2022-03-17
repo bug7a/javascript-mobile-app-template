@@ -1,9 +1,19 @@
+/* Bismillah */
+
 /*
 
 UI COMPONENT TEMPLATE
 - You can customize, this template code as you need:
 
+
+Started Date: 22 February 2022
+Developer: Bugra Ozden
+Email: bugra.ozden@gmail.com
+Site: https://bug7a.github.io/cordova-mobile-app-ui-template/
+
+
 */
+
 
 var tabBar = {}
 
@@ -16,7 +26,7 @@ tabBar.create = function() {
 
     // BOX: object container box
     tabBar.box = createBox()
-    that.width = global.VIEW_WIDTH
+    that.width = global.CONTENT_WIDTH
     that.height = tabBar.HEIGHT
     that.left = 0
     that.color = "white"
@@ -35,8 +45,12 @@ tabBar.create = function() {
     })
 
     // BOX: Selected item background highlight
-    tabBar.box.boxHighLight = createBox(0, 0, 100, 100)
-    that.round = 0
+    tabBar.box.boxHighLight = createBox(0, 5, 70, 70)
+    that.round = 50
+    that.border = 0
+    that.borderColor = "lightgray"
+    that.color = "whitesmoke"
+    that.opacity = 1
     that.setMotion("left 0.3s, background-color 0.3s")
 }
 
@@ -97,7 +111,7 @@ tabBar.selectItem = function(item) {
     item.space = 6
     item.opacity = 1
 
-    tabBar.box.boxHighLight.left = item.element.offsetLeft - 12
+    tabBar.box.boxHighLight.left = item.element.offsetLeft + 5
     //tabBar.box.boxHighLight.color = "lightblue"
 }
 

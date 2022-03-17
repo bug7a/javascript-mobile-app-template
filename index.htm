@@ -163,7 +163,7 @@
             // Code Editor
             editor1 = ace.edit("editor1");
             editor1.setReadOnly(true);
-            editor1.setTheme("ace/theme/twilight");
+            editor1.setTheme("ace/theme/ambiance");
             editor1.session.setMode("ace/mode/javascript");
             editor1.setOption("minLines", 8);
             editor1.setOption("maxLines", 500);
@@ -244,32 +244,34 @@
         <div id="htm-sample1" style="display:none"><iframe src="sample1.htm" width="360" height="640" style="border:0px solid lightgray;border-radius:4px;"></iframe></div>
 
         <div id="code-example1" style="display:none">
-    var tabBarItemList = [
-        { contentId:"home", iconPath:"images/ui-tab-bar/home.svg" },
-        { contentId:"search", iconPath:"images/ui-tab-bar/search.svg" },
-        { contentId:"alert", iconPath:"images/ui-tab-bar/alert.svg" },
-        { contentId:"fav", iconPath:"images/ui-tab-bar/fav.svg" },
-        { contentId:"setting", iconPath:"images/ui-tab-bar/setting.svg" }
+    var tabBarItemDataList = [
+        { contentId: "home", iconPath: "images/ui-tab-bar/home.svg" },
+        { contentId: "search", iconPath: "images/ui-tab-bar/search.svg" },
+        { contentId: "alert", iconPath: "images/ui-tab-bar/alert.svg" },
+        { contentId: "fav", iconPath: "images/ui-tab-bar/fav.svg" },
+        { contentId: "setting", iconPath: "images/ui-tab-bar/setting.svg" }
     ]
 
-    var menuBarItemList = [
-        { contentId:"home", title:"Home" },
-        { contentId:"search", title:"Search" },
-        { contentId:"alert", title:"Notifications" },
-        { contentId:"fav", title:"Favorites" },
-        { contentId:"setting", title:"Settings" }
+    var menuBarItemDataList = [
+        { contentId: "home", title: "Home" },
+        { contentId: "search", title: "Search" },
+        { contentId: "alert", title: "Notifications" },
+        { contentId: "fav", title: "Favorites" },
+        { contentId: "setting", title: "Settings" }
     ]
         
     // First running function:
-    function start() {
-        
-        page.color = "white"
-        
-        // Supports all screen resolutions (Orientation: portrait)
-        page.fit(global.VIEW_WIDTH, global.VIEW_MAX_ZOOMABLE_WIDTH)
+    function startApp() {
 
-        // UI OBJECT: Normal content view:
-        normalView.create()
+        print("App started. Platform: " + shared.getPlatformId())
+
+        // Supports all screen resolutions (Orientation: portrait)
+        page.fit(global.CONTENT_WIDTH, global.MAX_ZOOMABLE_WIDTH)
+
+        page.color = "white"
+
+        // UI OBJECT: Default content view:
+        defaultView.create()
 
         // UI OBJECT: Title and buttons:
         navigationBar.create()
@@ -278,10 +280,10 @@
         
         // UI OBJECT: Image buttons at bottom:
         tabBar.create()
-        tabBar.setItems(tabBarItemList)
+        tabBar.setItems(tabBarItemDataList)
         tabBar.onClick(contentController.openContentById)
 
-        // UI OBJECT: If you need a view without unload normalView object:
+        // UI OBJECT: If you need a view without unload defaultView object:
         secondView.create()
 
         // UI OBJECT: For small contents, extra info:
@@ -289,7 +291,7 @@
 
         // UI OBJECT: Right side menu:
         menuBar.create()
-        menuBar.setItems(menuBarItemList)
+        menuBar.setItems(menuBarItemDataList)
         menuBar.onClick(contentController.openContentById)
 
         // UI OBJECT: Login view:
@@ -297,6 +299,7 @@
         //loginView.lock()
         menuBar.lockScreenButton.onClick(lockScreen)
 
+        // Shows where did you tap.
         clickEffect.create()
         
         // Open the start content.
@@ -304,7 +307,6 @@
 
 
         // NOTE: The order in which objects are created determines the layers they are in.
-        
     }
 
     function openMenuBar() {
@@ -315,6 +317,9 @@
         menuBar.hide()
         loginView.lock()
     }
+
+    // Run the startApp() function when the app is ready:
+    shared.cordovaOnDeviceReady(startApp)
 </div>
         
     </body>

@@ -1,5 +1,5 @@
 
 var global = {}
 
-global.VIEW_WIDTH = 600
-global.VIEW_MAX_ZOOMABLE_WIDTH = 1024
+global.CONTENT_WIDTH = 600
+global.MAX_ZOOMABLE_WIDTH = 1024

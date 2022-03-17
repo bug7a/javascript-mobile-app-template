@@ -37,8 +37,8 @@ subUsageExamContent.open = function() {
     navigationBar.backButton.setVisible(1)
     navigationBar.menuButton.setVisible(1)
     tabBar.setVisible(0)
-    normalView.resize(navigationBar.HEIGHT, 0)
-    normalView.loadContent(subUsageExamContent)
+    defaultView.setTopAndBottomSpaces(navigationBar.HEIGHT, 0)
+    defaultView.createAndShowContent(subUsageExamContent)
 }
 
 subUsageExamContent.writeMessage = function() {

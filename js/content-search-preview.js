@@ -12,12 +12,12 @@ searchPreviewContent.createIn = function(boxView) {
 
     searchPreviewContent.box.color = "white"
 
-    searchPreviewContent.box.lblTitle = createLabel(0, 80, global.VIEW_WIDTH, "auto")
+    searchPreviewContent.box.lblTitle = createLabel(0, 80, global.CONTENT_WIDTH, "auto")
     that.text = searchPreviewContent.title
     that.fontSize = 30
     that.textAlign = "center"
 
-    searchPreviewContent.box.lblDesc = createLabel(0, 114, global.VIEW_WIDTH, "auto")
+    searchPreviewContent.box.lblDesc = createLabel(0, 114, global.CONTENT_WIDTH, "auto")
     that.text = searchPreviewContent.description
     that.fontSize = 18
     that.textColor = "gray"
@@ -37,6 +37,6 @@ searchPreviewContent.createIn = function(boxView) {
 
 searchPreviewContent.open = function() {
 
-    smallView.loadContent(searchPreviewContent)
+    smallView.createAndShowContent(searchPreviewContent)
     smallView.setVisible(1)
 }

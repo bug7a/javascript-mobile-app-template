@@ -1,9 +1,19 @@
+/* Bismillah */
+
 /*
 
 UI COMPONENT TEMPLATE
 - You can customize, this template code as you need:
 
+
+Started Date: 22 February 2022
+Developer: Bugra Ozden
+Email: bugra.ozden@gmail.com
+Site: https://bug7a.github.io/cordova-mobile-app-ui-template/
+
+
 */
+
 
 // UI OBJECT: Box on the top of the screen. Includes: back button, title, menu button.
 var navigationBar = {}
@@ -20,7 +30,7 @@ navigationBar.create = function() {
     navigationBar.box = createBox(0, 0, 600, navigationBar.HEIGHT)
     that.border = 0
     that.color = "white"
-    that.element.style.boxShadow = "0px 6px 8px rgba(0, 0, 0, 0.2)"
+    that.element.style.boxShadow = "0px 6px 8px rgba(0, 0, 0, 0.1)"
     that.setMotion("top 0.3s, opacity 0.3s")
     that.top = 0
     that.opacity = 0
@@ -75,6 +85,10 @@ navigationBar.setTitle = function(titleText) {
 
 navigationBar.setSubTitle = function(subTitleText) {
 
+}
+
+navigationBar.setColor = function(color) {
+    
 }
 
 navigationBar.setVisible = function(visible) {
