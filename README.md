@@ -9,7 +9,7 @@ https://bug7a.github.io/cordova-mobile-app-ui-template/
 
 ### ScreenShots
 
-![alt tag](https://bug7a.github.io/cordova-mobile-app-ui-template/mobile-ui-preview.png)
+![alt tag](https://raw.githubusercontent.com/bug7a/cordova-mobile-app-ui-template/2bf1eadada8be0e4d2fd75ccc9a2fef43247da9f/mobile-ui-preview.png)
 
 ### Contact information
 
