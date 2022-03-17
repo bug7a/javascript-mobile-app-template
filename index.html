@@ -1,0 +1,194 @@
+<!-- Bismillah -->
+
+<!-- 
+
+    v1.0.1
+
+
+    Cordova Mobile App UI Template
+    
+    - defaultView.loadContentFromURL(url) fonksiyonu ekle.
+    - 
+
+ -->
+
+<!DOCTYPE html>
+<html>
+    <head>
+        
+        <title>Cordova Mobile App UI Template</title>
+        
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, viewport-fit=cover">
+        <meta name="format-detection" content="telephone=no">
+        <meta name="msapplication-tap-highlight" content="no">
+
+        <script src="cordova.js" type="text/javascript" charset="utf-8"></script>
+        <link rel="stylesheet" type="text/css" href="library/basic.min.css">
+        <script src="library/basic.min.js" type="text/javascript" charset="utf-8"></script>
+
+        <script src="js/global.js" type="text/javascript" charset="utf-8"></script>
+        <script src="js/ui-click-effect.js" type="text/javascript" charset="utf-8"></script>
+        <script src="js/ui-search-box.js" type="text/javascript" charset="utf-8"></script>
+        <script src="js/ui-navigation-bar.js" type="text/javascript" charset="utf-8"></script>
+        <script src="js/ui-tab-bar.js" type="text/javascript" charset="utf-8"></script>
+        <script src="js/ui-close-button.js" type="text/javascript" charset="utf-8"></script>
+        <script src="js/ui-menu-bar.js" type="text/javascript" charset="utf-8"></script>
+        <script src="js/ui-item-list.js" type="text/javascript" charset="utf-8"></script>
+        <script src="js/ui-select-text.js" type="text/javascript" charset="utf-8"></script>
+
+        <script src="js/shared.js" type="text/javascript" charset="utf-8"></script>
+        <script src="js/view-default.js" type="text/javascript" charset="utf-8"></script>
+        <script src="js/view-second.js" type="text/javascript" charset="utf-8"></script>
+        <script src="js/view-small.js" type="text/javascript" charset="utf-8"></script>
+        <script src="js/view-login.js" type="text/javascript" charset="utf-8"></script>
+
+        <script src="js/content-search-preview.js" type="text/javascript" charset="utf-8"></script>
+        <script src="js/content-subusage-example.js" type="text/javascript" charset="utf-8"></script>
+        <script src="js/content-secondusage-example.js" type="text/javascript" charset="utf-8"></script>
+        <script src="js/content-num8.js" type="text/javascript" charset="utf-8"></script>
+        <script src="js/content-home.js" type="text/javascript" charset="utf-8"></script>
+        <script src="js/content-search.js" type="text/javascript" charset="utf-8"></script>
+        <script src="js/content-alert.js" type="text/javascript" charset="utf-8"></script>
+        <script src="js/content-fav.js" type="text/javascript" charset="utf-8"></script>
+        <script src="js/content-setting.js" type="text/javascript" charset="utf-8"></script>
+        <script src="js/controller-content.js" type="text/javascript" charset="utf-8"></script>
+        
+        <style>
+
+            body {
+                overflow: hidden;
+            }
+
+        </style>
+        
+        <script>
+
+        /*
+
+        CORDOVA MOBILE APP UI TEMPLATE (for ANDROID and iOS PLATFORMS)
+            
+        This template, can be used to develop mobile applications
+        with Apache Cordova or similar technology.
+        https://cordova.apache.org/
+
+        How to make an Android application? (Language: Turkish)
+        https://www.youtube.com/watch?v=B6x7yKhKZbY
+
+        How to make an iOS application? (Language: Turkish)
+        https://www.youtube.com/watch?v=WZZwiI_5WQA
+
+
+        FOR YOUR CORDOVA PROJECT: 
+        - Add these settings to your cordova project config.xml file:
+            <preference name="DisallowOverscroll" value="true" />
+            <preference name="StatusBarOverlaysWebView" value="false" />
+            <preference name="StatusBarStyle" value="darkcontent" />
+            <preference name="Orientation" value="portrait" />
+        - Add these plugins to your cordova project:
+            cordova plugin add cordova-plugin-statusbar
+
+        */
+            
+        // VARIABLES:
+
+        var tabBarItemDataList = [
+            { contentId: "home", iconPath: "images/ui-tab-bar/home.svg" },
+            { contentId: "search", iconPath: "images/ui-tab-bar/search.svg" },
+            { contentId: "alert", iconPath: "images/ui-tab-bar/alert.svg" },
+            { contentId: "fav", iconPath: "images/ui-tab-bar/fav.svg" },
+            { contentId: "setting", iconPath: "images/ui-tab-bar/setting.svg" }
+        ]
+
+        var menuBarItemDataList = [
+            { contentId: "home", title: "Home" },
+            { contentId: "search", title: "Search" },
+            { contentId: "alert", title: "Notifications" },
+            { contentId: "fav", title: "Favorites" },
+            { contentId: "setting", title: "Settings" }
+        ]
+            
+        // First running function:
+        function startApp() {
+
+            print("App started. Platform: " + shared.getPlatformId())
+
+            // Supports all screen resolutions (Orientation: portrait)
+            page.fit(global.CONTENT_WIDTH, global.MAX_ZOOMABLE_WIDTH)
+
+            page.color = "white"
+
+            // UI OBJECT: Default content view:
+            defaultView.create()
+
+            // UI OBJECT: Title and buttons:
+            navigationBar.create()
+            navigationBar.menuButton.onClick(openMenuBar)
+            navigationBar.backButton.onClick(contentController.goBack)
+            
+            // UI OBJECT: Image buttons at bottom:
+            tabBar.create()
+            tabBar.setItems(tabBarItemDataList)
+            tabBar.onClick(contentController.openContentById)
+
+            // UI OBJECT: If you need a view without unload defaultView object:
+            secondView.create()
+
+            // UI OBJECT: For small contents, extra info:
+            smallView.create()
+
+            // UI OBJECT: Right side menu:
+            menuBar.create()
+            menuBar.setItems(menuBarItemDataList)
+            menuBar.onClick(contentController.openContentById)
+
+            // UI OBJECT: Login view:
+            loginView.create()
+            //loginView.lock()
+            menuBar.lockScreenButton.onClick(lockScreen)
+
+            // Shows where did you tap.
+            clickEffect.create()
+            
+            // Open the start content.
+            contentController.openContentById("home")
+
+
+            // NOTE: The order in which objects are created determines the layers they are in.
+        }
+
+        function openMenuBar() {
+            menuBar.show()
+        }
+
+        function lockScreen() {
+            menuBar.hide()
+            loginView.lock()
+        }
+
+        // Run the startApp() function when the app is ready:
+        shared.cordovaOnDeviceReady(startApp)
+
+        </script>
+        
+    </head>
+    <body>
+        
+        <!-- HTML MODELS -->
+        <div style="display:none">
+
+            <div id="todo-app">
+                <iframe src="todo.htm" width="100%" height="100%" style="border:0px solid lightgray;border-radius:0px;">
+                </iframe>
+            </div>
+
+            <div id="card-model" class="card-model">
+                <div>{{title}}</div>
+                <div>{{description}}</div>
+                <div>{{date}}</div>
+            </div>
+            
+        </div>
+        
+    </body>
+</html>
