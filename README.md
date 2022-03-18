@@ -5,7 +5,7 @@ Simple and fully customizable user interface template. Design for mobile app dev
 
 ### Installation
 
-Run following command to install this template in current folder.
+Run following command to install this template in your current folder.
 
 ```bash
 npm i cordova-mobile-app-template
