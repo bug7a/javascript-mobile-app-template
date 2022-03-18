@@ -3,7 +3,7 @@ Simple and fully customizable user interface template. Design for mobile app dev
 
 - Plaftorms: iOS, Android<br><br>
 
-## Installation
+### Installation
 
 Run following command to install this template in current folder.
 
