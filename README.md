@@ -3,6 +3,14 @@ Simple and fully customizable user interface template. Design for mobile app dev
 
 - Plaftorms: iOS, Android<br><br>
 
+## Installation
+
+Run following command to install this template in current folder.
+
+```bash
+npm i cordova-mobile-app-template
+```
+
 ### Live Preview
 
 https://bug7a.github.io/cordova-mobile-app-ui-template/
