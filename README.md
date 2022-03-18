@@ -10,7 +10,7 @@ Run following command to install this template in your current folder.
 ```bash
 npm i cordova-mobile-app-template
 ```
-<br>
+
 ### Live Preview
 
 https://bug7a.github.io/cordova-mobile-app-ui-template/
