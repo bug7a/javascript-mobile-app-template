@@ -53,10 +53,11 @@ defaultView.createAndShowContent = function(content) {
     if (typeof content.createIn === "function") {
 
         defaultView.clean()
+        
         // Give some time for motion
-        //setTimeout(function() {
-        content.createIn(defaultView.box)
-        //}, 100)
+        setTimeout(function() {
+            content.createIn(defaultView.box)
+        }, 60)
 
         defaultView.box.dontMotion()
         defaultView.box.element.style.transform = "scale(1.4)"
@@ -65,7 +66,7 @@ defaultView.createAndShowContent = function(content) {
             self.element.style.transform = "scale(1)"
             self.opacity = 1
         })
-
+        
     } else {
         print("defaultView: content must have .createIn() function")
     }

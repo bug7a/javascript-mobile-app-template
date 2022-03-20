@@ -35,10 +35,12 @@ homeContent.createIn = function(box) {
 
     // UI SEARCH BOX: Search box in categoriesUITitle
     box.categoriesUITitle.categoriesUISearchBox = createUISearchBox(0, 0, 200)
-    that.right = 20
-    that.bottom = 10
+    that.right = 30
+    that.bottom = 20
     //that.color = "white"
-    //that.txtSearch.color = "white"
+    //that.setWidth(300)
+    //that.setPlaceholderText("")
+    //that.border = 0
 
     // UI ITEM LIST: Categoriy items in vertical list
     box.categoriesUIItemList = createUIItemList(0, 0, global.CONTENT_WIDTH, 200)

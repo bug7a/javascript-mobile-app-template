@@ -42,18 +42,23 @@ shared.createRelativeUITitle = function(titleText = "", backgroundColor = "trans
 shared.createUITitle = function(x = 0, y = 0, titleText = "", backgroundColor = "transparent") {
 
     // BOX: Object container box
-    var box = createBox(x, y, global.CONTENT_WIDTH, 100)
+    var box = createBox(x, y, global.CONTENT_WIDTH, 110)
     that.color = backgroundColor
     that.element.style.borderBottom = "2px solid rgba(0, 0, 0, 0.06)"
 
     // LABEL: title text
-    box.lblTitle = createLabel(30, 0, 540, 40)
-    that.bottom = 10
+    box.lblTitle = createLabel(30, 0, 540, 38)
+    that.bottom = 20
     that.text = titleText
     that.fontSize = 28
     that.color = "transparent"
     that.textColor = "rgba(0, 0, 0, 0.8)"
     that.element.style.fontFamily = "opensans-bold"
+    /*
+    that.onResize(function(self) {
+        print(self.height)
+    })
+    */
 
     makeBasicObject(box)
     return box

@@ -27,7 +27,7 @@ navigationBar.menuButton.onClickFunc = function() {}
 navigationBar.create = function() {
 
     // BOX: Container:
-    navigationBar.box = createBox(0, 0, 600, navigationBar.HEIGHT)
+    navigationBar.box = createBox(0, 0, global.CONTENT_WIDTH, navigationBar.HEIGHT)
     that.border = 0
     that.color = "white"
     that.element.style.boxShadow = "0px 6px 8px rgba(0, 0, 0, 0.1)"
@@ -36,7 +36,7 @@ navigationBar.create = function() {
     that.opacity = 0
 
     // IMAGE: Go back button:
-    navigationBar.box.btnBack = createImage(20, 30, 50, 50)
+    navigationBar.box.btnBack = createImage(30, 32, 50, 50)
     that.load("images/ui-navigation-bar/back.svg")
     that.space = 4
     that.visible = 0
@@ -49,7 +49,7 @@ navigationBar.create = function() {
     navigationBar.box.lblTitle = createLabel(0, 37, 400)
     that.textAlign = "center"
     that.element.style.fontFamily = "opensans-bold"
-    that.fontSize = 26
+    that.fontSize = 28
     that.center("left")
     that.setMotion("opacity 0.3s, transform 0.3s")
 
