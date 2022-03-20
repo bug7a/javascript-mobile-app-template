@@ -22,28 +22,30 @@ searchContent.plantItemDataList = [
 
 searchContent.createIn = function(box) {
 
+    // BOX: Content container box
     searchContent.box = box
-
-    searchContent.box.color = "white"
+    box.color = "white"
+    // "#EAEAE9", "#BFDBC9", "#CADAE0", "#FFF0C2"
+    //box.element.style.background = "linear-gradient(to bottom, #FFFFFF00, whitesmoke)"
 
     // BOX: Search container box
-    box.boxSearch = createBox(0, 0, global.CONTENT_WIDTH, 100)
+    box.boxSearch = createBox(0, 0, global.CONTENT_WIDTH, 110)
     that.color = "white"
     //that.color = "whitesmoke"
 
     // UI SEARCH BOX: Search box in boxSearch
     box.boxSearch.plantUISearchBox = createUISearchBox(0, 0, global.CONTENT_WIDTH - 60)
     that.left = 30
-    that.top = 30
+    that.top = 40
     //that.color = "white"
     //that.txtSearch.color = "white"
 
-    // UI ITEM LIST: Categoriy items in vertical list
-    box.plantUIItemList = createUIItemList(0, 0, 600, box.height - box.boxSearch.height)
-    that.color = "white"
+    // UI ITEM LIST: Categoriy items (vertical)
+    box.plantUIItemList = createUIItemList(0, 0, global.CONTENT_WIDTH, box.height - box.boxSearch.height)
+    that.color = "transparent"
     //that.color = "white"
     that.top = box.boxSearch.height
-    that.setItemAlign("vectoral")
+    that.setItemAlign("vertical")
     that.setBorderSpaces(0, 10, 0, 10)
     that.setCreateFunctionOfItem(searchContent.createPlantItem)
     that.setItemsWithData(searchContent.plantItemDataList)
@@ -102,10 +104,14 @@ searchContent.selectClickedPlantItem = function(uiItemList, itemObject, exItemOb
 
     if (itemObject.isSelected() == 0) {
         if (exItemObject) {
-            exItemObject.boxBackground.color = "transparent"
+            //exItemObject.boxBackground.color = "transparent"
+            exItemObject.boxBackground.element.style.background = "transparent"
             uiItemList.removeItemFromSelectedList(exItemObject)
         }
-        itemObject.boxBackground.color = "whitesmoke"
+        // "whitesmoke", "#EAEAE9", "#BFDBC9", "#CADAE0", "#FFF0C2"
+        //itemObject.boxBackground.color = "#FFF0C2"
+        itemObject.boxBackground.element.style.background = "linear-gradient(to top, #FFFFFF00, #FFF0C2)"
+        //itemObject.boxBackground.element.style.background = "linear-gradient(to bottom, #FFFFFF00, whitesmoke)"
         uiItemList.addItemToSelectedList(itemObject)
 
         print("Selected plant: " + itemObject.getIndex() + "-" + itemObject.getData().title)

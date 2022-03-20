@@ -21,7 +21,7 @@ var loginView = {}
 loginView.create = function() {
 
     // BOX: Kilit ekranı sayfası.
-    loginView.me = createBox(0, 0, 600, page.height)
+    loginView.me = createBox(0, 0, global.CONTENT_WIDTH, page.height)
     that.border = 0
     // that.element.style.backgroundImage = "radial-gradient(steelblue, black)"
     that.element.style.backgroundImage = "radial-gradient(white, white, lightgray)"
