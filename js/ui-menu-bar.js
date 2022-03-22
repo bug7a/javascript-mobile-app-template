@@ -25,10 +25,18 @@ menuBar.create = function() {
 
     // BOX: Taşıyıcı
     menuBar.box = createBox(0, 0, global.CONTENT_WIDTH, page.height)
-    that.color = "rgba(0, 0, 0, 0.8)"
+    //that.color = "rgba(0, 0, 0, 0.8)"
+    that.color = "transparent"
     that.border = 0
     that.visible = 0
     that.setMotion("opacity 0.3s, transform 0.3s")
+
+    // BOX: background box.
+    menuBar.box.boxBackground = createBox(0, 0, global.CONTENT_WIDTH, page.height)
+    that.color = "rgba(0, 0, 0, 0.8)"
+    that.onClick(function() {
+        menuBar.hide()
+    })
 
     // BOX: Beyaz arka plan
     menuBar.box.b1 = createBox(0, 0, 400, page.height)
@@ -36,6 +44,7 @@ menuBar.create = function() {
     that.right = 0
 
     // IMAGE: Kapatma düğmesi
+    /*
     menuBar.box.b1.btnClose = createImage(0, 0, 50, 50)
     that.load("images/ui-menu-bar/close.svg")
     that.right = 30
@@ -46,6 +55,7 @@ menuBar.create = function() {
     that.onClick(function() {
         menuBar.hide()
     })
+    */
 
     // Özel tasarımlar yapılabilir.
 

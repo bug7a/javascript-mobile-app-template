@@ -61,36 +61,88 @@ settingContent.box
 settingContent.createIn = function(box) {
 
     settingContent.box = box
-
     box.color = "whitesmoke"
 
     // Global settings
     //SelectText.setSelectedColor("#CADAE0")
-    SelectText.setSearchInfoText("Filter")
     //SelectText.setUIBackgroundColor("white")
+    SelectText.setSearchInfoText("Filter")
 
     // OBJECTS:
-    box.b2 = settingContent.createSubTitle("APPEARANCE")
-    box.b3 = settingContent.createSelectTextWithTitle("Theme", settingContent.themeList, settingContent.printSelectedName)
-    box.b4 = settingContent.createSelectTextWithTitle("Primary Color", settingContent.primaryColorList, settingContent.printSelectedName)
-    
-    box.b5 = settingContent.createSubTitle("SYSTEM")
-    box.b6 = settingContent.createSelectTextWithTitle("Update", settingContent.updateStatusList, settingContent.printSelectedName)
-    
-    box.b7 = settingContent.createSelectTextWithTitle("Notifications", settingContent.notificationStatusList, settingContent.printSelectedName)
-    box.b8 = settingContent.createSelectTextWithTitle("Sound", settingContent.soundStatusList, settingContent.printSelectedName)
-    box.b9 = settingContent.createSelectTextWithTitle("Language", settingContent.languageList, settingContent.printSelectedName)
-    
-    box.b10 = settingContent.createSubTitle("OTHERS")
-    box.b11 = settingContent.createSelectTextWithTitle("objectType", settingContent.objectTypeList, settingContent.printSelectedName)
-    
-    box.b12 = shared.createRelativeUISpace(120, "whitesmoke")
+    box.appearanceUISubTitle = shared.createRelativeUISubTitle(
+        "APPEARANCE")
 
-    box.b3.uiSelectText.setSelectedIndex(1)
-    box.b4.uiSelectText.setSelectedIndex(5)
-    box.b6.uiSelectText.setSelectedIndex(1)
-    box.b7.uiSelectText.setSelectedIndex(1)
+    box.darkModeGroup = settingContent.createUIToggleWithTitle(
+        "Dark mode",
+        {},
+        settingContent.printToggleValue)
+    box.darkModeGroup.uiToggle.id = "dark-mode"
+    box.darkModeGroup.uiToggle.setValue(1)
 
+    box.themeGroup = settingContent.createUISelectTextWithTitle(
+        "Theme", 
+        settingContent.themeList, 
+        settingContent.printSelectedName)
+    box.themeGroup.uiSelectText.setSelectedIndex(1)
+
+    box.primaryColorGroup = settingContent.createUISelectTextWithTitle(
+        "Primary Color", 
+        settingContent.primaryColorList, 
+        settingContent.printSelectedName)
+    
+
+    box.systemUISubTitle = shared.createRelativeUISubTitle(
+        "SYSTEM")
+
+    box.updateGroup = settingContent.createUISelectTextWithTitle(
+        "Update", 
+        settingContent.updateStatusList, 
+        settingContent.printSelectedName)
+    box.updateGroup.uiSelectText.setSelectedIndex(1)
+
+    box.onlyWhenChargingGroup = settingContent.createUIToggleWithTitle(
+        "Only when charging",
+        {},
+        settingContent.printToggleValue)
+    box.onlyWhenChargingGroup.uiToggle.id = "only-when-charging"
+
+    box.notificationsGroup = settingContent.createUISelectTextWithTitle(
+        "Notifications", 
+        settingContent.notificationStatusList, 
+        settingContent.printSelectedName)
+    box.notificationsGroup.uiSelectText.setSelectedIndex(2)
+
+    box.sleepDelayGroup = settingContent.createUIStepperWithTitle(
+        "Sleep delay",
+        {},
+        settingContent.printStepperNumber)
+    box.sleepDelayGroup.uiStepper.id = "sleep-delay"
+    box.sleepDelayGroup.uiStepper.setMinimumRangeNumber(1)
+    box.sleepDelayGroup.uiStepper.setMaximumRangeNumber(5)
+    box.sleepDelayGroup.uiStepper.setNumber(3)
+
+    box.soundGroup = settingContent.createUISelectTextWithTitle(
+        "Sound", 
+        settingContent.soundStatusList, 
+        settingContent.printSelectedName)
+
+    box.languageGroup = settingContent.createUISelectTextWithTitle(
+        "Language", 
+        settingContent.languageList, 
+        settingContent.printSelectedName)
+
+
+    box.othersUISubTitle = shared.createRelativeUISubTitle(
+        "OTHERS")
+
+    box.objectTypeGroup = settingContent.createUISelectTextWithTitle(
+        "objectType", 
+        settingContent.objectTypeList, 
+        settingContent.printSelectedName)
+    
+    box.bottomUISpace = shared.createRelativeUISpace(
+        120, 
+        "whitesmoke")
 }
 
 settingContent.open = function() {
@@ -105,31 +157,73 @@ settingContent.open = function() {
     defaultView.createAndShowContent(settingContent)
 }
 
-settingContent.printSelectedName = function(self, index) {
-    print("Selected value: " + self.itemList[index].name)
+settingContent.printSelectedName = function(self) {
+    print("Selected name: " + self.itemList[self.getSelectedIndex()].name)
 }
 
-settingContent.createSubTitle = function(title) {
+settingContent.printToggleValue = function(self) {
+    // self.id
+    print("Toggle value: " + self.getValue())
+}
+
+settingContent.printStepperNumber = function(self) {
+    // self.id
+    print("Stepper number: " + self.getNumber())
+}
+
+// UI SELECT TEXT
+settingContent.createUISelectTextWithTitle = function(titleText, data, func) {
 
     // BOX: object container
-    var box = createBox(0, 0, global.CONTENT_WIDTH, 90)
+    var box = settingContent.createBoxWithLeftTitle(titleText)
+
+    // OBJECT: Select text
+    box.uiSelectText = createSelectText()
+    that.right = 20
+    that.top = 10
+    that.setAutoResize(1)
+    that.onChange(func)
+    that.setItems(data)
     that.color = "whitesmoke"
-    that.borderColor = "rgba(0, 0, 0, 0.1)"
-    that.element.style.borderBottomWidth = "3px"
-    that.element.style.position = "relative"
-    
-    // LABEL: object title text
-    box.lblTitle = createLabel(20, 50, "auto")
-    that.text = title
-    that.fontSize = 18
-    that.element.style.fontFamily = "opensans-bold"
+    that.boxMask.element.style.background = "linear-gradient(to right, #FFFFFF00, lightgray)"
 
     makeBasicObject(box)
-
     return box
 }
 
-settingContent.createSelectTextWithTitle = function(title, list, func) {
+// UI TOGGLE
+settingContent.createUIToggleWithTitle = function(titleText, data = {}, func) {
+
+    // BOX: object container
+    var box = settingContent.createBoxWithLeftTitle(titleText)
+
+    // OBJECT: Select text
+    box.uiToggle = createUIToggle()
+    that.right = 20
+    that.center("top")
+    that.onValueChange(func)
+
+    makeBasicObject(box)
+    return box
+}
+
+// UI STEPPER
+settingContent.createUIStepperWithTitle = function(titleText, data = {}, func) {
+
+    // BOX: object container
+    var box = settingContent.createBoxWithLeftTitle(titleText)
+
+    // OBJECT: Select text
+    box.uiStepper = createUIStepper()
+    that.right = 20
+    that.center("top")
+    that.onNumberChange(func)
+
+    makeBasicObject(box)
+    return box
+}
+
+settingContent.createBoxWithLeftTitle = function(titleText) {
 
     // BOX: object container
     var box = createBox(0, 0, global.CONTENT_WIDTH, 70)
@@ -140,20 +234,9 @@ settingContent.createSelectTextWithTitle = function(title, list, func) {
     
     // LABEL: object title text
     box.lblTitle = createLabel(20, 22, "auto")
-    that.text = title
+    that.text = titleText
     that.fontSize = 20
 
-    // OBJECT: Select text
-    box.uiSelectText = createSelectText()
-    that.right = 10
-    that.top = 10
-    that.setAutoResize(1)
-    that.onChange(func)
-    that.setItems(list)
-    that.color = "whitesmoke"
-    that.boxMask.element.style.background = "linear-gradient(to right, #FFFFFF00, lightgray)"
-
     makeBasicObject(box)
-
     return box
 }

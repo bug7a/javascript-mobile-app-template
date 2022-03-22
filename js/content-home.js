@@ -29,6 +29,7 @@ homeContent.createIn = function(box) {
     homeContent.box = box
     box.color = "#5ABB9F"
     //box.color = "whitesmoke"
+    //box.color = "gold"
     
     // UI TITLE: Categories title
     box.categoriesUITitle = shared.createRelativeUITitle("Categories", "white")
@@ -42,10 +43,10 @@ homeContent.createIn = function(box) {
     //that.setPlaceholderText("")
     //that.border = 0
 
-    // UI ITEM LIST: Categoriy items in vertical list
+    // UI ITEM LIST: Categoriy items in horizontal list
     box.categoriesUIItemList = createUIItemList(0, 0, global.CONTENT_WIDTH, 200)
     that.color = "white"
-    //that.color = "white"
+    //that.color = "whitesmoke"
     that.element.style.position = "relative"
     that.setItemAlign("horizontal")
     that.setBorderSpaces(10, 0, 10, 0)
@@ -57,7 +58,7 @@ homeContent.createIn = function(box) {
     box.categoriesUITitle.categoriesUISearchBox.onCharChange(box.categoriesUIItemList.searchItemByText)
 
     // UI TITLE: Cards title
-    box.cardsUITitle = shared.createRelativeUITitle("Cards", "#5ABB9F")
+    box.cardsUITitle = shared.createRelativeUITitle("Cards", "transparent")
 
     // UI ITEM LIST: Categoriy items in vertical list
     box.cardsUIItemList = createUIItemList(0, 0, global.CONTENT_WIDTH, 400)
@@ -181,6 +182,7 @@ homeContent.createCardItem = function(dataItem) {
     that.text = dataItem.title
     that.fontSize = 28
     that.textAlign = "center"
+    that.setMotion("top 0.3s")
 
     // LABEL: item price text
     box.lblPrice = createLabel(0, 0, "auto", "auto")
@@ -201,6 +203,26 @@ homeContent.createCardItem = function(dataItem) {
         self.center("left")
     })
     */
+    
+    // UI STEPPER: Count of product.
+    box.countUIStepper = createUIStepper()
+    that.connectedItemName = dataItem.title
+    that.bottom = 35
+    that.opacity = 0
+    that.center("left")
+    that.setMotion("opacity 0.3s, transform 0.3s")
+    that.element.style.transform = "scale(0.1)"
+    that.setMinimumRangeNumber(1)
+    that.setMaximumRangeNumber(6)
+    that.setNumber(1)
+    that.color = "rgba(0, 0, 0, 0.08)"
+    that.imgDecrease.border = 1
+    that.imgIncrease.border = 1
+    that.onNumberChange(function(self) {
+        print("Stepper value (" + self.connectedItemName + "): " + self.getNumber())
+    })
+    // First cards stepper object global name:
+    // homeContent.box.cardsUIItemList.getSelectedItemList()[0].countUIStepper
 
     makeBasicObject(box)
     return box
@@ -211,12 +233,21 @@ homeContent.selectClickedCardItem = function(uiItemList, itemObject, exItemObjec
     // Multi selection
     if (itemObject.isSelected() == 0) {
         itemObject.boxBackground.border = 2
+        //itemObject.boxBackground.borderColor = "rgba(255, 255, 255, 0.8)"
         itemObject.boxBackground.color = "rgba(255, 255, 255, 0.3)"
+        itemObject.countUIStepper.element.style.transform = "scale(1)"
+        itemObject.countUIStepper.opacity = 1
+        itemObject.lblName.top = 270
         uiItemList.addItemToSelectedList(itemObject)
 
     } else {
         itemObject.boxBackground.border = 0
+        //itemObject.boxBackground.borderColor = "rgba(255, 255, 255, 0.0)"
         itemObject.boxBackground.color = "rgba(255, 255, 255, 0.1)"
+        itemObject.countUIStepper.element.style.transform = "scale(0.1)"
+        itemObject.countUIStepper.opacity = 0
+        itemObject.countUIStepper.setNumber(1)
+        itemObject.lblName.top = 300
         uiItemList.removeItemFromSelectedList(itemObject)
     }
     print("Total selected cards: " + uiItemList.getSelectedItemList().length)

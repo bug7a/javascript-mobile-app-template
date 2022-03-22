@@ -27,11 +27,12 @@ searchPreviewContent.createIn = function(boxView) {
     that.load(searchPreviewContent.imagePath)
     that.center()
 
-
+    /*
     searchPreviewContent.box.btnClose = closeButton.create()
     that.onClick(function(self) {
         smallView.setVisible(0)
     })
+    */
 
 }
 
