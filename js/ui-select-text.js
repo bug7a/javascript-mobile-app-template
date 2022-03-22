@@ -12,18 +12,6 @@ Email: bugra.ozden@gmail.com
 Site: https://bug7a.github.io/cordova-mobile-app-ui-template/
 
 
-LICENSE:
-
-You are free:
-
-to Share — to copy, distribute and transmit the work
-to Remix — to adapt the work
-to make commercial use of the work
-
-https://creativecommons.org/licenses/by/4.0/
-
-Have Fun.
-
 */
 
 var SelectText = {}

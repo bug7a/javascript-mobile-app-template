@@ -104,13 +104,13 @@ searchContent.selectClickedPlantItem = function(uiItemList, itemObject, exItemOb
 
     if (itemObject.isSelected() == 0) {
         if (exItemObject) {
-            //exItemObject.boxBackground.color = "transparent"
-            exItemObject.boxBackground.element.style.background = "transparent"
+            exItemObject.boxBackground.color = "transparent"
+            //exItemObject.boxBackground.element.style.background = "transparent"
             uiItemList.removeItemFromSelectedList(exItemObject)
         }
         // "whitesmoke", "#EAEAE9", "#BFDBC9", "#CADAE0", "#FFF0C2"
-        //itemObject.boxBackground.color = "#FFF0C2"
-        itemObject.boxBackground.element.style.background = "linear-gradient(to top, #FFFFFF00, #FFF0C2)"
+        itemObject.boxBackground.color = "whitesmoke"
+        //itemObject.boxBackground.element.style.background = "linear-gradient(to top, #FFFFFF00, #FFF0C2)"
         //itemObject.boxBackground.element.style.background = "linear-gradient(to bottom, #FFFFFF00, whitesmoke)"
         uiItemList.addItemToSelectedList(itemObject)
 

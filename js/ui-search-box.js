@@ -32,6 +32,7 @@ object.txtSearch.text = "text"
 object.color = "white"
 - Change color of search box
 
+
 */
 
 var UISearchBox = {}
@@ -74,6 +75,14 @@ var createUISearchBox = function(x = 0, y = 0, width = 300) {
 
     box.setWidth = function(width) {
         box.width = width
+    }
+
+    box.setText = function(text) {
+        box.txtSearch.text = text
+    }
+
+    box.getText = function() {
+        return box.txtSearch.text
     }
 
     box.setPlaceholderText = function(text) {

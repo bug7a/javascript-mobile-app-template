@@ -20,15 +20,24 @@ var smallView = {}
 
 smallView.create = function() {
 
-    // BOX: Normal içerik taşıyıcısı
+    // BOX: View container box.
     smallView.box = createBox(0, 
         0, 
         global.CONTENT_WIDTH, 
         page.height
     )
-    that.color = "rgba(0, 0, 0, 0.8)"
+    //that.color = "rgba(0, 0, 0, 0.8)"
+    that.color = "transparent"
     that.setMotion("opacity 0.3s, transform 0.5s")
 
+    // BOX: background box.
+    smallView.box.boxBackground = createBox(0, 0, global.CONTENT_WIDTH, page.height)
+    that.color = "rgba(0, 0, 0, 0.8)"
+    that.onClick(function() {
+        smallView.setVisible(0)
+    })
+
+    // BOX: Content container box.
     smallView.box.b1 = createBox(0, 0, global.CONTENT_WIDTH, 500)
     that.element.style.borderTopLeftRadius = "50px"
     that.element.style.borderTopRightRadius = "50px"
@@ -36,7 +45,6 @@ smallView.create = function() {
     
     smallView.clean()
     smallView.setVisible(0)
-
 }
 
 smallView.clean = function() {

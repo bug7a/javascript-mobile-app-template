@@ -30,6 +30,16 @@ shared.setBackgroundColorWithStatusBar = function(color) {
     page.color = color
 }
 
+shared.createRelativeBox = function(height = 100, color = "transparent") {
+
+    var box = createBox(0, 0, global.CONTENT_WIDTH, height)
+    that.color = color
+    that.element.style.position = "relative"
+
+    return box
+}
+shared.createRelativeUISpace = shared.createRelativeBox
+
 shared.createRelativeUITitle = function(titleText = "", backgroundColor = "transparent") {
 
     // BOX: Object container box
@@ -64,20 +74,20 @@ shared.createUITitle = function(x = 0, y = 0, titleText = "", backgroundColor = 
     return box
 }
 
-shared.createRelativeUISpace = function(height = 100, color = "transparent") {
+shared.createRelativeUISubTitle = function(titleText, color = "whitesmoke") {
 
-    // BOX: Object container box
-    var box = shared.createUISpace(0, 0, height, color)
-    that.element.style.position = "relative"
-
-    return box
-}
-
-shared.createUISpace = function(x = 0, y = 0, height = 100, color = "transparent") {
-
-    // BOX: Object container box
-    var box = createBox(x, y, global.CONTENT_WIDTH, height)
+    // BOX: object container
+    var box = createBox(0, 0, global.CONTENT_WIDTH, 90)
     that.color = color
+    that.borderColor = "rgba(0, 0, 0, 0.1)"
+    that.element.style.borderBottomWidth = "3px"
+    that.element.style.position = "relative"
+    
+    // LABEL: object title text
+    box.lblTitle = createLabel(20, 50, "auto")
+    that.text = titleText
+    that.fontSize = 18
+    that.element.style.fontFamily = "opensans-bold"
 
     makeBasicObject(box)
     return box
