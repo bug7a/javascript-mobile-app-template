@@ -4,30 +4,14 @@ var favContent = {}
 // BOX: İçerik taşıyıcısı
 favContent.box
 
-favContent.createIn = function(boxView) {
+favContent.createIn = function(box) {
 
-    favContent.box = boxView
-
-    favContent.box.color = "white"
+    favContent.box = box
+    box.color = "white"
     
-    // LABEL: Sayfanın ortasındaki yazı
-    /*
-    favContent.box.lblContent = createLabel(0, 0, "auto", "auto")
-    that.text = "Sayfa İçeriği #4"
-    that.color = "rgba(255, 255, 255, 0.5)"
-    that.textColor = favContent.box.color
-    that.fontSize = 22
-    that.space = 6
-    that.spaceX = 14
-    that.round = 6
-    that.onClick(favContent.writeMessage)
-    that.onResize(function(self) {
-        self.center()
-    })
-    */
-
-    favContent.box.scrollY = 0
-    favContent.box.html = document.getElementById("todo-app").innerHTML
+    box.webView = createUIWebView(0, 0, box.width, box.height)
+    that.loadContentFromURL("todo.htm")
+    //that.content.a0.b1.txtNewTask.color = "red"
 
 }
 
@@ -38,8 +22,4 @@ favContent.open = function() {
     tabBar.setSelectedIndex(3)
     defaultView.setTopAndBottomSpaces(0, tabBar.HEIGHT)
     defaultView.createAndShowContent(favContent)
-}
-
-favContent.writeMessage = function() {
-    print("Sık Kullanılanlar Sayfası")
 }

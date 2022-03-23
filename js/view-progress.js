@@ -15,4 +15,4 @@ Site: https://bug7a.github.io/cordova-mobile-app-ui-template/
 */
 
 
-var UILoadingView = {}
+var UIProgressView = {}

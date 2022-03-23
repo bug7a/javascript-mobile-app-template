@@ -27,7 +27,6 @@ defaultView.create = function() {
     that.setMotion("height 0.3s, top 0.3s, opacity 0.3s, transform 0.3s")
 
     defaultView.clean()
-
 }
 
 defaultView.clean = function() {
@@ -37,9 +36,8 @@ defaultView.clean = function() {
     defaultView.box.border = 0
     defaultView.box.scrollX = 0
     defaultView.box.scrollY = 1
-
 }
-
+/*
 defaultView.setVisible = function(visible) {
     defaultView.box.visible = visible
 }
@@ -47,7 +45,7 @@ defaultView.setVisible = function(visible) {
 defaultView.getVisible = function() {
     return defaultView.box.visible
 }
-
+*/
 defaultView.createAndShowContent = function(content) {
 
     if (typeof content.createIn === "function") {
@@ -70,10 +68,6 @@ defaultView.createAndShowContent = function(content) {
     } else {
         print("defaultView: content must have .createIn() function")
     }
-}
-
-defaultView.loadContentFromURL = function(url) {
-
 }
 
 defaultView.setTopAndBottomSpaces = function(topSpace, bottomSpace) {

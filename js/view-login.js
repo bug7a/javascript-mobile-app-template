@@ -94,13 +94,11 @@ loginView.create = function() {
 }
 
 loginView.lock = function() {
-
     loginView.me.visible = 1
 
 }
 
 loginView.open = function() {
-
     loginView.me.visible = 0
 
 }

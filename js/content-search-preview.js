@@ -38,6 +38,8 @@ searchPreviewContent.createIn = function(boxView) {
 
 searchPreviewContent.open = function() {
 
+    //smallView.setHeight(700)
+    //smallView.setHeight(page.height - 200)
     smallView.createAndShowContent(searchPreviewContent)
     smallView.setVisible(1)
 }

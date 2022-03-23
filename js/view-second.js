@@ -45,7 +45,30 @@ secondView.clean = function() {
 
 secondView.setVisible = function(visible) {
 
-    secondView.box.visible = visible
+    if (visible != secondView.visible) {
+        if (visible) {
+            secondView.box.dontMotion()
+            secondView.box.element.style.transform = "scale(1.4)"
+            secondView.box.opacity = 0
+            secondView.box.visible = 1
+            secondView.box.withMotion(function(self) {
+                self.element.style.transform = "scale(1)"
+                self.opacity = 1
+            })
+        } else {
+            secondView.box.dontMotion()
+            secondView.box.element.style.transform = "scale(1)"
+            secondView.box.opacity = 1
+            secondView.box.withMotion(function(self) {
+                self.element.style.transform = "scale(1.4)"
+                self.opacity = 0
+                setTimeout(function() { 
+                    secondView.box.visible = 0
+                    secondView.clean()
+                }, 300)
+            })
+        }
+    }
 
 }
 
@@ -54,11 +77,5 @@ secondView.createAndShowContent = function(content) {
     secondView.clean()
     content.createIn(secondView.box)
 
-    secondView.box.dontMotion()
-    secondView.box.element.style.transform = "scale(1.4)"
-    secondView.box.opacity = 0
-    secondView.box.withMotion(function(self) {
-        self.element.style.transform = "scale(1)"
-        self.opacity = 1
-    })
+    secondView.setVisible(1)
 }

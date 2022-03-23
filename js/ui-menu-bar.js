@@ -35,7 +35,7 @@ menuBar.create = function() {
     menuBar.box.boxBackground = createBox(0, 0, global.CONTENT_WIDTH, page.height)
     that.color = "rgba(0, 0, 0, 0.8)"
     that.onClick(function() {
-        menuBar.hide()
+        menuBar.setVisible(0)
     })
 
     // BOX: Beyaz arka plan
@@ -113,33 +113,31 @@ menuBar.addItem = function(buttonText, contentIndex) {
     menuBar.lastButtonTop += 55
 }
 
-menuBar.show = function() {
-    menuBar.box.visible = 1
-    // MOTION:
-    menuBar.box.dontMotion()
-    menuBar.box.element.style.transform = "scale(1.4)"
-    menuBar.box.opacity = 0
-    menuBar.box.withMotion(function(self) {
-        self.canMotionNow()
-        self.element.style.transform = "scale(1)"
-        self.opacity = 1
-    })
-}
+menuBar.setVisible = function(visible) {
 
-menuBar.hide = function() {
-    
-    // MOTION:
-    menuBar.box.dontMotion()
-    menuBar.box.element.style.transform = "scale(1)"
-    menuBar.box.opacity = 1
-    menuBar.box.withMotion(function(self) {
-        self.canMotionNow()
-        self.element.style.transform = "scale(1.4)"
-        self.opacity = 0
-        setTimeout(function() {
-            menuBar.box.visible = 0
-        }, 200)
-    })
+    if (visible != menuBar.visible) {
+        if (visible) {
+            menuBar.box.dontMotion()
+            menuBar.box.element.style.transform = "scale(1.4)"
+            menuBar.box.opacity = 0
+            menuBar.box.visible = 1
+            menuBar.box.withMotion(function(self) {
+                self.element.style.transform = "scale(1)"
+                self.opacity = 1
+            })
+        } else {
+            menuBar.box.dontMotion()
+            menuBar.box.element.style.transform = "scale(1)"
+            menuBar.box.opacity = 1
+            menuBar.box.withMotion(function(self) {
+                self.element.style.transform = "scale(1.4)"
+                self.opacity = 0
+                setTimeout(function() { 
+                    menuBar.box.visible = 0
+                }, 300)
+            })
+        }
+    }
 }
 
 menuBar.onClick = function(func) {

@@ -212,15 +212,16 @@ homeContent.createCardItem = function(dataItem) {
     that.center("left")
     that.setMotion("opacity 0.3s, transform 0.3s")
     that.element.style.transform = "scale(0.1)"
-    that.setMinimumRangeNumber(1)
-    that.setMaximumRangeNumber(6)
-    that.setNumber(1)
+    that.setMinNumber(1)
+    that.setMaxNumber(6)
+    that.setValue(1)
     that.color = "rgba(0, 0, 0, 0.08)"
     that.imgDecrease.border = 1
     that.imgIncrease.border = 1
-    that.onNumberChange(function(self) {
-        print("Stepper value (" + self.connectedItemName + "): " + self.getNumber())
+    that.onChange(function(self) {
+        print("Stepper value (" + self.connectedItemName + "): " + self.getValue())
     })
+
     // First cards stepper object global name:
     // homeContent.box.cardsUIItemList.getSelectedItemList()[0].countUIStepper
 
@@ -246,7 +247,7 @@ homeContent.selectClickedCardItem = function(uiItemList, itemObject, exItemObjec
         itemObject.boxBackground.color = "rgba(255, 255, 255, 0.1)"
         itemObject.countUIStepper.element.style.transform = "scale(0.1)"
         itemObject.countUIStepper.opacity = 0
-        itemObject.countUIStepper.setNumber(1)
+        itemObject.countUIStepper.setValue(1)
         itemObject.lblName.top = 300
         uiItemList.removeItemFromSelectedList(itemObject)
     }
