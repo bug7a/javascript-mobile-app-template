@@ -19,69 +19,109 @@ var myUIStepper = createUIStepper(left: float, top: float, width: number) : UISt
 - Create a stepper object.
 - UIStepper object extends Box object.
 
-object.setNumber(number: integer) : void
+object.setValue(number: integer) : void
 - Set the number of the stepper.
 
-object.getNumber() : number
+object.getValue() : number
 - Get the number of the stepper.
 
 object.setWidth(width: number) : void
 - Set the width of the stepper.
 
-object.setMinimumRangeNumber(number: integer) : void
+object.setMinNumber(number: integer) : void
 - Set the minimum number of the stepper.
 
-object.getMinimumRangeNumber() : number
+object.getMinNumber() : number
 - Get the minimum number of the stepper.
 
-object.setMaximumRangeNumber(number: integer) : void
+object.setMaxNumber(number: integer) : void
 - Set the maximum number of the stepper.
 
-object.getMaximumRangeNumber() : number
+object.getMaxNumber() : number
 - Get the maximum number of the stepper.
 
-object.onNumberChange(func: function) : void
+object.onChange(func: function) : void
 - Set the function that will be called when the stepper value is changed.
 
 */
 
 var UIStepper = {}
 
+// SHARED:
+
 var createUIStepper = function(left = 0, top = 0, width = 130) {
 
-	var DEFAULT_HEIGHT = 45
+	// PRIVATE VARIABLES:
+	var minimumNumber = 1
+	var maximumNumber = 10
+	var defaultNumber = 1
+	var onChangeFunc = function() {}
 	
+	// OBJECT MODEL:
 	// BOX: Object container box.
-	var box = createBox(left, top, width, DEFAULT_HEIGHT)
+	var box = createBox(left, top, width, 45)
 	that.border = 0
 	//that.round = 13
-	that.round = DEFAULT_HEIGHT
+	that.round = 23
 	that.color = "transparent"
 	//that.color = "rgba(0, 0, 0, 0.08)"
+
+	// LABEL: Decrease button. (-)
+	box.imgDecrease = createImage(2, 2, 41, 41)
+	//box.imgDecrease = createImage(0, 0, 45, 45)
+	that.load("js/ui-stepper/decrease.svg")
+	that.border = 0
+	that.borderColor = "#141414"
+	that.color = "rgba(0, 0, 0, 0.2)"
+	//that.round = 13
+	that.round = 23
+	that.space = 0
+	that.element.style.cursor = "pointer"
 	
-	// VARIABLES:
-	box.minimumNumber = 1
-	box.maximumNumber = 10
-	box.defaultRangeNumber = 1
-	box.onNumberChangeFunc = function() {}
+	// LABEL: Number text.
+	box.lblNumber = createLabel(0, 6)
+	that.fontSize = 22
+	that.textAlign = "center"
+	that.textColor = "rgba(0, 0, 0, 0.8)"
+	that.width = box.width
+	that.height = 30
+	that.color = "transparent"
+	//that.element.style.fontFamily = "opensans-bold"
 	
-	// METODS:
-	box._increaseNumber = function(self, event) {
+	// LABEL: Increase button. (+)
+	box.imgIncrease = createImage(2, 2, 41, 41)
+	that.right = 2
+	//box.imgIncrease = createImage(0, 0, 45, 45)
+	//that.right = 0
+	that.load("js/ui-stepper/increase.svg")
+	that.border = 0
+	that.borderColor = "#141414"
+	that.color = "rgba(0, 0, 0, 0.2)"
+	//that.round = 13
+	that.round = 23
+	that.space = 0
+	that.element.style.cursor = "pointer"
+	
+	// GLOBAL VARIABLES:
+	
+	// PRIVATE METHODS:
+	var increaseNumber = function(self, event) {
 		event.stopPropagation()
-		if (num(box.lblNumber.text) != box.maximumNumber) {
-			box.setNumber(num(box.lblNumber.text) + 1)
+		if (num(box.lblNumber.text) != maximumNumber) {
+			box.setValue(num(box.lblNumber.text) + 1)
 			box.refreshButtonsOpacity()
 		}
 	}
 	
-	box._decreaseNumber = function(self, event) {
+	var decreaseNumber = function(self, event) {
 		event.stopPropagation()
-		if (num(box.lblNumber.text) != box.minimumNumber) {
-			box.setNumber(num(box.lblNumber.text) - 1)
+		if (num(box.lblNumber.text) != minimumNumber) {
+			box.setValue(num(box.lblNumber.text) - 1)
 			box.refreshButtonsOpacity()
 		}
 	}
 	
+	// GLOBAL METHODS:
 	box.refreshButtonsOpacity = function() {
 
 		box.imgIncrease.opacity = 0.9
@@ -89,39 +129,39 @@ var createUIStepper = function(left = 0, top = 0, width = 130) {
 		box.imgIncrease.element.style.cursor = "pointer"
 		box.imgDecrease.element.style.cursor = "pointer"
 
-		if (num(box.lblNumber.text) == box.maximumNumber) {
+		if (num(box.lblNumber.text) == maximumNumber) {
 			box.imgIncrease.opacity = 0.4
 			box.imgIncrease.element.style.cursor = "default"
 		}
 
-		if (num(box.lblNumber.text) == box.minimumNumber) {
+		if (num(box.lblNumber.text) == minimumNumber) {
 			box.imgDecrease.opacity = 0.4
 			box.imgDecrease.element.style.cursor = "default"
 		}
 	}
 	
-	box.setMinimumRangeNumber = function(number) {
-		box.minimumNumber = number
+	box.setMinNumber = function(number) {
+		minimumNumber = number
 		if (num(box.lblNumber.text) < number) {
-			box.setNumber(number)
+			box.setValue(number)
 		}
 		box.refreshButtonsOpacity()
 	}
 
-	box.getMinimumRangeNumber = function() {
-		return box.minimumNumber
+	box.getMinNumber = function() {
+		return minimumNumber
 	}
 	
-	box.setMaximumRangeNumber = function(number) {
-		box.maximumNumber = number
+	box.setMaxNumber = function(number) {
+		maximumNumber = number
 		if (num(box.lblNumber.text) > number) {
-			box.setNumber(number)
+			box.setValue(number)
 		}
 		box.refreshButtonsOpacity()
 	}
 
-	box.getMaximumRangeNumber = function() {
-		return box.maximumNumber
+	box.getMaxNumber = function() {
+		return maximumNumber
 	}
 	
 	box.setWidth = function(width) {
@@ -133,68 +173,34 @@ var createUIStepper = function(left = 0, top = 0, width = 130) {
 		return box.width
 	}
 	
-	box.setNumber = function(number) {
-		if (number < box.minimumNumber) {
-			number = box.minimumNumber
-			print("UIStepper: setNumber() number is changed because too small.")
+	box.setValue = function(number) {
+		if (number < minimumNumber) {
+			number = minimumNumber
+			print("UIStepper: setValue() number is changed because too small.")
 		}
-		if (number > box.maximumNumber) {
-			number = box.maximumNumber
-			print("UIStepper: setNumber() number is changed because too big.")
+		if (number > maximumNumber) {
+			number = maximumNumber
+			print("UIStepper: setValue() number is changed because too big.")
 		}
 		box.lblNumber.text = str(number)
 		box.refreshButtonsOpacity()
-		box.onNumberChangeFunc(box)
+		onChangeFunc(box)
 	}
 	
-	box.getNumber = function() {
+	box.getValue = function() {
 		return num(box.lblNumber.text)
 	}
 
-	box.onNumberChange = function(func) {
-		box.onNumberChangeFunc = func
+	box.onChange = function(func) {
+		onChangeFunc = func
 	}
 
-	// LABEL: Decrease button. (-)
-	box.imgDecrease = createImage(2, 2, DEFAULT_HEIGHT - 4, DEFAULT_HEIGHT - 4)
-	//box.imgDecrease = createImage(0, 0, DEFAULT_HEIGHT, DEFAULT_HEIGHT)
-	that.load("js/ui-stepper/decrease.svg")
-	that.border = 0
-	that.borderColor = "#141414"
-	that.color = "rgba(0, 0, 0, 0.2)"
-	//that.round = 13
-	that.round = DEFAULT_HEIGHT
-	that.element.style.cursor = "pointer"
-	box.imgDecrease.onClick(box._decreaseNumber)
-	
-	// LABEL: Number text.
-	box.lblNumber = createLabel(0, 6)
-	that.fontSize = 22
-	that.textAlign = "center"
-	that.textColor = "rgba(0, 0, 0, 0.8)"
-	that.width = box.width
-	that.height = 30
-	that.color = "transparent"
-	that.element.style.fontFamily = "opensans-bold"
-	
-	// LABEL: Increase button. (+)
-	box.imgIncrease = createImage(2, 2, DEFAULT_HEIGHT - 4, DEFAULT_HEIGHT - 4)
-	that.right = 2
-	//box.imgIncrease = createImage(0, 0, DEFAULT_HEIGHT, DEFAULT_HEIGHT)
-	//that.right = 0
-	that.load("js/ui-stepper/increase.svg")
-	that.border = 0
-	that.borderColor = "#141414"
-	that.color = "rgba(0, 0, 0, 0.2)"
-	//that.round = 13
-	that.round = DEFAULT_HEIGHT
-	that.element.style.cursor = "pointer"
-	box.imgIncrease.onClick(box._increaseNumber)
-	
-	box.setNumber(box.defaultRangeNumber)
+	// RUN:
+	box.imgDecrease.onClick(decreaseNumber)
+	box.imgIncrease.onClick(increaseNumber)
+	box.setValue(defaultNumber)
 	box.refreshButtonsOpacity()
 	
 	makeBasicObject(box)
 	return box
 }
-

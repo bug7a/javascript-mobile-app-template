@@ -117,9 +117,9 @@ settingContent.createIn = function(box) {
         {},
         settingContent.printStepperNumber)
     box.sleepDelayGroup.uiStepper.id = "sleep-delay"
-    box.sleepDelayGroup.uiStepper.setMinimumRangeNumber(1)
-    box.sleepDelayGroup.uiStepper.setMaximumRangeNumber(5)
-    box.sleepDelayGroup.uiStepper.setNumber(3)
+    box.sleepDelayGroup.uiStepper.setMinNumber(1)
+    box.sleepDelayGroup.uiStepper.setMaxNumber(5)
+    box.sleepDelayGroup.uiStepper.setValue(3)
 
     box.soundGroup = settingContent.createUISelectTextWithTitle(
         "Sound", 
@@ -168,7 +168,7 @@ settingContent.printToggleValue = function(self) {
 
 settingContent.printStepperNumber = function(self) {
     // self.id
-    print("Stepper number: " + self.getNumber())
+    print("Stepper number: " + self.getValue())
 }
 
 // UI SELECT TEXT
@@ -184,8 +184,10 @@ settingContent.createUISelectTextWithTitle = function(titleText, data, func) {
     that.setAutoResize(1)
     that.onChange(func)
     that.setItems(data)
-    that.color = "whitesmoke"
-    that.boxMask.element.style.background = "linear-gradient(to right, #FFFFFF00, lightgray)"
+    //that.color = "whitesmoke"
+    //that.boxMask.element.style.background = "linear-gradient(to right, #FFFFFF00, lightgray)"
+    that.color = "white"
+    that.boxMask.element.style.background = "linear-gradient(to right, #FFFFFF00, white)"
 
     makeBasicObject(box)
     return box
@@ -200,8 +202,10 @@ settingContent.createUIToggleWithTitle = function(titleText, data = {}, func) {
     // OBJECT: Select text
     box.uiToggle = createUIToggle()
     that.right = 20
+    that.setColorOff("rgba(0, 0, 0, 0.1)")
+    that.setColorOn("#BFDBC9")
     that.center("top")
-    that.onValueChange(func)
+    that.onChange(func)
 
     makeBasicObject(box)
     return box
@@ -216,8 +220,10 @@ settingContent.createUIStepperWithTitle = function(titleText, data = {}, func) {
     // OBJECT: Select text
     box.uiStepper = createUIStepper()
     that.right = 20
+    that.imgDecrease.color = "rgba(0,0,0,0.05)"
+    that.imgIncrease.color = "rgba(0,0,0,0.05)"
     that.center("top")
-    that.onNumberChange(func)
+    that.onChange(func)
 
     makeBasicObject(box)
     return box

@@ -24,20 +24,20 @@ object.setValue(makeToggleOn: boolean) : void
 object.getValue() : boolean
 - Get the value of the toggle.
 
-object.setActionColor(color: string) : void
+object.setColorOn(color: string) : void
 - Set the color of the toggle action.
 
-object.setBackgroundColor(color: string) : void
+object.setColorOff(color: string) : void
 - Set the color of the object background.
 
-object.onValueChange(func: function) : void
+object.onChange(func: function) : void
 - Set the function that will be called when the toggle value is changed.
 
 */
 
 var UIToggle = {}
 
-var createUIToggle = function(left, top, width = 70) {
+var createUIToggle = function(left = 0, top = 0, width = 70) {
 
     // BOX: Object container box.
     var box = createBox(left, top, width, 40)
@@ -48,24 +48,24 @@ var createUIToggle = function(left, top, width = 70) {
     
     // VARIABLES:
     box.value = 0
-    box.actionColor = "#3871E0"
-    box.backgroundColor = "lightgray"
-    box.onValueChangeFunc = function() {}
+    box.colorForOn = "#3871E0"
+    box.colorForOff = "lightgray"
+    box.onChangeFunc = function() {}
     
     // METHODS:
     box.toggle = function() {
         if(box.value == 0) {
             box.value = 1
             box.btnAction.left = box.width - box.btnAction.width - 4
-            box.color = box.actionColor
+            box.color = box.colorForOn
         
         } else {
             box.value = 0
             box.btnAction.left = 4
-            box.color = box.backgroundColor
+            box.color = box.colorForOff
         }
         
-        box.onValueChangeFunc(box)
+        box.onChangeFunc(box)
     }
     
     box.setValue = function(value) {
@@ -78,22 +78,22 @@ var createUIToggle = function(left, top, width = 70) {
         return box.value
     }
     
-    box.setActionColor = function(color) {
-        box.actionColor = color
+    box.setColorOn = function(color) {
+        box.colorForOn = color
         if (box.value == 1) {
             box.color = color
         }
     }
     
-    box.setBackgroundColor = function(color) {
-        box.backgroundColor = color
+    box.setColorOff = function(color) {
+        box.colorForOff = color
         if (box.value == 0) {
             box.color = color
         }
     }
     
-    box.onValueChange = function(func) {
-        box.onValueChangeFunc = func
+    box.onChange = function(func) {
+        box.onChangeFunc = func
     }
 
     // BOX: Action button.

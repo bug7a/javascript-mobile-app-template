@@ -25,6 +25,7 @@
         <script src="js/ui-select-text.js" type="text/javascript" charset="utf-8"></script>
         <script src="js/ui-stepper.js" type="text/javascript" charset="utf-8"></script>
         <script src="js/ui-toggle.js" type="text/javascript" charset="utf-8"></script>
+        <script src="js/ui-web-view.js" type="text/javascript" charset="utf-8"></script>
 
         <script src="js/shared.js" type="text/javascript" charset="utf-8"></script>
         <script src="js/view-default.js" type="text/javascript" charset="utf-8"></script>
@@ -148,11 +149,11 @@
         }
 
         function openMenuBar() {
-            menuBar.show()
+            menuBar.setVisible(1)
         }
 
         function lockScreen() {
-            menuBar.hide()
+            menuBar.setVisible(0)
             loginView.lock()
         }
 
@@ -166,11 +167,6 @@
         
         <!-- HTML MODELS -->
         <div style="display:none">
-
-            <div id="todo-app">
-                <iframe src="todo.htm" width="100%" height="100%" style="border:0px solid lightgray;border-radius:0px;">
-                </iframe>
-            </div>
 
             <!-- Alternative use to create repeating patterns  -->
             <div id="card-model-num1" class="card-model">
