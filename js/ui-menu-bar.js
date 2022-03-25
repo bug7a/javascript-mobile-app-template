@@ -104,7 +104,7 @@ menuBar.addItem = function(buttonText, contentIndex) {
     that.text = buttonText.title
     that.fontSize = 26
     that.onClick(function(self) {
-        menuBar.hide()
+        menuBar.setVisible(0)
         menuBar.onClickFunc(self.contentId)
     })
 
