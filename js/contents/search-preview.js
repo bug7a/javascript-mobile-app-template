@@ -1,34 +1,36 @@
 
 var searchPreviewContent = {}
 
-searchPreviewContent.box = {}
 searchPreviewContent.title = ""
 searchPreviewContent.description = ""
 searchPreviewContent.imagePath = ""
 
-searchPreviewContent.createIn = function(boxView) {
+searchPreviewContent.createIn = function(box) {
 
-    searchPreviewContent.box = boxView
+    searchPreviewContent.box = box
 
-    searchPreviewContent.box.color = "white"
+    box.color = "white"
 
-    searchPreviewContent.box.lblTitle = createLabel(0, 80, global.CONTENT_WIDTH, "auto")
+    box.lblTitle = createLabel(0, 80, global.CONTENT_WIDTH, "auto")
+    box.add(that)
     that.text = searchPreviewContent.title
     that.fontSize = 30
     that.textAlign = "center"
 
-    searchPreviewContent.box.lblDesc = createLabel(0, 114, global.CONTENT_WIDTH, "auto")
+    box.lblDesc = createLabel(0, 114, global.CONTENT_WIDTH, "auto")
+    box.add(that)
     that.text = searchPreviewContent.description
     that.fontSize = 18
     that.textColor = "gray"
     that.textAlign = "center"
 
-    searchPreviewContent.box.imgLogo = createImage(0, 0, 160, 160)
+    box.imgLogo = createImage(0, 0, 160, 160)
+    box.add(that)
     that.load(searchPreviewContent.imagePath)
     that.center()
 
     /*
-    searchPreviewContent.box.btnClose = closeButton.create()
+    box.btnClose = closeButton.create()
     that.onClick(function(self) {
         smallView.setVisible(0)
     })

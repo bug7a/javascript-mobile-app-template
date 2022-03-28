@@ -36,7 +36,7 @@ createUIWebView = function(left = 0, top = 0, width = 250, height = 250) {
     var iframeObj = document.createElement('iframe')
     box.element.appendChild(iframeObj)
 
-    box.content = iframeObj.contentWindow
+    //box.content = iframeObj.contentWindow
 
     box.onResize(function(self) {
         iframeObj.setAttribute('width', self.width + 'px')

@@ -1,17 +1,15 @@
 
 var secondUsageExamContent = {}
 
-// BOX: İçerik taşıyıcısı
-secondUsageExamContent.box
+secondUsageExamContent.createIn = function(box) {
 
-secondUsageExamContent.createIn = function(boxView) {
+    secondUsageExamContent.box = box
 
-    secondUsageExamContent.box = boxView
-
-    secondUsageExamContent.box.color = "white"
+    box.color = "white"
     
     // LABEL: Sayfanın ortasındaki yazı
-    secondUsageExamContent.box.lblContent = createLabel(0, 0, "auto", "auto")
+    box.lblContent = createLabel(0, 0, "auto", "auto")
+    box.add(that)
     that.text = "Second Usage Example:<br>Previous view did not unload.<br>It is waiting at back."
     that.textAlign = "center"
     that.fontSize = 22
@@ -24,7 +22,8 @@ secondUsageExamContent.createIn = function(boxView) {
     })
 
     // NESNE: Tam ekran içeriği kapatma butonu
-    secondUsageExamContent.box.btnClose = closeButton.create()
+    box.btnClose = closeButton.create()
+    box.add(that)
     that.onClick(function() {
         secondView.setVisible(0)
     })

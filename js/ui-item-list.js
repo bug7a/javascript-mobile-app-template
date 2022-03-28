@@ -26,13 +26,13 @@ listObject.setItemAlign(alignType: string) : void
 - "horizontal" for horizontal categories, cards, etc.
 - "horizontal-vertical" for folder view, files, icons, images, etc.
 
-listObject.setBorderSpaces(left: integer, top: integer, right: integer, bottom: integer) : void
+listObject.setInnerSpaces(left: float, top: float, right: integer, bottom: integer) : void
 - Sets the border spaces.
 
 listObject.setCreateFunctionOfItem(func: function) : void
 - Sets the function that creates the items.
 
-listObject.setItemsWithData(dataList: array) : void
+listObject.createItemsByDataList(dataList: array) : void
 - Sets the items.
 - If you use .searchItemByText() function, dataList must have an element named "searchText".
 
@@ -129,7 +129,7 @@ var createUIItemList = function(x = 0, y = 0, width = 600, height = page.height)
         box.itemCreationFunction = func
     }
 
-    box.setItemsWithData = function(dataList) {
+    box.createItemsByDataList = function(dataList) {
 
         box.cleanItems()
 
@@ -201,7 +201,7 @@ var createUIItemList = function(x = 0, y = 0, width = 600, height = page.height)
         }
     }
 
-    box.setBorderSpaces = function(left, top, right, bottom) {
+    box.setInnerSpaces = function(left, top, right, bottom) {
         box.element.style.paddingLeft = left + "px"
         box.element.style.paddingTop = top + "px"
         box.element.style.paddingRight = right + "px"

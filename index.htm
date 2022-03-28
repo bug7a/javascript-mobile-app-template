@@ -267,6 +267,7 @@
 
         // Supports all screen resolutions (Orientation: portrait)
         page.fit(global.CONTENT_WIDTH, global.MAX_ZOOMABLE_WIDTH)
+        basic.autoAddObjectIntoBoxController.setActive(0)
 
         page.color = "white"
 
@@ -280,7 +281,7 @@
         
         // UI OBJECT: Image buttons at bottom:
         tabBar.create()
-        tabBar.setItems(tabBarItemDataList)
+        tabBar.createItemsByDataList(tabBarItemDataList)
         tabBar.onClick(contentController.openContentById)
 
         // UI OBJECT: If you need a view without unload defaultView object:
@@ -291,7 +292,7 @@
 
         // UI OBJECT: Right side menu:
         menuBar.create()
-        menuBar.setItems(menuBarItemDataList)
+        menuBar.createItemsByDataList(menuBarItemDataList)
         menuBar.onClick(contentController.openContentById)
 
         // UI OBJECT: Login view:
@@ -310,11 +311,11 @@
     }
 
     function openMenuBar() {
-        menuBar.show()
+        menuBar.setVisible(1)
     }
 
     function lockScreen() {
-        menuBar.hide()
+        menuBar.setVisible(0)
         loginView.lock()
     }
 

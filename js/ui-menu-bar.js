@@ -29,10 +29,11 @@ menuBar.create = function() {
     that.color = "transparent"
     that.border = 0
     that.visible = 0
-    that.setMotion("opacity 0.3s, transform 0.3s")
+    //that.setMotion("opacity 0.3s, transform 0.3s")
 
     // BOX: background box.
     menuBar.box.boxBackground = createBox(0, 0, global.CONTENT_WIDTH, page.height)
+    menuBar.box.add(that)
     that.color = "rgba(0, 0, 0, 0.8)"
     that.onClick(function() {
         menuBar.setVisible(0)
@@ -40,27 +41,15 @@ menuBar.create = function() {
 
     // BOX: Beyaz arka plan
     menuBar.box.b1 = createBox(0, 0, 400, page.height)
+    menuBar.box.add(that)
     that.border = 0
     that.right = 0
-
-    // IMAGE: Kapatma düğmesi
-    /*
-    menuBar.box.b1.btnClose = createImage(0, 0, 50, 50)
-    that.load("images/ui-menu-bar/close.svg")
-    that.right = 30
-    that.top = 30
-    that.borderColor = "lightgray"
-    that.space = 12
-    that.round = 8
-    that.onClick(function() {
-        menuBar.hide()
-    })
-    */
 
     // Özel tasarımlar yapılabilir.
 
     // BOX: Kilitmeleme düğmesi arka plan
     menuBar.box.b1.boxLock = createBox(0, 0, 172, 52)
+    menuBar.box.b1.add(that)
     that.color = "white"
     that.borderColor = "lightgray"
     that.border = 1
@@ -70,17 +59,19 @@ menuBar.create = function() {
 
     // IMAGE: Kilitleme düğmesi resimi
     menuBar.box.b1.boxLock.imgLock = createImage(8, 10, 30, 30)
+    menuBar.box.b1.boxLock.add(that)
     that.load("images/ui-menu-bar/lock.png")
 
     // LABEL: Kilitleme düğmesi yazısı
     menuBar.box.b1.boxLock.lblLock = createLabel(46, 12, "auto", 50)
+    menuBar.box.b1.boxLock.add(that)
     that.text = "Lock Screen"
 
     // menuBar.hide()
 
 }
 
-menuBar.setItems = function(list) {
+menuBar.createItemsByDataList = function(list) {
 
     //menuBar.removeAll()
 
@@ -115,6 +106,10 @@ menuBar.addItem = function(buttonText, contentIndex) {
 
 menuBar.setVisible = function(visible) {
 
+    menuBar.box.visible = visible
+
+    /*
+    // Closed for performance:
     if (visible != menuBar.visible) {
         if (visible) {
             menuBar.box.dontMotion()
@@ -138,6 +133,7 @@ menuBar.setVisible = function(visible) {
             })
         }
     }
+    */
 }
 
 menuBar.onClick = function(func) {

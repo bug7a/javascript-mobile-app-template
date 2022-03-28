@@ -55,15 +55,11 @@ settingContent.objectTypeList = [
     {id:"exaggerated", name:"Exaggerated"}
 ]
 
-// BOX: İçerik taşıyıcısı
-settingContent.box
-
 settingContent.createIn = function(box) {
 
     settingContent.box = box
     box.color = "whitesmoke"
 
-    // Global settings
     //SelectText.setSelectedColor("#CADAE0")
     //SelectText.setUIBackgroundColor("white")
     SelectText.setSearchInfoText("Filter")
@@ -71,11 +67,13 @@ settingContent.createIn = function(box) {
     // OBJECTS:
     box.appearanceUISubTitle = shared.createRelativeUISubTitle(
         "APPEARANCE")
+    box.add(that)
 
     box.darkModeGroup = settingContent.createUIToggleWithTitle(
         "Dark mode",
         {},
         settingContent.printToggleValue)
+    box.add(that)
     box.darkModeGroup.uiToggle.id = "dark-mode"
     box.darkModeGroup.uiToggle.setValue(1)
 
@@ -83,39 +81,46 @@ settingContent.createIn = function(box) {
         "Theme", 
         settingContent.themeList, 
         settingContent.printSelectedName)
+    box.add(that)
     box.themeGroup.uiSelectText.setSelectedIndex(1)
 
     box.primaryColorGroup = settingContent.createUISelectTextWithTitle(
         "Primary Color", 
         settingContent.primaryColorList, 
         settingContent.printSelectedName)
+    box.add(that)
     
 
     box.systemUISubTitle = shared.createRelativeUISubTitle(
         "SYSTEM")
+    box.add(that)
 
     box.updateGroup = settingContent.createUISelectTextWithTitle(
         "Update", 
         settingContent.updateStatusList, 
         settingContent.printSelectedName)
+    box.add(that)
     box.updateGroup.uiSelectText.setSelectedIndex(1)
 
     box.onlyWhenChargingGroup = settingContent.createUIToggleWithTitle(
         "Only when charging",
         {},
         settingContent.printToggleValue)
+    box.add(that)
     box.onlyWhenChargingGroup.uiToggle.id = "only-when-charging"
 
     box.notificationsGroup = settingContent.createUISelectTextWithTitle(
         "Notifications", 
         settingContent.notificationStatusList, 
         settingContent.printSelectedName)
+    box.add(that)
     box.notificationsGroup.uiSelectText.setSelectedIndex(2)
 
     box.sleepDelayGroup = settingContent.createUIStepperWithTitle(
         "Sleep delay",
         {},
         settingContent.printStepperNumber)
+    box.add(that)
     box.sleepDelayGroup.uiStepper.id = "sleep-delay"
     box.sleepDelayGroup.uiStepper.setMinNumber(1)
     box.sleepDelayGroup.uiStepper.setMaxNumber(5)
@@ -125,24 +130,29 @@ settingContent.createIn = function(box) {
         "Sound", 
         settingContent.soundStatusList, 
         settingContent.printSelectedName)
+    box.add(that)
 
     box.languageGroup = settingContent.createUISelectTextWithTitle(
         "Language", 
         settingContent.languageList, 
         settingContent.printSelectedName)
+    box.add(that)
 
 
     box.othersUISubTitle = shared.createRelativeUISubTitle(
         "OTHERS")
+    box.add(that)
 
     box.objectTypeGroup = settingContent.createUISelectTextWithTitle(
         "objectType", 
         settingContent.objectTypeList, 
         settingContent.printSelectedName)
+    box.add(that)
     
     box.bottomUISpace = shared.createRelativeUISpace(
         120, 
         "whitesmoke")
+    box.add(that)
 }
 
 settingContent.open = function() {
@@ -153,7 +163,7 @@ settingContent.open = function() {
     navigationBar.menuButton.setVisible(1)
     tabBar.setVisible(1)
     tabBar.setSelectedIndex(4)
-    defaultView.setTopAndBottomSpaces(navigationBar.HEIGHT, tabBar.HEIGHT)
+    defaultView.setTopAndBottom(navigationBar.HEIGHT, tabBar.HEIGHT)
     defaultView.createAndShowContent(settingContent)
 }
 
@@ -179,11 +189,12 @@ settingContent.createUISelectTextWithTitle = function(titleText, data, func) {
 
     // OBJECT: Select text
     box.uiSelectText = createSelectText()
+    box.add(that)
     that.right = 20
     that.top = 10
     that.setAutoResize(1)
     that.onChange(func)
-    that.setItems(data)
+    that.createItemsByDataList(data)
     //that.color = "whitesmoke"
     //that.boxMask.element.style.background = "linear-gradient(to right, #FFFFFF00, lightgray)"
     that.color = "white"
@@ -201,6 +212,7 @@ settingContent.createUIToggleWithTitle = function(titleText, data = {}, func) {
 
     // OBJECT: Select text
     box.uiToggle = createUIToggle()
+    box.add(that)
     that.right = 20
     that.setColorOff("rgba(0, 0, 0, 0.1)")
     that.setColorOn("#BFDBC9")
@@ -219,6 +231,7 @@ settingContent.createUIStepperWithTitle = function(titleText, data = {}, func) {
 
     // OBJECT: Select text
     box.uiStepper = createUIStepper()
+    box.add(that)
     that.right = 20
     that.imgDecrease.color = "rgba(0,0,0,0.05)"
     that.imgIncrease.color = "rgba(0,0,0,0.05)"
@@ -240,6 +253,7 @@ settingContent.createBoxWithLeftTitle = function(titleText) {
     
     // LABEL: object title text
     box.lblTitle = createLabel(20, 22, "auto")
+    box.add(that)
     that.text = titleText
     that.fontSize = 20
 

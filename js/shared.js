@@ -1,6 +1,8 @@
 
 var shared = {}
 shared.isCordovaExist = 0;
+shared.lastPerformanceCheckTime = Date.now()
+shared.savedSelectedBox = null
 
 shared.cordovaOnDeviceReady = function (func) {
 
@@ -15,6 +17,23 @@ shared.cordovaOnDeviceReady = function (func) {
 
 shared.getPlatformId = function() {
     return shared.isCordovaExist ? cordova.platformId : "web"
+}
+
+shared.saveSelectedBox = function() {
+    shared.savedSelectedBox = getSelectedBox()
+}
+
+shared.restoreSelectedBox = function() {
+    if (shared.savedSelectedBox) {
+        selectBox(shared.savedSelectedBox)
+        shared.savedSelectedBox = null
+    }
+}
+
+shared.checkPerformance = function(label) {
+    var spendingTime = (Date.now() - shared.lastPerformanceCheckTime)
+    shared.lastPerformanceCheckTime = Date.now()
+    print(label + ": " + spendingTime + "ms")
 }
 
 shared.createSafeAreaBackground = function() {
@@ -58,6 +77,7 @@ shared.createUITitle = function(x = 0, y = 0, titleText = "", backgroundColor = 
 
     // LABEL: title text
     box.lblTitle = createLabel(30, 0, 540, 38)
+    box.add(that)
     that.bottom = 20
     that.text = titleText
     that.fontSize = 28
@@ -85,6 +105,7 @@ shared.createRelativeUISubTitle = function(titleText, color = "whitesmoke") {
     
     // LABEL: object title text
     box.lblTitle = createLabel(20, 50, "auto")
+    box.add(that)
     that.text = titleText
     that.fontSize = 18
     that.element.style.fontFamily = "opensans-bold"

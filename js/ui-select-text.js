@@ -57,6 +57,7 @@ SelectText.createCopy = function(left = 0,
 
     // LABEL: Component name label
     ui.txtName = createLabel(10, 0, "auto")
+    ui.add(that)
     that.text = ""
     that.fontSize = 20
     that.height = that.fontSize + (that.fontSize / 2)
@@ -70,11 +71,13 @@ SelectText.createCopy = function(left = 0,
 
     // BOX: Mask of txtName
     ui.boxMask = createBox(0, 0, 40, ui.height)
+    ui.add(that)
     that.right = 0
     that.element.style.background = "linear-gradient(to right, #FFFFFF00, " + SelectText.uiBackgroundColor + ")"
 
     // IMAGE: Up arrow image
     ui.imgArrow1 = createImage(0, 0, 16, 16)
+    ui.add(that)
     that.load("js/ui-select-text/arrow.svg")
     that.right = 8
     that.opacity = 0.7
@@ -86,6 +89,7 @@ SelectText.createCopy = function(left = 0,
 
     // IMAGE: Down arrow image
     ui.imgArrow2 = createImage(0, 0, 16, 16)
+    ui.add(that)
     that.load("js/ui-select-text/arrow.svg")
     that.right = 8
     that.opacity = 0.7
@@ -96,7 +100,7 @@ SelectText.createCopy = function(left = 0,
 
     // METHODS:
 
-    ui.setItems = function(list) {
+    ui.createItemsByDataList = function(list) {
 
         ui.itemList = [...list]
 
@@ -224,6 +228,7 @@ var createItemSelection = function(connectedUI) {
 
     // BOX: Search box
     SelectText.itemSelection.boxSearch = createBox(20, 40)
+    SelectText.itemSelection.add(that)
     that.width = page.width - 40 - 30 - 10
     that.height = 50
     that.color = "whitesmoke"
@@ -232,12 +237,14 @@ var createItemSelection = function(connectedUI) {
 
     // IMAGE: Search icon
     SelectText.itemSelection.boxSearch.imgIcon = createImage(5, 0, 50, 50)
+    SelectText.itemSelection.boxSearch.add(that)
     that.load("js/ui-select-text/search.svg")
     that.opacity = 0.4
     that.space = 15
 
     // TEXTBOX: Search textbox
     SelectText.itemSelection.boxSearch.txtSearch = createTextBox(45, 0)
+    SelectText.itemSelection.boxSearch.add(that)
     that.width = SelectText.itemSelection.boxSearch.width - 80
     that.border = 0
     that.minimal = 1
@@ -247,6 +254,7 @@ var createItemSelection = function(connectedUI) {
 
     // BOX: Cancel button box
     SelectText.itemSelection.boxCancel = createBox(0, 50, 30, 30)
+    SelectText.itemSelection.add(that)
     that.right = 20
     that.color = "#D8D8D8"
     that.round = 15
@@ -256,11 +264,13 @@ var createItemSelection = function(connectedUI) {
 
     // IMAGE: Cancel button icon
     SelectText.itemSelection.boxCancel.imgCancel = createImage(8, 8, 14, 14)
+    SelectText.itemSelection.boxCancel.add(that)
     that.load("js/ui-select-text/cancel.svg")
     that.opacity = 0.5
 
     // BOX: Scrollable box for items
     SelectText.itemSelection.boxItems = createBox()
+    SelectText.itemSelection.add(that)
     that.left = 10
     that.bottom = 0
     that.width = page.width - 10
@@ -272,10 +282,12 @@ var createItemSelection = function(connectedUI) {
 
     // BOX: Items mask box (Top)
     SelectText.itemSelection.boxMaskTop = createBox(0, 109, page.width - 10 , 10)
+    SelectText.itemSelection.add(that)
     that.element.style.background = "linear-gradient(to bottom, #FFFFFF, #FFFFFF00)"
 
     // BOX: Items mask box (Bottom)
     SelectText.itemSelection.boxMaskBottom = createBox(0, 189, page.width - 10 , 10)
+    SelectText.itemSelection.add(that)
     that.element.style.background = "linear-gradient(to bottom, #FFFFFF00, #FFFFFF)"
     that.bottom = -1
     
@@ -297,6 +309,7 @@ var createItemSelection = function(connectedUI) {
 
         // LABEL: Item name
         boxItem.lblName = createLabel(30, 17, page.width - 70, "auto")
+        boxItem.add(that)
         that.text = connectedUI.itemList[index].name
         that.textAlign = "left"
         that.fontSize = 20
@@ -362,6 +375,7 @@ var createItemSelection = function(connectedUI) {
     // Create all items
     for (var i = 0; i < connectedUI.itemList.length; i++) {
         SelectText.itemSelection.boxItems["b" + i] = SelectText.itemSelection.createItem(i)
+        SelectText.itemSelection.boxItems.add(that)
     }
 
     // Highlight selected item

@@ -20,29 +20,32 @@ var loginView = {}
 
 loginView.create = function() {
 
-    // BOX: Kilit ekranı sayfası.
-    loginView.me = createBox(0, 0, global.CONTENT_WIDTH, page.height)
+    // BOX: Content container box.
+    loginView.box = createBox(0, 0, global.CONTENT_WIDTH, page.height)
     that.border = 0
     // that.element.style.backgroundImage = "radial-gradient(steelblue, black)"
     that.element.style.backgroundImage = "radial-gradient(white, white, lightgray)"
     //that.center("left")
     that.setMotion("opacity 0.3s, transform 0.5s")
 
-    // BOX: Giriş sayfasının içindeki beyaz kutu.
-    loginView.me.b1 = createBox(0, 0, 500, 480)
+    // BOX: Form background box.
+    loginView.box.b1 = createBox(0, 0, 500, 480)
+    loginView.box.add(that)
     that.color = "transparent"
     that.border = 0
     that.round = 13
     that.center()
 
-    // Giriş sayfası logo
-    loginView.me.b1.imgLogo = createImage(0, 20, 100, 100)
+    // IMAGE: Logo image.
+    loginView.box.b1.imgLogo = createImage(0, 20, 100, 100)
+    loginView.box.b1.add(that)
     that.load("images/view-login/lock.png")
     that.opacity = 1
     that.center("left")
 
-    // Giriş sayfası, kullanıcı adı metin kutusu
-    loginView.me.b1.txtName = createTextBox(0, 200, 400)
+    // TEXTBOX: User.
+    loginView.box.b1.txtName = createTextBox(0, 200, 400)
+    loginView.box.b1.add(that)
     that.title = "User Name:"
     that.text = "admin"
     that.color = "#f6f6f6"
@@ -51,8 +54,9 @@ loginView.create = function() {
     that.minimal = 1
     that.center("left")
 
-    // Giriş sayfası, şifre metin kutusu
-    loginView.me.b1.txtPass = createTextBox(0, 300, 400)
+    // TEXTBOX: password.
+    loginView.box.b1.txtPass = createTextBox(0, 300, 400)
+    loginView.box.b1.add(that)
     that.title = "Password:"
     that.text = "1111"
     that.color = "#f6f6f6"
@@ -63,29 +67,32 @@ loginView.create = function() {
     // Metin kutusunun tipini, şifre girişi olarak değiştir.
     that.inputElement.setAttribute("type", "password")
 
-    // Giriş sayfası, giriş düğmesi
-    loginView.me.b1.btnLogin = createButton()
+    // BUTTON: log in.
+    loginView.box.b1.btnLogin = createButton()
+    loginView.box.b1.add(that)
     that.text = "Log in"
     that.width = 150
     that.fontSize = 24
-    that.aline(loginView.me.b1.txtPass, "bottom", 40)
+    that.aline(loginView.box.b1.txtPass, "bottom", 40)
     that.right = 50
     that.round = 4
     that.color = "#3871E0"
     that.textColor = "white"
     that.minimal = 1
     that.onClick(function() {
-        loginView.me.visible = 0
+        loginView.box.visible = 0
     })
 
-    // Giriş sayfası, Beni hatırla kutusu
-    loginView.me.b1.boxRemember = createUIToggle(10, 10)
-    that.aline(loginView.me.b1.txtPass, "bottom", 45)
+    // UI TOGGLE: Remember me.
+    loginView.box.b1.boxRemember = createUIToggle(10, 10)
+    loginView.box.b1.add(that)
+    that.aline(loginView.box.b1.txtPass, "bottom", 45)
 
-    // Giriş sayfası, Beni hatırla metni
-    loginView.me.b1.lblBoxRemember = createLabel()
+    // LABEL: Remember me text.
+    loginView.box.b1.lblBoxRemember = createLabel()
+    loginView.box.b1.add(that)
     that.text = "Remember me"
-    that.aline(loginView.me.b1.boxRemember, "right", 10)
+    that.aline(loginView.box.b1.boxRemember, "right", 10)
     that.fontSize = 16
     that.top += 8
 
@@ -94,11 +101,11 @@ loginView.create = function() {
 }
 
 loginView.lock = function() {
-    loginView.me.visible = 1
+    loginView.box.visible = 1
 
 }
 
 loginView.open = function() {
-    loginView.me.visible = 0
+    loginView.box.visible = 0
 
 }

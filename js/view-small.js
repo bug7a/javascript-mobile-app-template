@@ -28,11 +28,11 @@ smallView.create = function() {
     )
     //that.color = "rgba(0, 0, 0, 0.8)"
     that.color = "transparent"
-    that.setMotion("opacity 0.3s, transform 0.5s")
     that.visible = 0
 
     // BOX: background box.
     smallView.box.boxBackground = createBox(0, 0, global.CONTENT_WIDTH, page.height)
+    smallView.box.add(that)
     that.color = "rgba(0, 0, 0, 0.8)"
     that.onClick(function() {
         smallView.setVisible(0)
@@ -40,6 +40,7 @@ smallView.create = function() {
 
     // BOX: Content container box.
     smallView.box.b1 = createBox(0, 0, global.CONTENT_WIDTH, 500)
+    smallView.box.add(that)
     that.element.style.borderTopLeftRadius = "50px"
     that.element.style.borderTopRightRadius = "50px"
     that.bottom = 0
@@ -57,30 +58,7 @@ smallView.clean = function() {
 
 smallView.setVisible = function(visible) {
 
-    if (visible != smallView.visible) {
-        if (visible) {
-            smallView.box.dontMotion()
-            smallView.box.element.style.transform = "scale(1.4)"
-            smallView.box.opacity = 0
-            smallView.box.visible = 1
-            smallView.box.withMotion(function(self) {
-                self.element.style.transform = "scale(1)"
-                self.opacity = 1
-            })
-        } else {
-            smallView.box.dontMotion()
-            smallView.box.element.style.transform = "scale(1)"
-            smallView.box.opacity = 1
-            smallView.box.withMotion(function(self) {
-                self.element.style.transform = "scale(1.4)"
-                self.opacity = 0
-                setTimeout(function() { 
-                    smallView.box.visible = 0
-                    smallView.clean()
-                }, 300)
-            })
-        }
-    }
+    smallView.box.visible = visible
 }
 
 smallView.createAndShowContent = function(content) {

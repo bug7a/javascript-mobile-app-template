@@ -1,9 +1,6 @@
 
 var searchContent = {}
 
-// BOX: Container
-searchContent.box
-
 // Meyve, sebze listesi
 searchContent.plantItemDataList = [
     { title:"Broccoli", desc:"Vegetable", iconPath:"images/fruids/brokoli.png", searchText: "Broccoli Vegetable" },
@@ -30,29 +27,35 @@ searchContent.createIn = function(box) {
 
     // BOX: Search container box
     box.boxSearch = createBox(0, 0, global.CONTENT_WIDTH, 110)
+    box.add(that)
     that.color = "white"
     //that.color = "whitesmoke"
 
     // UI SEARCH BOX: Search box in boxSearch
     box.boxSearch.plantUISearchBox = createUISearchBox(0, 0, global.CONTENT_WIDTH - 60)
+    box.boxSearch.add(that)
     that.left = 30
     that.top = 40
     //that.color = "white"
     //that.txtSearch.color = "white"
 
-    // UI ITEM LIST: Categoriy items (vertical)
+    // UI ITEM LIST: Category items (vertical)
     box.plantUIItemList = createUIItemList(0, 0, global.CONTENT_WIDTH, box.height - box.boxSearch.height)
+    box.add(that)
     that.color = "transparent"
     //that.color = "white"
     that.top = box.boxSearch.height
     that.setItemAlign("vertical")
-    that.setBorderSpaces(0, 10, 0, 10)
+    that.setInnerSpaces(0, 10, 0, 10)
     that.setCreateFunctionOfItem(searchContent.createPlantItem)
-    that.setItemsWithData(searchContent.plantItemDataList)
+    that.createItemsByDataList(searchContent.plantItemDataList)
     that.onItemClick(searchContent.selectClickedPlantItem)
 
     // Connect search box with plant item list
-    box.boxSearch.plantUISearchBox.onCharChange(box.plantUIItemList.searchItemByText)
+    box.boxSearch.plantUISearchBox.onSearch(function(uiSearchBox, searchText) {
+        box.plantUIItemList.searchItemByText(searchText)
+    })
+        
 
 }
 
@@ -60,11 +63,11 @@ searchContent.open = function() {
     navigationBar.setVisible(0)
     tabBar.setVisible(1)
     tabBar.setSelectedIndex(1)
-    defaultView.setTopAndBottomSpaces(0, tabBar.HEIGHT)
+    defaultView.setTopAndBottom(0, tabBar.HEIGHT)
     defaultView.createAndShowContent(searchContent)
 }
 
-searchContent.createPlantItem = function(dataItem) {
+searchContent.createPlantItem = function(itemData) {
 
     //var ITEM_WIDTH = 150
     var ITEM_WIDTH = global.CONTENT_WIDTH
@@ -75,24 +78,28 @@ searchContent.createPlantItem = function(dataItem) {
 
     // BOX: Item background box
     box.boxBackground = createBox(10, 2, ITEM_WIDTH - 20, 90)
+    box.add(that)
     that.color = "transparent"
     that.round = 13
     that.setMotion("background-color 0.3s")
 
     // IMAGE: Item icon image
     box.imgLogo = createImage(30, 12, 70, 70)
-    that.load(dataItem.iconPath)
+    box.add(that)
+    that.load(itemData.iconPath)
     that.round = 4
     that.color = "transparent"
     that.border = 0
 
     // LABEL: Item title text
     box.lblTitle = createLabel(120, 25, 280, "auto")
-    that.text = dataItem.title
+    box.add(that)
+    that.text = itemData.title
 
     // LABEL: Item description text
     box.lblDesc = createLabel(120, 49, 280, "auto")
-    that.text = dataItem.desc
+    box.add(that)
+    that.text = itemData.desc
     that.textColor = "gray"
     that.fontSize = 14
 
@@ -100,26 +107,26 @@ searchContent.createPlantItem = function(dataItem) {
     return box
 }
 
-searchContent.selectClickedPlantItem = function(uiItemList, itemObject, exItemObject) {
+searchContent.selectClickedPlantItem = function(uiItemList, clickedItem, prevClickedItem) {
 
-    if (itemObject.isSelected() == 0) {
-        if (exItemObject) {
-            exItemObject.boxBackground.color = "transparent"
-            //exItemObject.boxBackground.element.style.background = "transparent"
-            uiItemList.removeItemFromSelectedList(exItemObject)
+    if (clickedItem.isSelected() == 0) {
+        if (prevClickedItem) {
+            prevClickedItem.boxBackground.color = "transparent"
+            //prevClickedItem.boxBackground.element.style.background = "transparent"
+            uiItemList.removeItemFromSelectedList(prevClickedItem)
         }
         // "whitesmoke", "#EAEAE9", "#BFDBC9", "#CADAE0", "#FFF0C2"
-        itemObject.boxBackground.color = "whitesmoke"
-        //itemObject.boxBackground.element.style.background = "linear-gradient(to top, #FFFFFF00, #FFF0C2)"
-        //itemObject.boxBackground.element.style.background = "linear-gradient(to bottom, #FFFFFF00, whitesmoke)"
-        uiItemList.addItemToSelectedList(itemObject)
+        clickedItem.boxBackground.color = "whitesmoke"
+        //clickedItem.boxBackground.element.style.background = "linear-gradient(to top, #FFFFFF00, #FFF0C2)"
+        //clickedItem.boxBackground.element.style.background = "linear-gradient(to bottom, #FFFFFF00, whitesmoke)"
+        uiItemList.addItemToSelectedList(clickedItem)
 
-        print("Selected plant: " + itemObject.getIndex() + "-" + itemObject.getData().title)
+        print("Selected plant: " + clickedItem.getIndex() + "-" + clickedItem.getData().title)
     }
 
-    searchPreviewContent.title = itemObject.getData().title
-    searchPreviewContent.description = itemObject.getData().desc
-    searchPreviewContent.imagePath = itemObject.getData().iconPath
+    searchPreviewContent.title = clickedItem.getData().title
+    searchPreviewContent.description = clickedItem.getData().desc
+    searchPreviewContent.imagePath = clickedItem.getData().iconPath
 
     searchPreviewContent.open()
 }
