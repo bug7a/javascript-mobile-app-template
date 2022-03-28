@@ -51,13 +51,13 @@ var UIStepper = {}
 
 var createUIStepper = function(left = 0, top = 0, width = 130) {
 
-	// PRIVATE VARIABLES:
+	// *** PRIVATE VARIABLES:
 	var minimumNumber = 1
 	var maximumNumber = 10
 	var defaultNumber = 1
 	var onChangeFunc = function() {}
 	
-	// OBJECT MODEL:
+	// *** OBJECT MODEL:
 	// BOX: Object container box.
 	var box = createBox(left, top, width, 45)
 	that.border = 0
@@ -68,6 +68,7 @@ var createUIStepper = function(left = 0, top = 0, width = 130) {
 
 	// LABEL: Decrease button. (-)
 	box.imgDecrease = createImage(2, 2, 41, 41)
+	box.add(that)
 	//box.imgDecrease = createImage(0, 0, 45, 45)
 	that.load("js/ui-stepper/decrease.svg")
 	that.border = 0
@@ -80,6 +81,7 @@ var createUIStepper = function(left = 0, top = 0, width = 130) {
 	
 	// LABEL: Number text.
 	box.lblNumber = createLabel(0, 6)
+	box.add(that)
 	that.fontSize = 22
 	that.textAlign = "center"
 	that.textColor = "rgba(0, 0, 0, 0.8)"
@@ -90,6 +92,7 @@ var createUIStepper = function(left = 0, top = 0, width = 130) {
 	
 	// LABEL: Increase button. (+)
 	box.imgIncrease = createImage(2, 2, 41, 41)
+	box.add(that)
 	that.right = 2
 	//box.imgIncrease = createImage(0, 0, 45, 45)
 	//that.right = 0
@@ -102,9 +105,10 @@ var createUIStepper = function(left = 0, top = 0, width = 130) {
 	that.space = 0
 	that.element.style.cursor = "pointer"
 	
-	// GLOBAL VARIABLES:
+	// *** GLOBAL VARIABLES:
+	box.test = ""
 	
-	// PRIVATE METHODS:
+	// *** PRIVATE METHODS:
 	var increaseNumber = function(self, event) {
 		event.stopPropagation()
 		if (num(box.lblNumber.text) != maximumNumber) {
@@ -121,7 +125,7 @@ var createUIStepper = function(left = 0, top = 0, width = 130) {
 		}
 	}
 	
-	// GLOBAL METHODS:
+	// *** GLOBAL METHODS:
 	box.refreshButtonsOpacity = function() {
 
 		box.imgIncrease.opacity = 0.9
@@ -195,7 +199,7 @@ var createUIStepper = function(left = 0, top = 0, width = 130) {
 		onChangeFunc = func
 	}
 
-	// RUN:
+	// *** CODE:
 	box.imgDecrease.onClick(decreaseNumber)
 	box.imgIncrease.onClick(increaseNumber)
 	box.setValue(defaultNumber)

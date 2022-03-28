@@ -15,6 +15,7 @@
         <script src="cordova.js" type="text/javascript" charset="utf-8"></script>
 
         <script src="js/global.js" type="text/javascript" charset="utf-8"></script>
+        
         <script src="js/ui-click-effect.js" type="text/javascript" charset="utf-8"></script>
         <script src="js/ui-search-box.js" type="text/javascript" charset="utf-8"></script>
         <script src="js/ui-navigation-bar.js" type="text/javascript" charset="utf-8"></script>
@@ -28,20 +29,25 @@
         <script src="js/ui-web-view.js" type="text/javascript" charset="utf-8"></script>
 
         <script src="js/shared.js" type="text/javascript" charset="utf-8"></script>
+
         <script src="js/view-default.js" type="text/javascript" charset="utf-8"></script>
         <script src="js/view-second.js" type="text/javascript" charset="utf-8"></script>
         <script src="js/view-small.js" type="text/javascript" charset="utf-8"></script>
         <script src="js/view-login.js" type="text/javascript" charset="utf-8"></script>
 
-        <script src="js/content-search-preview.js" type="text/javascript" charset="utf-8"></script>
-        <script src="js/content-subusage-example.js" type="text/javascript" charset="utf-8"></script>
-        <script src="js/content-secondusage-example.js" type="text/javascript" charset="utf-8"></script>
-        <script src="js/content-num8.js" type="text/javascript" charset="utf-8"></script>
-        <script src="js/content-home.js" type="text/javascript" charset="utf-8"></script>
-        <script src="js/content-search.js" type="text/javascript" charset="utf-8"></script>
-        <script src="js/content-alert.js" type="text/javascript" charset="utf-8"></script>
-        <script src="js/content-fav.js" type="text/javascript" charset="utf-8"></script>
-        <script src="js/content-setting.js" type="text/javascript" charset="utf-8"></script>
+        <script src="js/contents/search-preview.js" type="text/javascript" charset="utf-8"></script>
+        <script src="js/contents/subusage-example.js" type="text/javascript" charset="utf-8"></script>
+        <script src="js/contents/secondusage-example.js" type="text/javascript" charset="utf-8"></script>
+        <script src="js/contents/num8.js" type="text/javascript" charset="utf-8"></script>
+        <script src="js/contents/home.js" type="text/javascript" charset="utf-8"></script>
+        <script src="js/contents/search.js" type="text/javascript" charset="utf-8"></script>
+        <script src="js/contents/folder-action.js" type="text/javascript" charset="utf-8"></script>
+        <script src="js/contents/folder-new.js" type="text/javascript" charset="utf-8"></script>
+        <script src="js/contents/folder.js" type="text/javascript" charset="utf-8"></script>
+        <script src="js/contents/alert.js" type="text/javascript" charset="utf-8"></script>
+        <script src="js/contents/fav.js" type="text/javascript" charset="utf-8"></script>
+        <script src="js/contents/setting.js" type="text/javascript" charset="utf-8"></script>
+
         <script src="js/controller-content.js" type="text/javascript" charset="utf-8"></script>
         
         <style>
@@ -106,6 +112,7 @@
 
             // Supports all screen resolutions (Orientation: portrait)
             page.fit(global.CONTENT_WIDTH, global.MAX_ZOOMABLE_WIDTH)
+            basic.autoAddObjectIntoBoxController.setActive(0)
 
             page.color = "white"
 
@@ -119,7 +126,7 @@
             
             // UI OBJECT: Image buttons at bottom:
             tabBar.create()
-            tabBar.setItems(tabBarItemDataList)
+            tabBar.createItemsByDataList(tabBarItemDataList)
             tabBar.onClick(contentController.openContentById)
 
             // UI OBJECT: If you need a view without unload defaultView object:
@@ -130,7 +137,7 @@
 
             // UI OBJECT: Right side menu:
             menuBar.create()
-            menuBar.setItems(menuBarItemDataList)
+            menuBar.createItemsByDataList(menuBarItemDataList)
             menuBar.onClick(contentController.openContentById)
 
             // UI OBJECT: Login view:

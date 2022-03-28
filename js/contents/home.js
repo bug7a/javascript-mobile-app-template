@@ -1,7 +1,7 @@
 
 var homeContent = {}
 
-homeContent.categoriesItemDataList = [
+homeContent.categoryItemDataList = [
     { categoryId: "a", title: "Coffee", iconPath: "images/categories/coffee.png", searchText: "Coffee Hot" },
     { categoryId: "b", title: "Coffee Cup", iconPath: "images/categories/coffee-cup.png", searchText: "Coffee Cup Hot" },
     { categoryId: "c", title: "Iced Caffee", iconPath: "images/categories/iced-caffee.png", searchText: "Iced Caffee Cold" },
@@ -13,7 +13,7 @@ homeContent.categoriesItemDataList = [
     { categoryId: "i", title: "Orange Juice", iconPath: "images/categories/orange-juice.png", searchText: "Orange Juice Cold" }
 ]
 
-homeContent.cardsItemDataList = [
+homeContent.cardItemDataList = [
     { title: "Armchair", price: "50", iconPath: "images/cards/armchair.png", searchText: "i g h i" },
     { title: "Bed", price:"86", iconPath: "images/cards/bed.png", searchText: "h f g c" },
     { title: "Bunk", price:"120", iconPath: "images/cards/bunk.png", searchText: "g e g" },
@@ -29,53 +29,59 @@ homeContent.createIn = function(box) {
     homeContent.box = box
     box.color = "#5ABB9F"
     //box.color = "whitesmoke"
-    //box.color = "gold"
     
     // UI TITLE: Categories title
-    box.categoriesUITitle = shared.createRelativeUITitle("Categories", "white")
+    box.categoryUITitle = shared.createRelativeUITitle("Categories", "white")
+    box.add(that)
 
-    // UI SEARCH BOX: Search box in categoriesUITitle
-    box.categoriesUITitle.categoriesUISearchBox = createUISearchBox(0, 0, 200)
+    // UI SEARCH BOX: Search box in categoryUITitle
+    box.categoryUITitle.categoryUISearchBox = createUISearchBox(0, 0, 200)
+    box.categoryUITitle.add(that)
     that.right = 30
     that.bottom = 20
     //that.color = "white"
     //that.setWidth(300)
     //that.setPlaceholderText("")
     //that.border = 0
-
+    
     // UI ITEM LIST: Categoriy items in horizontal list
-    box.categoriesUIItemList = createUIItemList(0, 0, global.CONTENT_WIDTH, 200)
+    box.categoryUIItemList = createUIItemList(0, 0, global.CONTENT_WIDTH, 200)
+    box.add(that)
     that.color = "white"
     //that.color = "whitesmoke"
     that.element.style.position = "relative"
     that.setItemAlign("horizontal")
-    that.setBorderSpaces(10, 0, 10, 0)
+    that.setInnerSpaces(10, 0, 10, 0)
     that.setCreateFunctionOfItem(homeContent.createCategoryItem)
-    that.setItemsWithData(homeContent.categoriesItemDataList)
+    that.createItemsByDataList(homeContent.categoryItemDataList)
     that.onItemClick(homeContent.selectClickedCategoryItem)
     
     // Connect search box with category item list
-    box.categoriesUITitle.categoriesUISearchBox.onCharChange(box.categoriesUIItemList.searchItemByText)
+    box.categoryUITitle.categoryUISearchBox.onSearch(function(uiSearchBox, searchText) {
+        box.categoryUIItemList.searchItemByText(searchText)
+    })
 
     // UI TITLE: Cards title
-    box.cardsUITitle = shared.createRelativeUITitle("Cards", "transparent")
+    box.cardUITitle = shared.createRelativeUITitle("Cards", "transparent")
+    box.add(that)
 
     // UI ITEM LIST: Categoriy items in vertical list
-    box.cardsUIItemList = createUIItemList(0, 0, global.CONTENT_WIDTH, 400)
+    box.cardUIItemList = createUIItemList(0, 0, global.CONTENT_WIDTH, 400)
+    box.add(that)
     that.color = "transparent"
     //that.color = "white"
     that.element.style.position = "relative"
     that.setItemAlign("horizontal")
-    that.setBorderSpaces(10, 0, 10, 0)
+    that.setInnerSpaces(10, 0, 10, 0)
     that.setCreateFunctionOfItem(homeContent.createCardItem)
-    that.setItemsWithData(homeContent.cardsItemDataList)
+    that.createItemsByDataList(homeContent.cardItemDataList)
     that.onItemClick(homeContent.selectClickedCardItem)
     //that.selectItemByIndex(0)
     //that.selectItemByIndex(1)
 
-    // Select category, after cardsUIItemList created. 
+    // Select category, after cardUIItemList created. 
     // NOTE: We connected them in homeContent.selectClickedCategoryItem() function.
-    box.categoriesUIItemList.selectItemByIndex(0)
+    box.categoryUIItemList.selectItemByIndex(0)
 }
 
 homeContent.open = function() {
@@ -83,11 +89,11 @@ homeContent.open = function() {
     navigationBar.setVisible(0)
     tabBar.setVisible(1)
     tabBar.setSelectedIndex(0)
-    defaultView.setTopAndBottomSpaces(0, tabBar.HEIGHT)
+    defaultView.setTopAndBottom(0, tabBar.HEIGHT)
     defaultView.createAndShowContent(homeContent)
 }
 
-homeContent.createCategoryItem = function(dataItem) {
+homeContent.createCategoryItem = function(itemData) {
 
     //var ITEM_WIDTH = 150
     var ITEM_WIDTH = 129
@@ -98,20 +104,23 @@ homeContent.createCategoryItem = function(dataItem) {
 
     // BOX: Item background box
     box.boxBackground = createBox(2, 5, ITEM_WIDTH - 4, 190)
+    box.add(that)
     that.color = "transparent"
     that.round = 13
     that.setMotion("background-color 0.3s")
 
     // BOX: Icon background box
     box.boxIconBackground = createBox(0, 35, 90, 90)
+    box.add(that)
     that.round = 50
     that.color = "rgba(255, 255, 255, 0.3)"
     that.setMotion("background-color 0.3s")
     that.center("left")
-
+    
     // IMAGE: icon image
     box.imgIcon = createImage(0, 0, 70, 70)
-    that.load(dataItem.iconPath)
+    box.add(that)
+    that.load(itemData.iconPath)
     that.aline(box.boxIconBackground)
     that.left += 10
     that.top += 10
@@ -119,7 +128,8 @@ homeContent.createCategoryItem = function(dataItem) {
 
     // LABEL: item name text
     box.lblName = createLabel(0, 0, ITEM_WIDTH, 30)
-    that.text = dataItem.title
+    box.add(that)
+    that.text = itemData.title
     that.bottom = 30
     that.textAlign = "center"
 
@@ -127,35 +137,35 @@ homeContent.createCategoryItem = function(dataItem) {
     return box
 }
 
-homeContent.selectClickedCategoryItem = function(uiItemList, itemObject, exItemObject) {
+homeContent.selectClickedCategoryItem = function(uiItemList, clickedItem, prevClickedItem) {
 
-    if (itemObject.isSelected() == 0) {
+    if (clickedItem.isSelected() == 0) {
 
-        if (exItemObject) {
-            exItemObject.boxBackground.color = "transparent"
-            exItemObject.boxIconBackground.color = "rgba(255, 255, 255, 0.3)"
-            exItemObject.lblName.element.style.fontFamily = "opensans"
-            exItemObject.imgIcon.element.style.transform = "scale(1)"
-            uiItemList.removeItemFromSelectedList(exItemObject)
+        if (prevClickedItem) {
+            prevClickedItem.boxBackground.color = "transparent"
+            prevClickedItem.boxIconBackground.color = "rgba(255, 255, 255, 0.3)"
+            prevClickedItem.lblName.element.style.fontFamily = "opensans"
+            prevClickedItem.imgIcon.element.style.transform = "scale(1)"
+            uiItemList.removeItemFromSelectedList(prevClickedItem)
         }
 
         // Selected item properties
-        itemObject.boxBackground.color = "white"
-        itemObject.boxIconBackground.color = "transparent"
-        itemObject.lblName.element.style.fontFamily = "opensans-bold"
-        itemObject.imgIcon.element.style.transform = "scale(1.5)"
-        uiItemList.addItemToSelectedList(itemObject)
+        clickedItem.boxBackground.color = "white"
+        clickedItem.boxIconBackground.color = "transparent"
+        clickedItem.lblName.element.style.fontFamily = "opensans-bold"
+        clickedItem.imgIcon.element.style.transform = "scale(1.5)"
+        uiItemList.addItemToSelectedList(clickedItem)
 
-        print("Selected category: " + itemObject.getIndex() + "-" + itemObject.getData().title)
+        print("Selected category: " + clickedItem.getIndex() + "-" + clickedItem.getData().title)
 
         // Filter cards by selected category id:
-        if (homeContent.box.cardsUIItemList) {
-            homeContent.box.cardsUIItemList.searchItemByText(itemObject.getData().categoryId)
+        if (homeContent.box.cardUIItemList) {
+            homeContent.box.cardUIItemList.searchItemByText(clickedItem.getData().categoryId)
         }
     }
 }
 
-homeContent.createCardItem = function(dataItem) {
+homeContent.createCardItem = function(itemData) {
 
     //var ITEM_WIDTH = 150
     var ITEM_WIDTH = 350
@@ -166,6 +176,7 @@ homeContent.createCardItem = function(dataItem) {
 
     // BOX: Item background box
     box.boxBackground = createBox(2, 10, ITEM_WIDTH - 4, 380)
+    box.add(that)
     that.color = "rgba(255, 255, 255, 0.1)"
     that.round = 13
     that.border = 0
@@ -174,19 +185,22 @@ homeContent.createCardItem = function(dataItem) {
 
     // IMAGE: icon image
     box.imgIcon = createImage(0, 50, 200, 200)
-    that.load(dataItem.iconPath)
+    box.add(that)
+    that.load(itemData.iconPath)
     that.center("left")
 
     // LABEL: item name text
     box.lblName = createLabel(0, 300, ITEM_WIDTH, 38)
-    that.text = dataItem.title
+    box.add(that)
+    that.text = itemData.title
     that.fontSize = 28
     that.textAlign = "center"
     that.setMotion("top 0.3s")
 
     // LABEL: item price text
     box.lblPrice = createLabel(0, 0, "auto", "auto")
-    that.text = "$" + dataItem.price
+    box.add(that)
+    that.text = "$" + itemData.price
     that.top = 20
     that.right = 10
     that.color = "rgba(255, 255, 255, 0.4)"
@@ -197,16 +211,11 @@ homeContent.createCardItem = function(dataItem) {
     that.borderColor = "rgba(255, 255, 255, 0.8)"
     that.fontSize = 28
     that.element.style.fontFamily = "opensans-bold"
-    /*
-    that.aline(box.lblName, "bottom", 20)
-    that.onResize(function(self) {
-        self.center("left")
-    })
-    */
     
     // UI STEPPER: Count of product.
     box.countUIStepper = createUIStepper()
-    that.connectedItemName = dataItem.title
+    box.add(that)
+    that.connectedItemName = itemData.title
     that.bottom = 35
     that.opacity = 0
     that.center("left")
@@ -223,33 +232,33 @@ homeContent.createCardItem = function(dataItem) {
     })
 
     // First cards stepper object global name:
-    // homeContent.box.cardsUIItemList.getSelectedItemList()[0].countUIStepper
+    // homeContent.box.cardUIItemList.getSelectedItemList()[0].countUIStepper
 
     makeBasicObject(box)
     return box
 }
 
-homeContent.selectClickedCardItem = function(uiItemList, itemObject, exItemObject) {
+homeContent.selectClickedCardItem = function(uiItemList, clickedItem, prevClickedItem) {
 
     // Multi selection
-    if (itemObject.isSelected() == 0) {
-        itemObject.boxBackground.border = 2
-        //itemObject.boxBackground.borderColor = "rgba(255, 255, 255, 0.8)"
-        itemObject.boxBackground.color = "rgba(255, 255, 255, 0.3)"
-        itemObject.countUIStepper.element.style.transform = "scale(1)"
-        itemObject.countUIStepper.opacity = 1
-        itemObject.lblName.top = 270
-        uiItemList.addItemToSelectedList(itemObject)
+    if (clickedItem.isSelected() == 0) {
+        clickedItem.boxBackground.border = 2
+        //clickedItem.boxBackground.borderColor = "rgba(255, 255, 255, 0.8)"
+        clickedItem.boxBackground.color = "rgba(255, 255, 255, 0.3)"
+        clickedItem.countUIStepper.element.style.transform = "scale(1)"
+        clickedItem.countUIStepper.opacity = 1
+        clickedItem.lblName.top = 270
+        uiItemList.addItemToSelectedList(clickedItem)
 
     } else {
-        itemObject.boxBackground.border = 0
-        //itemObject.boxBackground.borderColor = "rgba(255, 255, 255, 0.0)"
-        itemObject.boxBackground.color = "rgba(255, 255, 255, 0.1)"
-        itemObject.countUIStepper.element.style.transform = "scale(0.1)"
-        itemObject.countUIStepper.opacity = 0
-        itemObject.countUIStepper.setValue(1)
-        itemObject.lblName.top = 300
-        uiItemList.removeItemFromSelectedList(itemObject)
+        clickedItem.boxBackground.border = 0
+        //clickedItem.boxBackground.borderColor = "rgba(255, 255, 255, 0.0)"
+        clickedItem.boxBackground.color = "rgba(255, 255, 255, 0.1)"
+        clickedItem.countUIStepper.element.style.transform = "scale(0.1)"
+        clickedItem.countUIStepper.opacity = 0
+        clickedItem.countUIStepper.setValue(1)
+        clickedItem.lblName.top = 300
+        uiItemList.removeItemFromSelectedList(clickedItem)
     }
     print("Total selected cards: " + uiItemList.getSelectedItemList().length)
 }

@@ -10,9 +10,9 @@ favContent.createIn = function(box) {
     box.color = "white"
     
     box.webView = createUIWebView(0, 0, box.width, box.height)
+    box.add(that)
     that.loadContentFromURL("todo.htm")
     //that.content.a0.b1.txtNewTask.color = "red"
-
 }
 
 favContent.open = function() {
@@ -20,6 +20,6 @@ favContent.open = function() {
     navigationBar.setVisible(0)
     tabBar.setVisible(1)
     tabBar.setSelectedIndex(3)
-    defaultView.setTopAndBottomSpaces(0, tabBar.HEIGHT)
+    defaultView.setTopAndBottom(0, tabBar.HEIGHT)
     defaultView.createAndShowContent(favContent)
 }

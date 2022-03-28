@@ -1,12 +1,9 @@
 
 var contentNum8 = {}
 
-// BOX: İçerik taşıyıcısı
-contentNum8.box
+contentNum8.createIn = function(box) {
 
-contentNum8.createIn = function(boxView) {
-
-    contentNum8.box = boxView
+    contentNum8.box = box
     
     // LABEL: Sayfanın ortasındaki yazı
     contentNum8.box.lblContent = createLabel(0, 0, "auto", "auto")

@@ -18,7 +18,7 @@ contentController.openContentById = function(contentId) {
                 navigationBar.menuButton.setVisible(1)
                 tabBar.setVisible(1)
                 tabBar.setSelectedIndex(0)
-                defaultView.setTopAndBottomSpaces(navigationBar.HEIGHT, tabBar.HEIGHT)
+                defaultView.setTopAndBottom(navigationBar.HEIGHT, tabBar.HEIGHT)
                 defaultView.createAndShowContent(homeContent)
                 break;
 

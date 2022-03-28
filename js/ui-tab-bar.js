@@ -24,7 +24,7 @@ tabBar.onChangeFunc = function() {}
 
 tabBar.create = function() {
 
-    // BOX: object container box
+    // BOX: Object container box.
     tabBar.box = createBox()
     that.width = global.CONTENT_WIDTH
     that.height = tabBar.HEIGHT
@@ -35,17 +35,12 @@ tabBar.create = function() {
     // that.round = 20
     that.element.style.boxShadow = "0px 0px 8px rgba(0, 0, 0, 0.2)"
     that.element.style.textAlign = "center"
-    that.setMotion("top 0.3s, opacity 0.3s")
+    that.top = page.height - tabBar.HEIGHT
+    that.visible = 0
 
-    that.top = page.height
-    that.opacity = 0
-    that.withMotion(function(self) {
-        self.top = page.height - tabBar.HEIGHT
-        self.opacity = 1
-    })
-
-    // BOX: Selected item background highlight
+    // BOX: Selected item background highlight.
     tabBar.box.boxHighLight = createBox(0, 5, 70, 70)
+    tabBar.box.add(that)
     that.round = 50
     that.border = 0
     that.borderColor = "lightgray"
@@ -54,7 +49,7 @@ tabBar.create = function() {
     that.setMotion("left 0.3s, background-color 0.3s")
 }
 
-tabBar.setItems = function(list) {
+tabBar.createItemsByDataList = function(list) {
 
     tabBar.removeAll()
 
@@ -69,6 +64,7 @@ tabBar.addItem = function(item, index) {
 
     // IMAGE: item image
     tabBar.box[itemName] = createImage()
+    tabBar.box.add(that)
     that.load(item.iconPath)
     that.width = tabBar.HEIGHT
     that.height = tabBar.HEIGHT
@@ -95,7 +91,6 @@ tabBar.addItem = function(item, index) {
     tabBar.itemList.push(that)
 
     makeBasicObject(that)
-
 }
 
 tabBar.setSelectedIndex = function(index) {
@@ -138,21 +133,16 @@ tabBar.removeAll = function() {
 
 tabBar.setVisible = function(visible) {
 
-    if (visible == 1) {
-        tabBar.box.top = page.height - tabBar.HEIGHT
-        tabBar.box.opacity = 1
-
-    } else {
-        tabBar.box.top = page.height
-        tabBar.box.opacity = 0
-    }
+    tabBar.box.visible = visible
 }
 
 tabBar.getVisible = function() {
-    return tabBar.box.opacity
+
+    return tabBar.box.visible
 }
 
 tabBar.onClick = function(func) {
+    
     tabBar.onChangeFunc = func
 }
 

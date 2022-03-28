@@ -24,6 +24,11 @@ clickEffect.create = function() {
 
         if (clickEffect.active) {
 
+            var lastSelectedBox = getSelectedBox()
+            if (lastSelectedBox != page) {
+                selectBox(page)
+            }
+
             var e = window.event;
             var posX = e.clientX;
             var posY = e.clientY;
@@ -52,16 +57,14 @@ clickEffect.create = function() {
 
                 _that.remove()
             }, 2500)
+
+            selectBox(lastSelectedBox)
         }
     })
 }
 
-clickEffect.show = function() {
-    clickEffect.active = 1
-}
-
-clickEffect.hide = function() {
-    clickEffect.active = 0
+clickEffect.setActive = function(value) {
+    clickEffect.active = value
 }
 
             

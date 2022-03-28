@@ -31,12 +31,14 @@ navigationBar.create = function() {
     that.border = 0
     that.color = "white"
     that.element.style.boxShadow = "0px 6px 8px rgba(0, 0, 0, 0.1)"
-    that.setMotion("top 0.3s, opacity 0.3s")
+    //that.setMotion("top 0.3s, opacity 0.3s")
     that.top = 0
-    that.opacity = 0
+    //that.opacity = 0
+    that.visible = 0
 
     // IMAGE: Go back button:
     navigationBar.box.btnBack = createImage(30, 32, 50, 50)
+    navigationBar.box.add(that)
     that.load("images/ui-navigation-bar/back.svg")
     that.space = 4
     that.visible = 0
@@ -47,14 +49,16 @@ navigationBar.create = function() {
 
     // LABEL: Title text
     navigationBar.box.lblTitle = createLabel(0, 37, 400)
+    navigationBar.box.add(that)
     that.textAlign = "center"
     that.element.style.fontFamily = "opensans-bold"
     that.fontSize = 28
     that.center("left")
-    that.setMotion("opacity 0.3s, transform 0.3s")
+    //that.setMotion("opacity 0.3s, transform 0.3s")
 
     // IMAGE: Open/close menu button
     navigationBar.box.btnMenu = createImage(0, 0, 50, 50)
+    navigationBar.box.add(that)
     that.load("images/ui-navigation-bar/menu6.svg")
     that.border = 0
     that.borderColor = "lightgray"
@@ -72,7 +76,7 @@ navigationBar.create = function() {
 navigationBar.setTitle = function(titleText) {
 
     navigationBar.box.lblTitle.text = titleText
-
+    /*
     navigationBar.box.lblTitle.dontMotion()
     navigationBar.box.lblTitle.element.style.transform = "scale(1.4)"
     navigationBar.box.lblTitle.opacity = 0
@@ -81,6 +85,7 @@ navigationBar.setTitle = function(titleText) {
         self.element.style.transform = "scale(1)"
         self.opacity = 1
     })
+    */
 }
 
 navigationBar.setSubTitle = function(subTitleText) {
@@ -93,6 +98,8 @@ navigationBar.setColor = function(color) {
 
 navigationBar.setVisible = function(visible) {
 
+    navigationBar.box.visible = visible
+    /*
     if (visible == 1) {
         navigationBar.box.top = 0
         navigationBar.box.opacity = 1
@@ -100,10 +107,12 @@ navigationBar.setVisible = function(visible) {
         navigationBar.box.top = navigationBar.HEIGHT * -1
         navigationBar.box.opacity = 0
     }
+    */
 }
 
 navigationBar.getVisible = function() {
-    return navigationBar.box.opacity
+    return navigationBar.box.visible
+    //return navigationBar.box.opacity
     //return navigationBar.box.var-visible
 }
 

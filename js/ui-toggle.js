@@ -71,6 +71,9 @@ var createUIToggle = function(left = 0, top = 0, width = 70) {
     box.setValue = function(value) {
         if (value != box.value) {
             box.toggle()
+            
+        } else {
+            box.onChangeFunc(box)
         }
     }
     
@@ -98,6 +101,7 @@ var createUIToggle = function(left = 0, top = 0, width = 70) {
 
     // BOX: Action button.
     box.btnAction = createBox(4, 4, 32, 32)
+    box.add(that)
     that.round = 16
     that.color = "white"
     that.border = 0

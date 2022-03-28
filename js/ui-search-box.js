@@ -17,8 +17,9 @@ HANDBOOK:
 var myUISearchBox = createUISearchBox(x: float, y: float, width: number) : UISearchBox
 - Create a search box.
 
-object.onCharChange(func: function) : void
+object.onSearch(func: function) : void
 - Call this function when textbox text changes.
+- Return parameters: self: UISearchBox, searchText: string
 
 object.setWidth(width: number)
 - Change the width of the search box
@@ -48,16 +49,18 @@ var createUISearchBox = function(x = 0, y = 0, width = 300) {
     that.element.style.borderBottom = "2px solid rgba(0, 0, 0, 0.06)"
 
     // VARIABLES:
-    box.onCharChangeFunc = function() {}
+    box.onSearchFunc = function() {}
 
     // IMAGE: Search icon
     box.imgIcon = createImage(5, 0, 50, 50)
+    box.add(that)
     that.load("images/ui-search-box/search.svg")
     that.opacity = 0.4
     that.space = 12
 
     // TEXTBOX: Search textbox
     box.txtSearch = createTextBox(45, 0)
+    box.add(that)
     that.width = box.width - 80
     that.border = 0
     that.minimal = 1
@@ -69,8 +72,8 @@ var createUISearchBox = function(x = 0, y = 0, width = 300) {
         self.txtSearch.width = self.width - 80
     }
 
-    box.onCharChange = function(func) {
-        box.onCharChangeFunc = func
+    box.onSearch = function(func) {
+        box.onSearchFunc = func
     }
 
     box.setWidth = function(width) {
@@ -90,7 +93,7 @@ var createUISearchBox = function(x = 0, y = 0, width = 300) {
     }
 
     box.txtSearch.inputElement.addEventListener("keyup", function() {
-        box.onCharChangeFunc(box.txtSearch.text.toLowerCase())
+        box.onSearchFunc(box, box.txtSearch.text.toLowerCase())
     })
 
     makeBasicObject(box)

@@ -30,8 +30,8 @@ closeButton.create = function() {
     that.round = closeButton.btnClose.width
     that.space = 4
     that.opacity = 0.5
-    that.onClick(function() {
-        closeButton.onClickFunc_btnClose()
+    that.onClick(function(self) {
+        closeButton.onClickFunc_btnClose(self)
     })
 
     makeBasicObject(that)

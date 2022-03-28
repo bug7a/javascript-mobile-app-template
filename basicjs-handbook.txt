@@ -1,5 +1,7 @@
 
-basic.js LIBRARY (v1.6.3) - HANDBOOK
+basic.js LIBRARY (v1.6.4) - HANDBOOK
+
+basic.js is a technique (JavaScript library) that simplifies project development.
 
 
 INTRODUCTION
@@ -10,7 +12,12 @@ In this book, you will find a list and brief explanations of the codes you can u
 -- Before, all the variables and functions written on the outermost are ready to be used.
 -- Uses the "load" event in JavaScript.
 See blank project template: 0C-blank-project-theme.htm
-See blank mobile app template: 35-mobile-app-template-v2.htm
+
+Project website:
+https://bug7a.github.io/basic.js/
+
+Sample project for mobile application development:
+https://bug7a.github.io/cordova-mobile-app-ui-template/
 
 
 DATA TYPES USED:
@@ -126,11 +133,13 @@ page.onClick(func:function)
 - Each time the page is pressed; the specified function is called.
 -- All objects added to the page are also part of the page. This event is also triggered when a different object in the page is pressed.
 -- If you want to control printing, except for added objects, you can add a transparent box object inside the page object that will stay behind.
+- remove with page.remove_onClick(func:function)
 See: 65-length-measure-conversion-application.htm
 
 page.onResize(func:function)
 - Every time the page size changes; the specified function is called.
 -- NOT CALLED for the initial size of the page on load.
+- remove with page.remove_onResize(func:function)
 
 page.add(object:BasicObject)
 - Used to move a base object back into the page.
@@ -217,7 +226,7 @@ object.textAlign
 object.clickable
 - Makes the object clickable/non-clickable.
 1: clickable, 0: not clickable
-- when using the object.onClick(func:function) function; The object is automatically clickable.
+- when using the object.onClick(func:function) function: The object is automatically clickable.
 -- Button and TextBox objects are clickable by default.
 - Uses pointer-events:auto or none property in CSS.
 
@@ -237,6 +246,7 @@ object.onResize(func:function)
 - It can be used to update the positions of auto-sized objects in the coordinate system.
 -- Label.width, label.height, button.width and box.height properties can be set to "auto". Like lblName.width = "auto".
 -- The object itself is sent to the called function.
+- remove with object.remove_onResize(func:function)
 
 object.center(direction:string)
 - Centers the object relative to the object it is in.
@@ -289,9 +299,6 @@ object.dontMotion()
 - Motion of a defined object; temporarily allows its properties to be changed inactive.
 See: 55-basic-css-animation.htm
 
-object.canMotionNow()
-- It is used if dontMotion() is used in the top lines, but it is desired to return the motion features immediately.
-
 
 ---
 
@@ -320,6 +327,7 @@ object.scrollY
 object.onClick(func:function)
 - Each time the object is pressed; the specified function is called.
 -- The object itself is sent to the called function.
+- remove with object.remove_onClick(func:function)
 
 object.add(object:BasicObject)
 - Manually moves the object sent as a parameter inside this box object.
@@ -396,6 +404,7 @@ object.minimal
 object.onChange(func:function)
 - Each time the object content changes, the specified function is executed.
 -- The object itself is sent to the called function.
+- remove with object.remove_onChange(func:function)
 
 object.element
 - Element object that connects the object's container with HTML.
@@ -437,6 +446,7 @@ object.spaceY
 object.onClick(func:function)
 - Each time the object is pressed; the specified function is called.
 -- The object itself is sent to the called function.
+- remove with object.remove_onClick(func:function)
 
 object.element
 - Element object that connects the object with HTML.
@@ -487,10 +497,12 @@ object.spaceY
 object.onClick(func:function)
 - Each time the object is pressed; the specified function is called.
 -- The object itself is sent to the called function.
+- remove with object.remove_onClick(func:function)
 
 object.onLoad(func:function)
 - When the image object is loaded, the function is called.
 -- The object itself is sent to the called function.
+- remove with object.remove_onLoad(func:function)
 var myImage = createImage()
 that.load("images/roket.png")
 that.onLoad(function(self) {
@@ -520,6 +532,8 @@ selectBox(boxObject:Box)
 - It determines the box in which the created objects will be moved first.
 - Its default value is the page object.
 -- To revert to the default value, selectBox(page)
+- IMPORTANT NOTE: For performance, make passive autoAddObjectIntoBoxController and use selectBox() or .add() function.
+-- basic.autoAddObjectIntoBoxController.setActive(0)
 
 getSelectedBox() : Box or MainBox
 - Returns the object to which the created objects were first moved.
@@ -661,7 +675,6 @@ Uncaught SyntaxError: missing ) after argument list
 AUTHOR:
 Bugra Ozden <bugra.ozden@gmail.com>
 
-https://bug7a.github.io/basic.js/
 
 
 
