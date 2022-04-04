@@ -279,6 +279,7 @@ object.setMotion(motionString:string)
 - It ensures that the changes in the specified properties of the object occur slowly in the specified time.
 - motionString, the properties that are desired to be animated and the information for how long the motion will take place.
 Examples:
+"all 0.3s": all properties will be animated in 0.3 seconds.
 "left 1s, opacity 1s": smooth horizontal position change and transparency only. Let it take 1 second.
 "width 2s": only changes in the width of the object make it animated. Let it take 2 seconds.
 "left 1s, top 1s, width 0.5s, height 0.5s, transform 1s, background-color 1s, border-radius 1s, opacity 1s": Many motions are softened.
@@ -292,8 +293,14 @@ object.getMotion() : string
 - Returns the object's motionString value set with the setMotion() function.
 
 object.withMotion(func:function)
-- It is used to make the desired movement of a newly created object, immediately after its initial properties are given.
+- It is used if the initial value of the object to be moved is determined.
 See: 55-basic-css-animation.htm
+- Example:
+object.dontMotion()
+object.opacity = 0
+object.withMotion(function(self) {
+	self.opacity = 1
+})
 
 object.dontMotion()
 - Motion of a defined object; temporarily allows its properties to be changed inactive.

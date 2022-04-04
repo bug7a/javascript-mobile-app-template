@@ -20,13 +20,13 @@ var tabBar = {}
 tabBar.HEIGHT = 80
 tabBar.itemList = []
 tabBar.selectedIndex = -1
-tabBar.onChangeFunc = function() {}
+tabBar.onItemClickFunc = function() {}
 
 tabBar.create = function() {
 
     // BOX: Object container box.
     tabBar.box = createBox()
-    that.width = global.CONTENT_WIDTH
+    that.width = global.USED_WIDTH
     that.height = tabBar.HEIGHT
     that.left = 0
     that.color = "white"
@@ -51,27 +51,27 @@ tabBar.create = function() {
 
 tabBar.createItemsByDataList = function(list) {
 
-    tabBar.removeAll()
+    tabBar.removeItems()
 
     for (var i = 0; i < list.length; i++) {
             tabBar.addItem(list[i], i)
     }
 }
 
-tabBar.addItem = function(item, index) {
+tabBar.addItem = function(itemData, itemIndex) {
 
     var itemName = "item" + tabBar.itemList.length
 
     // IMAGE: item image
     tabBar.box[itemName] = createImage()
     tabBar.box.add(that)
-    that.load(item.iconPath)
+    that.load(itemData.iconPath)
     that.width = tabBar.HEIGHT
     that.height = tabBar.HEIGHT
     that.space = 16
     that.opacity = 0.7
-    that.itemIndex = index
-    that.contentId = item.contentId
+    that.itemIndex = itemIndex
+    that.pageId = itemData.pageId
     that.setMotion("padding 0.3s, opacity 0.3s")
 
     // Koordinat sistemini devre dışı bırak:
@@ -80,27 +80,23 @@ tabBar.addItem = function(item, index) {
     that.element.style.display = "inline-block"
 
     that.onClick(function(self) {
-
-        tabBar.setSelectedIndex(self.itemIndex)
-        tabBar.onChangeFunc(self.contentId)
+        tabBar.selectItemByIndex(self.itemIndex)
+        tabBar.onItemClickFunc(self.pageId)
     })
 
     // tabBar.box.width = (tabBar.HEIGHT * (tabBar.itemList.length + 1)) + 20
     // tabBar.box.center("left")
 
     tabBar.itemList.push(that)
-
     makeBasicObject(that)
 }
 
-tabBar.setSelectedIndex = function(index) {
-
+tabBar.selectItemByIndex = function(index) {
     tabBar.selectItem(tabBar.itemList[index])
 }
 
 tabBar.selectItem = function(item) {
-
-    tabBar.unselect()
+    tabBar.unselectItem()
     tabBar.selectedIndex = item.itemIndex
     //item.load(item.clickedIconPath)
     item.space = 6
@@ -110,8 +106,7 @@ tabBar.selectItem = function(item) {
     //tabBar.box.boxHighLight.color = "lightblue"
 }
 
-tabBar.unselect = function() {
-
+tabBar.unselectItem = function() {
     if (tabBar.selectedIndex != -1) {
 
         //tabBar.itemList[tabBar.selectedIndex].load(tabBar.itemList[tabBar.selectedIndex].item.clickedIconPath)
@@ -121,8 +116,7 @@ tabBar.unselect = function() {
     }
 }
 
-tabBar.removeAll = function() {
-
+tabBar.removeItems = function() {
     for (var i = 0; i < tabBar.itemList.length; i++) {
         tabBar.itemList[i].remove()
     }
@@ -132,17 +126,15 @@ tabBar.removeAll = function() {
 }
 
 tabBar.setVisible = function(visible) {
-
-    tabBar.box.visible = visible
+    //tabBar.box.visible = visible
+    shared.setVisibleWithMotion(tabBar.box, visible)
 }
 
 tabBar.getVisible = function() {
-
     return tabBar.box.visible
 }
 
-tabBar.onClick = function(func) {
-    
-    tabBar.onChangeFunc = func
+tabBar.onItemClick = function(func) {
+    tabBar.onItemClickFunc = func
 }
 

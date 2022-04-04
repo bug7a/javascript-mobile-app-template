@@ -15,39 +15,37 @@ Site: https://bug7a.github.io/cordova-mobile-app-ui-template/
 */
 
 
-// NESNE: Sol menü
 var menuBar = {}
+menuBar.itemList = []
 menuBar.lockScreenButton = {}
+menuBar.onItemClickFunc = function() {}
 
-menuBar.onClickFunc = function() {}
 
 menuBar.create = function() {
 
-    // BOX: Taşıyıcı
-    menuBar.box = createBox(0, 0, global.CONTENT_WIDTH, page.height)
+    // BOX: Object container box.
+    menuBar.box = createBox(0, 0, global.USED_WIDTH, page.height)
     //that.color = "rgba(0, 0, 0, 0.8)"
     that.color = "transparent"
     that.border = 0
     that.visible = 0
-    //that.setMotion("opacity 0.3s, transform 0.3s")
 
-    // BOX: background box.
-    menuBar.box.boxBackground = createBox(0, 0, global.CONTENT_WIDTH, page.height)
+    // BOX: half transparent background box.
+    menuBar.box.boxBackground = createBox(0, 0, global.USED_WIDTH, page.height)
     menuBar.box.add(that)
     that.color = "rgba(0, 0, 0, 0.8)"
     that.onClick(function() {
         menuBar.setVisible(0)
     })
 
-    // BOX: Beyaz arka plan
+    // BOX: Menu container and background box.
     menuBar.box.b1 = createBox(0, 0, 400, page.height)
     menuBar.box.add(that)
     that.border = 0
     that.right = 0
 
-    // Özel tasarımlar yapılabilir.
-
-    // BOX: Kilitmeleme düğmesi arka plan
+    // You can add your custom objects:
+    // BOX: Lock button background box.
     menuBar.box.b1.boxLock = createBox(0, 0, 172, 52)
     menuBar.box.b1.add(that)
     that.color = "white"
@@ -57,23 +55,19 @@ menuBar.create = function() {
     that.left = 50
     that.bottom = 55
 
-    // IMAGE: Kilitleme düğmesi resimi
+    // IMAGE: Lock button icon.
     menuBar.box.b1.boxLock.imgLock = createImage(8, 10, 30, 30)
     menuBar.box.b1.boxLock.add(that)
     that.load("images/ui-menu-bar/lock.png")
 
-    // LABEL: Kilitleme düğmesi yazısı
+    // LABEL: Lock button text.
     menuBar.box.b1.boxLock.lblLock = createLabel(46, 12, "auto", 50)
     menuBar.box.b1.boxLock.add(that)
     that.text = "Lock Screen"
-
-    // menuBar.hide()
-
 }
 
 menuBar.createItemsByDataList = function(list) {
-
-    //menuBar.removeAll()
+    menuBar.removeItems()
 
     for (var i = 0; i < list.length; i++) {
         menuBar.addItem(list[i], i)
@@ -81,63 +75,45 @@ menuBar.createItemsByDataList = function(list) {
 }
 
 menuBar.lastButtonTop = 140
-
-menuBar.addItem = function(buttonText, contentIndex) {
+menuBar.addItem = function(itemData, itemIndex) {
 
     // BUTTON: Menü butonları
     var btnItem = createButton(50, menuBar.lastButtonTop)
-    that.index = contentIndex
-    that.contentId = buttonText.contentId
+    that.index = itemIndex
+    that.pageId = itemData.pageId
     that.width = "auto"
     that.textAlign = "left"
     that.minimal = 1
     that.color = "transparent"
-    that.text = buttonText.title
+    that.text = itemData.title
     that.fontSize = 26
     that.onClick(function(self) {
         menuBar.setVisible(0)
-        menuBar.onClickFunc(self.contentId)
+        menuBar.onItemClickFunc(self.pageId)
     })
 
+    menuBar.itemList.push(btnItem)
     menuBar.box.b1.add(btnItem)
-
     menuBar.lastButtonTop += 55
 }
 
-menuBar.setVisible = function(visible) {
+menuBar.removeItems = function() {
 
-    menuBar.box.visible = visible
-
-    /*
-    // Closed for performance:
-    if (visible != menuBar.visible) {
-        if (visible) {
-            menuBar.box.dontMotion()
-            menuBar.box.element.style.transform = "scale(1.4)"
-            menuBar.box.opacity = 0
-            menuBar.box.visible = 1
-            menuBar.box.withMotion(function(self) {
-                self.element.style.transform = "scale(1)"
-                self.opacity = 1
-            })
-        } else {
-            menuBar.box.dontMotion()
-            menuBar.box.element.style.transform = "scale(1)"
-            menuBar.box.opacity = 1
-            menuBar.box.withMotion(function(self) {
-                self.element.style.transform = "scale(1.4)"
-                self.opacity = 0
-                setTimeout(function() { 
-                    menuBar.box.visible = 0
-                }, 300)
-            })
-        }
+    for (var i = 0; i < menuBar.itemList.length; i++) {
+        menuBar.itemList[i].remove()
     }
-    */
+
+    menuBar.lastButtonTop = 140
+    menuBar.itemList = []
 }
 
-menuBar.onClick = function(func) {
-    menuBar.onClickFunc = func
+menuBar.setVisible = function(visible) {
+    //menuBar.box.visible = visible
+    shared.setVisibleWithMotion(menuBar.box, visible)
+}
+
+menuBar.onItemClick = function(func) {
+    menuBar.onItemClickFunc = func
 }
 
 menuBar.lockScreenButton.onClick = function(func) {

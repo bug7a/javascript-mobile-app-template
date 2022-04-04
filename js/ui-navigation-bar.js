@@ -15,7 +15,6 @@ Site: https://bug7a.github.io/cordova-mobile-app-ui-template/
 */
 
 
-// UI OBJECT: Box on the top of the screen. Includes: back button, title, menu button.
 var navigationBar = {}
 navigationBar.backButton = {}
 navigationBar.menuButton = {}
@@ -26,8 +25,8 @@ navigationBar.menuButton.onClickFunc = function() {}
 
 navigationBar.create = function() {
 
-    // BOX: Container:
-    navigationBar.box = createBox(0, 0, global.CONTENT_WIDTH, navigationBar.HEIGHT)
+    // BOX: Object container box.
+    navigationBar.box = createBox(0, 0, global.USED_WIDTH, navigationBar.HEIGHT)
     that.border = 0
     that.color = "white"
     that.element.style.boxShadow = "0px 6px 8px rgba(0, 0, 0, 0.1)"
@@ -36,7 +35,7 @@ navigationBar.create = function() {
     //that.opacity = 0
     that.visible = 0
 
-    // IMAGE: Go back button:
+    // IMAGE: Go back button.
     navigationBar.box.btnBack = createImage(30, 32, 50, 50)
     navigationBar.box.add(that)
     that.load("images/ui-navigation-bar/back.svg")
@@ -47,16 +46,16 @@ navigationBar.create = function() {
         navigationBar.backButton.onClickFunc()
     })
 
-    // LABEL: Title text
+    // LABEL: Title text.
     navigationBar.box.lblTitle = createLabel(0, 37, 400)
     navigationBar.box.add(that)
     that.textAlign = "center"
     that.element.style.fontFamily = "opensans-bold"
     that.fontSize = 28
     that.center("left")
-    //that.setMotion("opacity 0.3s, transform 0.3s")
+    that.setMotion("opacity 0.3s, transform 0.3s")
 
-    // IMAGE: Open/close menu button
+    // IMAGE: Open/close menu button.
     navigationBar.box.btnMenu = createImage(0, 0, 50, 50)
     navigationBar.box.add(that)
     that.load("images/ui-navigation-bar/menu6.svg")
@@ -75,17 +74,14 @@ navigationBar.create = function() {
 
 navigationBar.setTitle = function(titleText) {
 
-    navigationBar.box.lblTitle.text = titleText
-    /*
     navigationBar.box.lblTitle.dontMotion()
     navigationBar.box.lblTitle.element.style.transform = "scale(1.4)"
     navigationBar.box.lblTitle.opacity = 0
     navigationBar.box.lblTitle.withMotion(function(self) {
-        self.canMotionNow()
         self.element.style.transform = "scale(1)"
         self.opacity = 1
     })
-    */
+    navigationBar.box.lblTitle.text = titleText
 }
 
 navigationBar.setSubTitle = function(subTitleText) {
@@ -93,27 +89,16 @@ navigationBar.setSubTitle = function(subTitleText) {
 }
 
 navigationBar.setColor = function(color) {
-    
+    navigationBar.box.color = color
 }
 
 navigationBar.setVisible = function(visible) {
-
-    navigationBar.box.visible = visible
-    /*
-    if (visible == 1) {
-        navigationBar.box.top = 0
-        navigationBar.box.opacity = 1
-    } else {
-        navigationBar.box.top = navigationBar.HEIGHT * -1
-        navigationBar.box.opacity = 0
-    }
-    */
+    //navigationBar.box.visible = visible
+    shared.setVisibleWithMotion(navigationBar.box, visible)
 }
 
 navigationBar.getVisible = function() {
     return navigationBar.box.visible
-    //return navigationBar.box.opacity
-    //return navigationBar.box.var-visible
 }
 
 navigationBar.backButton.setVisible = function(visible) {
