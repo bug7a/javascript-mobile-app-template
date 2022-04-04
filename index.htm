@@ -245,78 +245,108 @@
 
         <div id="code-example1" style="display:none">
     var tabBarItemDataList = [
-        { contentId: "home", iconPath: "images/ui-tab-bar/home.svg" },
-        { contentId: "search", iconPath: "images/ui-tab-bar/search.svg" },
-        { contentId: "alert", iconPath: "images/ui-tab-bar/alert.svg" },
-        { contentId: "fav", iconPath: "images/ui-tab-bar/fav.svg" },
-        { contentId: "setting", iconPath: "images/ui-tab-bar/setting.svg" }
+        { pageId: homePage.ID, iconPath: "images/ui-tab-bar/home.svg" },
+        { pageId: searchPage.ID, iconPath: "images/ui-tab-bar/search.svg" },
+        { pageId: natificationsPage.ID, iconPath: "images/ui-tab-bar/alert.svg" },
+        { pageId: tasksPage.ID, iconPath: "images/ui-tab-bar/fav.svg" },
+        { pageId: settingsPage.ID, iconPath: "images/ui-tab-bar/setting.svg" }
     ]
 
     var menuBarItemDataList = [
-        { contentId: "home", title: "Home" },
-        { contentId: "search", title: "Search" },
-        { contentId: "alert", title: "Notifications" },
-        { contentId: "fav", title: "Favorites" },
-        { contentId: "setting", title: "Settings" }
+        { pageId: homePage.ID, title: "Home" },
+        { pageId: searchPage.ID, title: "Search" },
+        { pageId: natificationsPage.ID, title: "Notifications" },
+        { pageId: tasksPage.ID, title: "Tasks" },
+        { pageId: settingsPage.ID, title: "Settings" }
     ]
         
     // First running function:
     function startApp() {
 
+        loadGlobal()
         print("App started. Platform: " + shared.getPlatformId())
 
         // Supports all screen resolutions (Orientation: portrait)
-        page.fit(global.CONTENT_WIDTH, global.MAX_ZOOMABLE_WIDTH)
+        page.fit(global.USED_WIDTH, global.MAX_ZOOMABLE_WIDTH)
+        
+        // Settings
         basic.autoAddObjectIntoBoxController.setActive(0)
-
         page.color = "white"
+        
 
-        // UI OBJECT: Default content view:
+        // UI OBJECT: Default page view:
         defaultView.create()
 
         // UI OBJECT: Title and buttons:
         navigationBar.create()
-        navigationBar.menuButton.onClick(openMenuBar)
-        navigationBar.backButton.onClick(contentController.goBack)
+        navigationBar.menuButton.onClick(showMenuBar)
+        navigationBar.backButton.onClick(defaultView.createPrevOpenedPageAndShow)
         
         // UI OBJECT: Image buttons at bottom:
         tabBar.create()
         tabBar.createItemsByDataList(tabBarItemDataList)
-        tabBar.onClick(contentController.openContentById)
+        tabBar.onItemClick(openPageById)
 
         // UI OBJECT: If you need a view without unload defaultView object:
         secondView.create()
 
-        // UI OBJECT: For small contents, extra info:
+        // UI OBJECT: For small pages, extra info:
         smallView.create()
 
         // UI OBJECT: Right side menu:
         menuBar.create()
         menuBar.createItemsByDataList(menuBarItemDataList)
-        menuBar.onClick(contentController.openContentById)
+        menuBar.onItemClick(openPageById)
 
         // UI OBJECT: Login view:
         loginView.create()
-        //loginView.lock()
+        //loginView.show()
         menuBar.lockScreenButton.onClick(lockScreen)
 
         // Shows where did you tap.
         clickEffect.create()
         
-        // Open the start content.
-        contentController.openContentById("home")
+        // Open the home page.
+        openPageById(homePage.ID)
 
 
         // NOTE: The order in which objects are created determines the layers they are in.
     }
 
-    function openMenuBar() {
+    // For tabBar and menuBar objects:
+    function openPageById(pageId) {
+
+        switch(pageId) {
+
+            case homePage.ID:
+                homePage.createInDefaultViewAndShow()
+                break;
+
+            case searchPage.ID:
+                searchPage.createInDefaultViewAndShow()
+                break;
+
+            case natificationsPage.ID:
+                natificationsPage.createInDefaultViewAndShow()
+                break;
+
+            case tasksPage.ID:
+                tasksPage.createInDefaultViewAndShow()
+                break;
+
+            case settingsPage.ID:
+                settingsPage.createInDefaultViewAndShow()
+                break;
+        }
+    }
+
+    function showMenuBar() {
         menuBar.setVisible(1)
     }
 
     function lockScreen() {
         menuBar.setVisible(0)
-        loginView.lock()
+        loginView.show()
     }
 
     // Run the startApp() function when the app is ready:
