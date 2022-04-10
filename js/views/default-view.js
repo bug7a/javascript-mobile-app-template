@@ -79,9 +79,9 @@ defaultView.createPrevOpenedPageAndShow = function() {
 
 defaultView.getLastOpenedPage = function() {
     
-        if (defaultView.openedPageList.length > 0) {
-            return defaultView.openedPageList[defaultView.openedPageList.length - 1]
-        } else {
-            return ""
-        }
+    if (defaultView.openedPageList.length > 0) {
+        return defaultView.openedPageList[defaultView.openedPageList.length - 1]
+    } else {
+        return ""
+    }
 }

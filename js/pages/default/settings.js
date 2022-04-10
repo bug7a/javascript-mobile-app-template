@@ -225,7 +225,6 @@ settingsPage.createUISelectTextWithTitle = function(titleText) {
     that.right = 20
     that.top = 10
     that.setAutoResize(1)
-    //that.createItemsByDataList(data)
     //that.color = "whitesmoke"
     //that.boxMask.element.style.background = "linear-gradient(to right, #FFFFFF00, lightgray)"
     that.color = "white"
