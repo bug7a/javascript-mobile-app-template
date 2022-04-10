@@ -155,5 +155,8 @@ shared.setVisibleWithMotion = function(object, visible) {
 
     } else {
         object.visible = visible
+        object.dontMotion()
+        object.opacity = visible
+        object.element.style.transform = "scale(1)"
     }
 }

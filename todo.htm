@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>to-do list app</title>
+        <title>To-do list app</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
@@ -18,58 +18,79 @@
 
         <script>
 
-        var APP_WIDTH = 500
-        var APP_MAX_WIDTH = 600
+        /*
 
-        // Başlangıç sayfasının taşıyıcısı
-        var a0
+        TO-DO LIST APP (FOR MOBILE):
 
-        // Görevlerin, nesne listesi.
-        var tasks = []
-        // Kaydedilecek bilgi.
-        var tasksData = []
+        - An application that keeps a to-do list.
+        - When the application is closed, the information is stored in local storage.
+    
+        To make an android or iOS application with Apache Cordova or similar technology.
+        https://cordova.apache.org/
+        
+        How to make an Android application? (Language: Turkish)
+        https://www.youtube.com/watch?v=B6x7yKhKZbY
+        
+        How to make an iOS application? (Language: Turkish)
+        https://www.youtube.com/watch?v=WZZwiI_5WQA
+        
+        FOR YOUR CORDOVA PROJECT: 
+        - Add these settings to your cordova project config.xml file:
+            <preference name="DisallowOverscroll" value="true" />
+            <preference name="StatusBarOverlaysWebView" value="false" />
+            <preference name="StatusBarStyle" value="darkcontent" />
+            <preference name="Orientation" value="portrait" />
+        - Add these plugins to your cordova project:
+            cordova plugin add cordova-plugin-statusbar
 
-        // Sık kullanılan nesnelere, daha kullanışlı isimler ver
+        */
+
+        var USED_WIDTH = 500
+        var MAX_ZOOMABLE_WIDTH = 700
+
+        var taskList = []
+        var taskDataList = []
+
+        // BOX: Container box of home content.
+        var homePage
+
+        // Shortcut names for frequently used objects.
         var txtNewTask
-        var lblDeleteCount
+        var lblSelectedCount
 
-        // İlk çalışan fonksiyon.
+        // First running function.
         var start = function() {
 
-            // Gerekirse, tüm sayfaları sığdır.
-            page.fit(APP_WIDTH, APP_MAX_WIDTH)
+            // Support all resolutions.
+            page.fit(USED_WIDTH, MAX_ZOOMABLE_WIDTH)
 
-            // Kaydedilmiş bilgiyi geri al, daha önce kaydedilmemiş ise boş dizi oluştur.
-            tasksData = storage.load("todo-tasks-data") || []
+            // Restore saved information.
+            loadTaskDataList()
 
-            // NESNE: Başlangıç sayfasının taşıyıcısı.
-            a0 = cbox(0, 0, 500, page.height)
+            // UI: HOME PAGE:
+            // BOX: Container box of home content. Parameters: left, top, width, height.
+            homePage = createBox(0, 0, USED_WIDTH, page.height)
             that.color = "white"
             that.center("left")
-
-            // NESNE: Yeni görev eklemek için taşıyıcı kutu.
-            a0.b1 = cbox(10, 10, 480, 80)
+            
+            // UI: ADD NEW TASK:
+            // BOX: Container box for adding new task.
+            homePage.boxNewTask = createBox(10, 10, 480, 80)
             that.color = "whitesmoke"
             that.border = 0
             that.round = 16
             
-            // NESNE: Yeni görevin yazılacağı metin kutusu.
-            a0.b1.txtNewTask = ctxt(20, 15, 380)
+            // TEXTBOX: Where the new task is written.
+            homePage.boxNewTask.txtNewTask = createTextBox(20, 15, 380)
             that.minimal = 1
             that.color = "transparent"
             that.inputElement.setAttribute("placeholder", "Add a task")
-            that.onChange(addBtnClicked)
-            // Nesne için, 2 isim de kullanılabilsin.
-            txtNewTask = a0.b1.txtNewTask
+            that.onChange(addTask)
+            // Set shortcut name.
+            txtNewTask = homePage.boxNewTask.txtNewTask
 
-            // NOT: Ama uzun olan isim, aynı zamanda nesnenin,
-            // İlk sayfanın, bölümlenmiş 1. kutusunun içinde olduğunu,
-            // bize hatırlattığından dolayı, daha kullanışlı olabilir.
-            // Sayfa ve nesne sayıları arttığında, 
-            // isimlerin temsil ettiği nesneleri hatırlamak zorlaşabilir.
-
-            // NESNE: Yeni görevi ekleyecek buton.
-            a0.b1.lblAddButton = clbl()
+            // LABEL: Add new task label button.
+            homePage.boxNewTask.lblAddButton = createLabel()
             that.text = "+"
             that.textAlign = "center"
             that.color = "#23BCC1BB"
@@ -78,217 +99,224 @@
             that.width = that.height
             that.fontSize = 36
             that.round = 25
-            that.aline(a0.b1.txtNewTask, "right", 5)
-            that.onClick(addBtnClicked)
-
-            // NESNE: Eklenenen görevlerin taşıyıcısı.
-            a0.b2 = cbox(10, 100, 480, page.height - 110)
-            that.border = 0
+            that.aline(txtNewTask, "right", 5)
+            that.onClick(addTask)
+            
+            // UI: TASK ITEMS:
+            // BOX: Scrollable container box of task items.
+            homePage.boxTaskItemList = createBox(10, 100, 480, page.height - 110)
             that.color = "white"
+            that.border = 0
             that.scrollY = 1
-
-            // NESNE: Silme bölümü için taşıyıcı kutu.
-            a0.b3 = cbox(10, 10, 480, 80)
+            
+            // UI: DELETE TASKS:
+            // BOX: Container box for delete tasks.
+            homePage.boxDeleteTask = createBox(10, 10, 480, 80)
             that.color = "whitesmoke"
             that.round = 16
             that.visible = 0
 
-            // NESNE: Silme resminin taşıyıcısı
-            a0.b3.b1 = cbox(0, 0, 55, 55)
+            // BOX: Background box for delete image.
+            homePage.boxDeleteTask.boxBackground = createBox(0, 0, 55, 55)
             that.color = "#ED6D5230"
             that.round = 30
             that.center()
             that.onClick(removeSelectedTasks)
 
-            // NESNE: Silme resmi
-            a0.b3.b1.imgDelete = cimg(0, 0, 35, 35)
+            // IMAGE: Delete image.
+            homePage.boxDeleteTask.boxBackground.imgDelete = createImage(0, 0, 35, 35)
             that.load("images/todo-app/trash.svg")
             that.opacity = 0.9
             that.center()
 
-            // NESNE: Silme resminin sayı bilgisi
-            a0.b3.lblCount = clbl(a0.b3.b1.left + 41, a0.b3.b1.top - 4, "auto", "auto")
+            // LABEL: Count of selected items on delete image.
+            homePage.boxDeleteTask.lblCount = createLabel()
+            that.left = homePage.boxDeleteTask.boxBackground.left + 41
+            that.top = homePage.boxDeleteTask.boxBackground.top - 4
+            that.width = "auto"
+            that.height = "auto"
+            that.color = "white"
             that.text = "0"
+            that.textColor = "#141414"
+            that.fontSize = 16
             that.spaceY = 2
             that.spaceX = 7
-            that.color = "white"
-            that.fontSize = 16
             that.border = 1
             that.borderColor = "#141414"
-            that.textColor = "#141414"
             that.element.style.fontFamily = "opensans-bold"
             that.round = 50
             that.opacity = 0.7
-            // Nesne için, 2 isim de kullanılabilsin.
-            lblDeleteCount = a0.b3.lblCount
+            // Set shortcut name.
+            lblSelectedCount = homePage.boxDeleteTask.lblCount
 
-            // Sayfa yeniden açıldığında, eski kayıtları oluştur.
-            refreshTasks();
+            // When page reopens, create old records.
+            refreshTasks()
 
-            // Her sayfa boyutu değiştiğinde, çalıştır.
-            page.onResize(pageResized)
-
+            // Run each time the page size changes.
+            page.onResize(resizeHomePage)
         }
 
-        // Sayfa boyutu değiştiğinde, taşıyıcı sayfayı ortala.
-        var pageResized = function() {
+        var resizeHomePage = function() {
 
-            page.fit(APP_WIDTH, APP_MAX_WIDTH)
+            page.fit(USED_WIDTH, MAX_ZOOMABLE_WIDTH)
 
-            a0.b2.height = page.height - 110
-            a0.center("left")
-
+            homePage.height = page.height
+            homePage.boxTaskItemList.height = page.height - 110
+            homePage.center("left")
         }
 
-        // Tüm görevleri temizle ve bilgiye göre yeniden oluştur.
+        var addTask = function() {
+
+            var taskText = txtNewTask.text
+
+            if (taskText != "") {
+                addTaskItem(taskText)
+                addTaskData(taskText)
+
+                txtNewTask.text = ""
+            }
+        }
+
+        // Clear all tasks and recreate based on data list.
         var refreshTasks = function() {
 
-            a0.b2.text = ""
-            tasks = []
+            // Clear all tasks.
+            taskList = []
+            homePage.boxTaskItemList.html = ""
 
-            // Sayfa yeniden açıldığında, eski kayıtları oluştur.
-            for (var i = (tasksData.length - 1); i >= 0; i--) {
-                addTask(tasksData[i])
+            for (var i = (taskDataList.length - 1); i >= 0; i--) {
+                addTaskItem(taskDataList[i])
             }
-        
         }
 
-        var addBtnClicked = function() {
-
-            if (a0.b1.txtNewTask.text != "") {
-
-                addTask(a0.b1.txtNewTask.text)
-                tasksData.unshift(a0.b1.txtNewTask.text)
-                storage.save("todo-tasks-data", tasksData)
-
-                a0.b1.txtNewTask.text = ""
-
-            }
-
-        }
-
-        // Yeni görev ekle.
-        var addTask = function(taskText) {
+        // Add new task item object.
+        var addTaskItem = function(taskText) {
 
             var newItem = createTaskItem(taskText)
-            a0.b2.add(newItem)
+            homePage.boxTaskItemList.add(newItem)
 
-            tasks.unshift(newItem)
+            taskList.unshift(newItem)
 
-            // Otomatik boyut hesaplaması tamamlandıktan sonra, nesneleri yeniden hizala.
+            // After the automatic size calculation is complete, reposition the objects.
             newItem.lblText.onResize(repositionTasks)
 
-            // NOT: Görevlerin, her bir yazısı için onResize() eklenmiş;
-            // Bir görevin yazısının boyutu değiştiğinde, tüm görevler yeniden konumlandırılıyor.
-
+            // NOTE: .onResize() has been added for each item of the tasks;
+            // when a task's text changes size, all tasks are repositioned.
         }
 
-        // Görev nesnelerini yeniden alt alta diz.
-        var repositionTasks = function() {
-
-            var top = 0
-
-            for (var i = 0; i < tasks.length; i++) {
-                tasks[i].top = top
-                tasks[i].height = tasks[i].lblText.height + 20
-
-                top += tasks[i].height
-            }
-
+        // Add new task data.
+        var addTaskData = function(taskText) {
+            taskDataList.unshift(taskText)
+            saveTaskDataList()
         }
 
-        // Yeni görev nesnesi oluştur.
+        // Create new task item object.
         var createTaskItem = function(taskText) {
 
-            // NESNE: Bir görevin taşıyıcısı
-            var object = cbox(0, 0, 480, 100)
+            // BOX: Task item container box.
+            var box = createBox(0, 0, 480, 100)
             that.color = "white"
             that.round = 4
-            that.onClick(taskItemClicked)
-            // Görevler nesnelerine, küçük bir hareket ekle.
+            that.onClick(selectTask)
+            // Let vertical position change be with motion.
             that.setMotion("top 0.3s")
 
-            // NESNE: Bir görevin yazısı
-            object.lblText = clbl(50, 10, 410, "auto")
+            // LABEL: Task text.
+            box.lblText = createLabel(50, 10, 410, "auto")
             that.color = "transparent"
             that.text = taskText
 
-            // NESNE: Görev yazısının başındaki, seçim alanı
-            object.boxTick = cbox(15, 15, 20, 20)
+            // BOX: Selection circle.
+            box.boxTick = createBox(15, 15, 20, 20)
             that.round = 10
             that.border = 1
             that.color = "whitesmoke"
             that.borderColor = "lightgray"
 
-            makeBasicObject(object)
+            // Define a variable inside the object.
+            box.isSelected = 0
 
-            return object
-
+            makeBasicObject(box)
+            return box
         }
 
-        // Üzrerine basılan görevi işaretler.
-        var taskItemClicked = function(self) {
+        var selectTask = function(clickedTask) {
 
-            if (self.boxTick.color != "tomato") {
-
-                self.boxTick.color = "tomato"
-                self.boxTick.border = 0
-                self.lblText.textColor = "tomato"
-                // İşaretlenmiş sayısını arttır.
-                a0.b3.lblCount.text = num(a0.b3.lblCount.text) + 1
+            // If item is selected:
+            if (clickedTask.isSelected) {
+                // Unselect it.
+                clickedTask.isSelected = 0
+                clickedTask.boxTick.color = "whitesmoke"
+                clickedTask.boxTick.border = 1
+                clickedTask.lblText.textColor = basic.TEXT_COLOR
+                lblSelectedCount.text = num(lblSelectedCount.text) - 1
 
             } else {
-
-                self.boxTick.color = "whitesmoke"
-                self.boxTick.border = 1
-                self.lblText.textColor = basic.TEXT_COLOR
-                a0.b3.lblCount.text = num(a0.b3.lblCount.text) - 1
-
+                // Select it.
+                clickedTask.isSelected = 1
+                clickedTask.boxTick.color = "tomato"
+                clickedTask.boxTick.border = 0
+                clickedTask.lblText.textColor = "tomato"
+                lblSelectedCount.text = num(lblSelectedCount.text) + 1
             }
 
-            // Silme butonunu göster veya gizle.
-            if (num(a0.b3.lblCount.text) > 0) {
-                a0.b3.visible = 1
+            // Show/hide delete task box by selected count.
+            if (num(lblSelectedCount.text) > 0) {
+                homePage.boxDeleteTask.visible = 1
+
             } else {
-                a0.b3.visible = 0
+                homePage.boxDeleteTask.visible = 0
             }
-
         }
 
-        // İşaretlenen görevleri sil.
         var removeSelectedTasks = function() {
 
-            // İşaretlenmeyen görevlerin, yeni listesi.
-            var newTasksData = []
-            var newTasks = []
+            var newTaskDataList = []
+            var newTaskList = []
 
-            // Tüm görevleri kontrol et.
-            for (var i = 0; i < tasks.length; i++) {
-                // Sadece seçili olmayanları, dizilere ekle.
-                if(tasks[i].boxTick.color != "tomato") {
-                    newTasksData.push(tasksData[i])
-                    newTasks.push(tasks[i])
+            for (var i = 0; i < taskList.length; i++) {
+                // If item is selected:
+                if(taskList[i].isSelected) {
+                    // Remove it.
+                    taskList[i].remove()
+
                 } else {
-                    // Seçili görev nesnelerini sil.
-                    tasks[i].remove()
+                    // Add it to the new list.
+                    newTaskDataList.push(taskDataList[i])
+                    newTaskList.push(taskList[i])
                 }
             }
 
-            // Kullanılan dizileri, yeni oluşturulan ile güncelle
-            tasksData = newTasksData
-            tasks = newTasks
+            taskDataList = newTaskDataList
+            taskList = newTaskList
+            saveTaskDataList()
 
-            // Bilgileri kaydet.
-            storage.save("todo-tasks-data", tasksData)
-
-            // Görev nesnelerini, yeniden konumlandır.
             repositionTasks()
 
-            // Silme resminin yazısını 0 yap.
-            a0.b3.lblCount.text = "0"
-            // Silme bölümünü görünmez yap.
-            a0.b3.visible = 0
+            // Clean and hide delete task box.
+            lblSelectedCount.text = "0"
+            homePage.boxDeleteTask.visible = 0
+        }
 
+        var saveTaskDataList = function() {
+            storage.save("todoApp-taskDataList", taskDataList)
+        }
+
+        var loadTaskDataList = function() {
+            taskDataList = storage.load("todoApp-taskDataList") || []
+        }
+
+        // Because object positioning uses the coordinate system.
+        var repositionTasks = function() {
+
+            var top = 0
+
+            for (var i = 0; i < taskList.length; i++) {
+                taskList[i].top = top
+                taskList[i].height = taskList[i].lblText.height + 20
+
+                top += taskList[i].height
+            }
         }
         
         </script>
