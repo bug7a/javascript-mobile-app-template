@@ -1,5 +1,5 @@
 # Mobile App UI Template for Apache Cordova
-Simple and fully customizable user interface template. Design for mobile app development on Apache Cordova framework. Developed with JavaScript and basic.js technique. Usage is like a basic programming language. <br>(This is the Alpha version.)
+Simple and fully customizable user interface template. Design for mobile app development on Apache Cordova framework. Developed with JavaScript and basic.js technique. (This is the Alpha version.)
 
 - Plaftorms: iOS, Android<br><br>
 

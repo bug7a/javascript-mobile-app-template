@@ -6,13 +6,17 @@ shared.savedSelectedBox = null
 
 shared.cordovaOnDeviceReady = function (func) {
 
-    if (typeof cordova !== "undefined") {
-        shared.isCordovaExist = 1;
-        document.addEventListener('deviceready', func.bind(this), false);
+    window.addEventListener("load", function () {
+
+        if (typeof cordova !== "undefined") {
+            shared.isCordovaExist = 1;
+            document.addEventListener('deviceready', func.bind(this), false);
+        
+        }else {
+            func();
+        }
+    });
     
-    }else {
-        window.onload = func;
-    }
 }
 
 shared.getPlatformId = function() {
