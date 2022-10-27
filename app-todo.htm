@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>To-do list app</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <link rel="stylesheet" type="text/css" href="library/basic.min.css">
+        <script src="library/basic.min.js" type="text/javascript" charset="utf-8"></script>
+
+        <script>
+
+        /*
+
+        TO-DO LIST APP (FOR MOBILE):
+
+        - An application that keeps a to-do list.
+        - When the application is closed, the information is stored in local storage.
+    
+        To make an android or iOS application with Apache Cordova or similar technology.
+        https://cordova.apache.org/
+        
+        How to make an Android application? (Language: Turkish)
+        https://www.youtube.com/watch?v=B6x7yKhKZbY
+        
+        How to make an iOS application? (Language: Turkish)
+        https://www.youtube.com/watch?v=WZZwiI_5WQA
+        
+        FOR YOUR CORDOVA PROJECT: 
+        - Add these settings to your cordova project config.xml file:
+            <preference name="DisallowOverscroll" value="true" />
+            <preference name="StatusBarOverlaysWebView" value="false" />
+            <preference name="StatusBarStyle" value="darkcontent" />
+            <preference name="Orientation" value="portrait" />
+        - Add these plugins to your cordova project:
+            cordova plugin add cordova-plugin-statusbar
+
+        */
+
+        const USED_WIDTH = 500
+        const MAX_ZOOMABLE_WIDTH = 700
+
+        let taskList = []
+        let taskDataList = []
+
+        // BOX: Container box of home content.
+        let homePage
+
+        // Shortcut names for frequently used objects.
+        let txtNewTask
+        let lblSelectedCount
+
+        // First running function.
+        const start = function() {
+
+            // Support all resolutions.
+            page.fit(USED_WIDTH, MAX_ZOOMABLE_WIDTH)
+
+            // Restore saved information.
+            loadTaskDataList()
+
+            // UI: HOME PAGE:
+            // BOX: Container box of home content. Parameters: left, top, width, height.
+            homePage = createBox(0, 0, USED_WIDTH, page.height)
+            that.color = "white"
+            that.center("left")
+            
+            // UI: ADD NEW TASK:
+            // BOX: Container box for adding new task.
+            homePage.boxNewTask = createBox(10, 10, 480, 80)
+            homePage.add(that)
+            that.color = "whitesmoke"
+            that.border = 0
+            that.round = 16
+            
+            // TEXTBOX: Where the new task is written.
+            homePage.boxNewTask.txtNewTask = createTextBox(20, 15, 380)
+            homePage.boxNewTask.add(that)
+            that.minimal = 1
+            that.color = "transparent"
+            that.inputElement.setAttribute("placeholder", "Add a task")
+            that.onChange(addTask)
+            // Set shortcut name.
+            txtNewTask = homePage.boxNewTask.txtNewTask
+
+            // LABEL: Add new task label button.
+            homePage.boxNewTask.lblAddButton = createLabel()
+            homePage.boxNewTask.add(that)
+            that.text = "+"
+            that.textAlign = "center"
+            that.color = "#23BCC1BB"
+            that.textColor = "rgba(255, 255, 255, 0.95)"
+            that.height = 50
+            that.width = that.height
+            that.fontSize = 36
+            that.round = 25
+            that.aline(txtNewTask, "right", 5)
+            that.onClick(addTask)
+            
+            // UI: TASK ITEMS:
+            // BOX: Scrollable container box of task items.
+            homePage.boxTaskItemList = createBox(10, 100, 480, page.height - 110)
+            homePage.add(that)
+            that.color = "white"
+            that.border = 0
+            that.scrollY = 1
+            
+            // UI: DELETE TASKS:
+            // BOX: Container box for delete tasks.
+            homePage.boxDeleteTask = createBox(10, 10, 480, 80)
+            homePage.add(that)
+            that.color = "whitesmoke"
+            that.round = 16
+            that.visible = 0
+
+            // BOX: Background box for delete image.
+            homePage.boxDeleteTask.boxBackground = createBox(0, 0, 55, 55)
+            homePage.boxDeleteTask.add(that)
+            that.color = "#ED6D5230"
+            that.round = 30
+            that.center()
+            that.onClick(removeSelectedTasks)
+
+            // IMAGE: Delete image.
+            homePage.boxDeleteTask.boxBackground.imgDelete = createImage(0, 0, 35, 35)
+            homePage.boxDeleteTask.boxBackground.add(that)
+            that.load("assets/todo-app/trash.svg")
+            that.opacity = 0.9
+            that.center()
+
+            // LABEL: Count of selected items on delete image.
+            homePage.boxDeleteTask.lblCount = createLabel()
+            homePage.boxDeleteTask.add(that)
+            that.left = homePage.boxDeleteTask.boxBackground.left + 41
+            that.top = homePage.boxDeleteTask.boxBackground.top - 4
+            that.width = "auto"
+            that.height = "auto"
+            that.color = "white"
+            that.text = "0"
+            that.textColor = "#141414"
+            that.fontSize = 16
+            that.spaceY = 2
+            that.spaceX = 7
+            that.border = 1
+            that.borderColor = "#141414"
+            that.element.style.fontFamily = "opensans-bold"
+            that.round = 50
+            that.opacity = 0.7
+            // Set shortcut name.
+            lblSelectedCount = homePage.boxDeleteTask.lblCount
+
+            // When page reopens, create old records.
+            refreshTasks()
+
+            // Run each time the page size changes.
+            page.onResize(resizeHomePage)
+        }
+
+        const resizeHomePage = function() {
+
+            page.fit(USED_WIDTH, MAX_ZOOMABLE_WIDTH)
+
+            homePage.height = page.height
+            homePage.boxTaskItemList.height = page.height - 110
+            homePage.center("left")
+        }
+
+        const addTask = function() {
+
+            const taskText = txtNewTask.text
+
+            if (taskText != "") {
+                addTaskItem(taskText)
+                addTaskData(taskText)
+
+                txtNewTask.text = ""
+            }
+        }
+
+        // Clear all tasks and recreate based on data list.
+        const refreshTasks = function() {
+
+            // Clear all tasks.
+            taskList = []
+            homePage.boxTaskItemList.html = ""
+
+            for (let i = (taskDataList.length - 1); i >= 0; i--) {
+                addTaskItem(taskDataList[i])
+            }
+        }
+
+        // Add new task item object.
+        const addTaskItem = function(taskText) {
+
+            const newItem = createTaskItem(taskText)
+            homePage.boxTaskItemList.add(newItem)
+
+            taskList.unshift(newItem)
+
+            // After the automatic size calculation is complete, reposition the objects.
+            newItem.lblText.onResize(repositionTasks)
+
+            // NOTE: .onResize() has been added for each item of the tasks;
+            // when a task's text changes size, all tasks are repositioned.
+        }
+
+        // Add new task data.
+        const addTaskData = function(taskText) {
+            taskDataList.unshift(taskText)
+            saveTaskDataList()
+        }
+
+        // Create new task item object.
+        const createTaskItem = function(taskText) {
+
+            // BOX: Task item container box.
+            const box = createBox(0, 0, 480, 100)
+            that.color = "white"
+            that.round = 4
+            that.onClick(selectTask)
+            // Let vertical position change be with motion.
+            that.setMotion("top 0.2s")
+
+            // LABEL: Task text.
+            box.lblText = createLabel(50, 10, 410, "auto")
+            box.add(that)
+            that.color = "transparent"
+            that.text = taskText
+
+            // BOX: Selection circle.
+            box.boxTick = createBox(15, 15, 20, 20)
+            box.add(that)
+            that.round = 10
+            that.border = 1
+            that.color = "whitesmoke"
+            that.borderColor = "lightgray"
+
+            // Define a variable inside the object.
+            box.isSelected = 0
+
+            makeBasicObject(box)
+            return box
+        }
+
+        const selectTask = function(clickedTask) {
+
+            // If item is selected:
+            if (clickedTask.isSelected) {
+                // Unselect it.
+                clickedTask.isSelected = 0
+                clickedTask.boxTick.color = "whitesmoke"
+                clickedTask.boxTick.border = 1
+                clickedTask.lblText.textColor = basic.TEXT_COLOR
+                lblSelectedCount.text = num(lblSelectedCount.text) - 1
+
+            } else {
+                // Select it.
+                clickedTask.isSelected = 1
+                clickedTask.boxTick.color = "tomato"
+                clickedTask.boxTick.border = 0
+                clickedTask.lblText.textColor = "tomato"
+                lblSelectedCount.text = num(lblSelectedCount.text) + 1
+            }
+
+            // Show/hide delete task box by selected count.
+            if (num(lblSelectedCount.text) > 0) {
+                homePage.boxDeleteTask.visible = 1
+
+            } else {
+                homePage.boxDeleteTask.visible = 0
+            }
+        }
+
+        const removeSelectedTasks = function() {
+
+            let newTaskDataList = []
+            let newTaskList = []
+
+            for (let i = 0; i < taskList.length; i++) {
+                // If item is selected:
+                if(taskList[i].isSelected) {
+                    // Remove it.
+                    taskList[i].remove()
+
+                } else {
+                    // Add it to the new list.
+                    newTaskDataList.push(taskDataList[i])
+                    newTaskList.push(taskList[i])
+                }
+            }
+
+            taskDataList = newTaskDataList
+            taskList = newTaskList
+            saveTaskDataList()
+
+            repositionTasks()
+
+            // Clean and hide delete task box.
+            lblSelectedCount.text = "0"
+            homePage.boxDeleteTask.visible = 0
+        }
+
+        const saveTaskDataList = function() {
+            storage.save("todoApp-taskDataList", taskDataList)
+        }
+
+        const loadTaskDataList = function() {
+            taskDataList = storage.load("todoApp-taskDataList") || []
+        }
+
+        // Because object positioning uses the coordinate system.
+        const repositionTasks = function() {
+
+            let top = 0
+
+            for (let i = 0; i < taskList.length; i++) {
+                taskList[i].top = top
+                taskList[i].height = taskList[i].lblText.height + 20
+
+                top += taskList[i].height
+            }
+        }
+        
+        </script>
+
+    </head>
+    <body>
+        
+    </body>
+</html>

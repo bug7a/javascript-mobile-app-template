@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        
+        <title>Custom UI Dialog</title>
+        
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+
+        <link rel="stylesheet" type="text/css" href="library/basic.min.css">
+        <script src="library/basic.min.js" type="text/javascript" charset="utf-8"></script>
+
+        <script>
+
+        var selectedColor = "#FFD541";
+        var btnOpenDialog = null; 
+        
+        var start = function() {
+
+            page.color = "white";
+            
+            // *** EXAMPLE 1:
+
+            btnOpenDialog = createButton(0, 0, "auto");
+            that.text = "Open Dialog";
+            that.color = selectedColor;
+            that.spaceX = 20;
+            that.onResize(function(self) {
+                self.center();
+            })
+            that.onClick(function buttonClicked(self) {
+                openColorSelectionDialog(selectedColor, function colorSelected(color) {
+
+                    selectedColor = color;
+                    self.color = color;
+
+                });
+            })
+            
+        }
+
+        var openColorSelectionDialog = function(useColor, returnAnswerFunc) {
+
+            var colorList = ["#FFD541", "#689BD2", "#A5D5BE", "lightgray", "#EE7553", "pink" ]
+            var colorItemList = []
+            
+            var closeBox = function() {
+                box.boxEditColor.bottom = -1 * box.boxEditColor.height - 10
+                box.boxBack.opacity = 0
+                setTimeout(function() {
+                    box.remove()
+                    delete box
+                }, 200)
+            }
+
+            var refreshActionButton = function() {
+
+                if (box.boxEditColor.txtColorName.text == useColor) {
+                    box.buttonGroup.btnAction.enabled = 0
+                    box.buttonGroup.btnAction.element.style.filter = "grayscale(100%)"
+                } else {
+                    box.buttonGroup.btnAction.enabled = 1
+                    box.buttonGroup.btnAction.element.style.filter = "none"
+                }
+                box.boxEditColor.boxColor.color = box.boxEditColor.txtColorName.text
+
+                for (var i = 0; i < colorItemList.length; i++) {
+                    if (colorItemList[i].colorCode == box.boxEditColor.txtColorName.text) {
+                        colorItemList[i].border = 12
+                    } else {
+                        colorItemList[i].border = 2
+                    }
+                }
+
+            }
+
+            // BOX: Container.
+            var box = createBox(0, 0, page.width, page.height)
+            that.color = "transparent"
+
+            // BOX: Cover background.
+            box.boxBack = createBox(0, 0, box.width, box.height)
+            box.add(that)
+            that.color = "rgba(0, 0, 0, 0.2)"
+            that.opacity = 0
+            that.setMotion("opacity 0.2s")
+            that.withMotion(function(self) {
+                self.opacity = 1
+            })
+            that.onClick(function(self) {
+                closeBox()
+            })
+
+            // UI EDIT BOX:
+            box.boxEditColor = createBox(10, 0, box.width - 20, 330)
+            box.add(that)
+            that.bottom = -1 * that.height - 10
+            that.color = "white"
+            that.border = 2
+            that.borderColor = "rgba(0, 0, 0, 0.3)"
+            that.round = 13
+            that.element.style.boxShadow = "0px 0px 8px rgba(0, 0, 0, 0.2)"
+            that.visible = 1
+            that.opacity = 1
+            that.setMotion("bottom 0.2s, opacity 0.2s");
+            that.withMotion(function(self) {
+                self.bottom = 10
+            })
+
+            // TEXTBOX: Color name textbox.
+            box.boxEditColor.txtColorName = createTextBox(30, 70, box.width - 80)
+            box.boxEditColor.add(that)
+            that.minimal = 1
+            that.round = 8
+            that.title = "Primary Color Code:"
+            that.color = "whitesmoke"
+            that.border = 1;
+            that.borderColor = "rgba(0, 0, 0, 0.2)";
+            that.text = useColor
+
+            box.boxEditColor.boxColor = createBox(0, 0, 24, 24);
+            box.boxEditColor.add(that)
+            that.color = useColor
+            that.border = 2
+            that.borderColor = "#141414"
+            that.round = 40
+            box.boxEditColor.boxColor.aline(box.boxEditColor.txtColorName, "right", -35, "center")
+
+            // BOX: Select color list.
+            for (var i = 0; i < colorList.length; i++) {
+
+                var boxColor = createBox(0, 0, 40, 40);
+                box.boxEditColor.add(that)
+                that.color = colorList[i]
+                that.colorCode = colorList[i]
+                that.border = 2
+                that.borderColor = "#141414"
+                that.round = 40
+                that.onClick(function(self) {
+
+                    box.boxEditColor.txtColorName.text = self.colorCode
+                    refreshActionButton()
+
+                })
+                if (i == 0) {
+                    boxColor.aline(box.boxEditColor.txtColorName, "bottom", 30)
+                } else {
+                    boxColor.aline(exThat, "right", 20)
+                }
+
+                colorItemList.push(boxColor)
+
+            } 
+
+            // BOX: Bottom button group.
+            box.buttonGroup = createBox(0, 0, box.boxEditColor.width, 106);
+            box.boxEditColor.add(that);
+            that.color = "transparent";
+            that.bottom = 0;
+            that.border = 0;
+
+            // BUTTON: CANCEL button.
+            box.buttonGroup.btnCancel = createButton(0, 20, "auto", 60);
+            box.buttonGroup.add(that);
+            that.text = "CANCEL";
+            that.fontSize = 20;
+            that.minimal = 1;
+            that.color = "whitesmoke";
+            that.right = 20;
+            that.round = 8;
+            that.border = 2;
+            that.opacity = 1;
+            that.borderColor = "transparent";
+            that.element.style.fontFamily = "opensans-bold";
+            that.buttonElement.style.paddingLeft = "36px";
+            that.buttonElement.style.paddingRight = "36px";
+            that.onClick(function() {
+                closeBox()
+            })
+
+            // BUTTON: SAVE button.
+            box.buttonGroup.btnAction = createButton(0, 20, "auto", 60);
+            box.buttonGroup.add(that);
+            that.text = "SAVE";
+            that.fontSize = 20;
+            that.minimal = 0;
+            that.color = useColor;
+            that.right = 30;
+            that.round = 8;
+            that.opacity = 1;
+            that.enabled = 0;
+            that.element.style.filter = "grayscale(100%)"
+            that.element.style.fontFamily = "opensans-bold";
+            that.buttonElement.style.paddingLeft = "36px";
+            that.buttonElement.style.paddingRight = "36px";
+            that.setMotion("filtre 0.3s, opacity 0.3s");
+            that.onClick(function(self) {
+
+                // Return selection
+                returnAnswerFunc(box.boxEditColor.txtColorName.text)
+
+                // Close
+                closeBox()
+
+            });
+
+            // Reposition cancel button.
+            box.buttonGroup.btnAction.onResize(function(self) {
+                box.buttonGroup.btnCancel.aline(box.buttonGroup.btnAction, "left", 10);
+            })
+
+            // Check button action enabled or disabled
+            box.boxEditColor.txtColorName.inputElement.addEventListener("keyup" ,function(self) {
+                refreshActionButton()
+            })
+
+            refreshActionButton()
+
+        }
+
+        </script>
+
+    </head>
+    <body>
+        
+        <!-- HTML content -->
+        
+    </body>
+</html>

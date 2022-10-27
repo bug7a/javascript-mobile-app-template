@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        
+        <title>UI Progress Bar</title>
+        
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+
+        <link rel="stylesheet" type="text/css" href="library/basic.min.css">
+        <script src="library/basic.min.js" type="text/javascript" charset="utf-8"></script>
+
+        <script src="js/component/ui-progress-bar.js" type="text/javascript" charset="utf-8"></script>
+
+        <script>
+        
+        var start = function() {
+
+            page.color = "white";
+            
+            // *** EXAMPLE 1:
+
+            // UI PROGRESS BAR: Object description.
+            page.uiProgressBar = createUIProgressBar(0, 0, 300, 20);
+            that.setProgressPercentage(40);
+            that.setLineLimitPercentage(60);
+            that.setProgressColor("green");
+            that.setLineLimitText("60");
+            that.setLineLimitVisible(1);
+            that.center();
+            //that.makeLineLimitHalfVisible()
+            //UIProgressBar.calculatePercentage($width, $maxWidth)
+
+            // LABEL: Progress bar title.
+            page.uiProgressBar.lblTitle = createLabel();
+            that.text = "Progress Title:";
+            that.width = page.uiProgressBar.width;
+            //that.textAlign = "center";
+            that.aline(page.uiProgressBar, "top", 20);
+
+            /*
+            // LABEL: Progress bar value.
+            page.uiProgressBar.lblValue = createLabel();
+            that.text = "40%";
+            that.width = page.uiProgressBar.width;
+            that.textAlign = "right";
+            that.aline(page.uiProgressBar, "top", 20);
+            */
+            
+        }
+
+        </script>
+
+    </head>
+    <body>
+        
+        <!-- HTML content -->
+        
+    </body>
+</html>
