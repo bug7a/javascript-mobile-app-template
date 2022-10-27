@@ -1,7 +1,5 @@
 # Mobile App UI Template for Apache Cordova
-Simple and fully customizable user interface template. Design for mobile app development on Apache Cordova framework.<br>(This is the Beta version.)
-
-- Platforms: iOS, Android<br>
+Simple and fully customizable user interface template. Design for mobile app development on Apache Cordova framework. Platforms: iOS, Android (This is the Beta version.)
 
 - It reduces production costs and enables the project to be developed quickly.<br>
 - Developed project; It can run on Android, iOS, and the web.<br>
