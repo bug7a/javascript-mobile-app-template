@@ -31,6 +31,8 @@ https://bug7a.github.io/cordova-mobile-app-ui-template/
 
 ![alt tag](https://bug7a.github.io/cordova-mobile-app-ui-template/mobile-app-template-ios.png)
 
+<br><br>
+
 ### CONTACT:
 
 Started Date: 22 February 2022<br>
@@ -39,7 +41,7 @@ Email: bugra.ozden@gmail.com<br>
 Web Site: http://bugraozden.com<br><br>
 
 You can contact me for your mobile application projects.<br />
-Best regards<br /><br />
+Best regards,<br /><br />
 
 ### LICENSE:
 
