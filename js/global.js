@@ -1,46 +1,41 @@
 
+const APP_ID = "app-id";
+
 // global.js - shared variables storaged at local storage.
-var global = {}
+let global = {};
 
-global.appId = "app-id"
-// If you want bigger objects use smaller USED_WIDTH
-global.USED_WIDTH = 600
-//global.USED_WIDTH = 500
-global.MAX_ZOOMABLE_WIDTH = 1024
+// If you want bigger objects use smaller USED_WIDTH: 550, 600, 700
+global.usedWidth = 600;
+//global.usedWidth = 550;
+global.maxZoomableWidth = 1024;
 
-global.defaultView = {}
-global.defaultView.openedPageListLimit = 10
+global.defaultView = {};
+global.defaultView.openedPageListLimit = 10;
 
-global.natifications = {}
-global.natifications.isLampOn = 1
+global.natifications = {};
+global.natifications.isLampOn = 1;
 
-global.settings = {}
-// its working.
-global.settings.useMotionInTransitions = 1
-// they are examples: not working.
-global.settings.isDarkModeOn = 0
-global.settings.themeIndex = 1
-global.settings.themeName = "StarWars"
-global.settings.primaryColorIndex = 5
-global.settings.primaryColorName = "White"
-global.settings.updateIndex = 1
-global.settings.updateName = "Ask to me"
-global.settings.isOnlyWhenChargingOn = 1
-global.settings.notificationsIndex = 1
-global.settings.notificationsName = "Friends only"
-global.settings.sleepDelayNumber = 3
-global.settings.soundIndex = 1
-global.settings.soundName = "Mute"
-global.settings.languageIndex = 0
-global.settings.languageName = "English"
-global.settings.objectTypeIndex = 1
-global.settings.objectTypeName = "Minimal"
+global.settings = {};
+global.settings.selectedColor = "#689BD2";
+global.settings.isDarkModeOn = 1;
+global.settings.isDownloadWiFiOnlyOn = 1;
+global.settings.isOnlyWhenChargingOn = 1;
+global.settings.fontSize = 18;
+global.settings.themeId = "starwars";
+global.settings.themeName = "StarWars";
+global.settings.videoQualityId = "high";
+global.settings.videoQualityName = "High";
+global.settings.updateId = "auto";
+global.settings.updateName = "Auto";
+global.settings.notificationId = "friends-only";
+global.settings.notificationName = "Friends only";
+global.settings.languageId = "en";
+global.settings.languageName = "English";
 
-
-var saveGlobal = function() {
-    storage.save(global.appId + "-global-vars", global)
+const saveGlobal = function() {
+    storage.save(APP_ID + "-global-vars", global);
 }
 
-var loadGlobal = function() {
-    global = storage.load(global.appId + "-global-vars") || global
+const loadGlobal = function() {
+    global = storage.load(APP_ID + "-global-vars") || global;
 }
