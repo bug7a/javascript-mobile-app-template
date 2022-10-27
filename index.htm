@@ -1,0 +1,995 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        
+        <title>Mobile App UI Template for Apache Cordova (Platforms: iOS, Android)</title>
+        
+        <meta charset="UTF-8">
+        <meta name="description" content="Simple and fully customizable user interface template. Design for mobile (Platforms: iOS, Android) app development on Apache Cordova framework.">
+        <meta name="keywords" content="App template, template, UI Template, user interface template, Select Text, Combobox, searchable, JavaScript, JS, UI, UX, User Interface, Component, Apache, Cordova, Mobile, iOS, Android, simple, fully customizable" >
+        <meta name="author" content="Bugra Ozden">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+
+        <!-- LIBRARY FILES -->
+        <script src="library/src-noconflict/ace.js" type="text/javascript" charset="utf-8"></script>
+        <link rel="stylesheet" type="text/css" href="library/basic.min.css">
+        <script src="library/basic.min.js" type="text/javascript" charset="utf-8"></script>
+
+        <script src="js/component/ui-group.js" type="text/javascript" charset="utf-8"></script>
+
+        <style>
+
+            body {
+                overflow: hidden;
+            }
+
+            .basic_box::-webkit-scrollbar {
+                width: 10px;
+                height: 10px;
+            }
+
+            .basic_box::-webkit-scrollbar-track {
+                border-radius: 10px;
+                border: 3px solid rgba(0, 0, 0, 0);
+                background-clip: padding-box;
+            }
+
+            .basic_box::-webkit-scrollbar-thumb {
+                background: rgba(0, 0, 0, 0.4);
+                border-radius: 10px;
+                border: 3px solid rgba(0, 0, 0, 0);
+                background-clip: padding-box;
+            }
+
+            .basic_box::-webkit-scrollbar-thumb:hover {
+                background: rgba(0, 0, 0, 0.6);
+                border-radius: 10px;
+                border: 3px solid rgba(0, 0, 0, 0);
+                background-clip: padding-box;
+            }
+
+            .text-highlight {
+                font-family: opensans-bold;
+                /* color: #41AC9F; */
+                /* background-color: #FFF0C2; */
+                border-radius: 4px;
+                padding: 0px 8px;
+            }
+
+            .editor { 
+                position:relative;
+                margin:0px;
+                border-radius: 6px;
+                /* margin-left: 5px;margin-right: 0px; */
+                height:200px;
+                font-size: 16px;
+            }
+
+        </style>
+
+        <script>
+            
+        // VARIABLES
+        var boxContent
+        var editor1
+        
+        // First running function.
+        var start = function() {
+
+            page.fit(600)
+
+            // BOX: main view
+            boxContent = createBox(0, 0, page.width, page.height)
+            that.scrollY = 1
+            that.visible = 1
+
+            // LABEL: Title text
+            boxContent.lblTitle = createLabel(0, 104, 600, "auto")
+            boxContent.add(that);
+            that.text = document.getElementById("htm-title").innerHTML
+            that.fontSize = 70
+            that.textAlign = "center"
+            that.opacity = 0
+            that.textColor = "black"
+            that.element.style.fontFamily = "opensans-bold"
+            that.center("left")
+
+            // IMAGE: Title logo
+            //boxContent.imgTitle = createImage(0, 70, 211, 107);
+            boxContent.imgTitle = createImage(0, 70, 249, 107);
+            boxContent.add(that);
+            //that.load("image/mobile-ui-logo.png");
+            that.load("image/mobile-app-ui-template.png");
+            that.center("left");
+
+            // LABEL: Description text
+            boxContent.lblDesc = createLabel(0, 200, 600, "auto")
+            boxContent.add(that);
+            that.text = document.getElementById("htm-desc").innerHTML
+            that.fontSize = 35
+            that.textAlign = "center"
+            that.opacity = 0.6
+            that.textColor = "black"
+            that.center("left")
+
+            // GROUP: Platforms: Android, iOS
+            boxContent.grpPlatforms = createUIGroup();
+            boxContent.add(that);
+            that.setInnerSpaces(0, 0, 0, 0);
+            that.setSpacesBetweenItems(6);
+            that.setItemAlignment("horizontal", "center");
+            that.color = "transparent";
+
+            // LABEL: Platforms.
+            boxContent.lblPlatforms = createLabel(0, 0, "auto", "auto");
+            that.text = "Platforms:";
+            that.fontSize = 18;
+            that.textColor = "black";
+            that.opacity = 0.6; // 0.8
+            boxContent.grpPlatforms.addItem(boxContent.lblPlatforms);
+
+            // IMAGE: Android.
+            boxContent.imgAndroidIcon = createImage(0, 0, 24, 24);
+            that.load("image/android.png");
+            that.opacity = 0.6; // 0.6
+            boxContent.grpPlatforms.addItem(boxContent.imgAndroidIcon);
+
+            // IMAGE: IOS.
+            boxContent.imgiOSIcon = createImage(0, 0, 24, 24);
+            that.load("image/ios.png");
+            that.opacity = 0.6; // 0.6
+            boxContent.grpPlatforms.addItem(boxContent.imgiOSIcon);
+
+            boxContent.grpPlatforms.onResize(function(self) {
+                boxContent.grpPlatforms.aline(boxContent.lblDesc, "bottom", 4, "center");
+            });
+
+            // BOX: sample1 iframe content
+            boxContent.boxSample1 = createBox(0, 370, 360, 640)
+            boxContent.add(that);
+            that.text = document.getElementById("htm-sample1").innerHTML
+            that.clickable = 1
+            that.round = 12
+            that.color = "white"
+            that.center("left")
+
+            // IMAGE: phone template
+            boxContent.imgPhone = createImage(0, 370, 360, 640)
+            boxContent.add(that);
+            that.load("image/phone.svg")
+            that.center("left")
+            that.width += 10 
+            that.height += 8
+            that.top -= 4
+            that.left -= 5
+
+            // LABEL: info 1 text
+            boxContent.lblInfo1 = createLabel(0, 1050, 600, "auto")
+            boxContent.add(that);
+            // that.text = document.getElementById("htm-info1").innerHTML + "<br><br>" + document.getElementById("htm-info2").innerHTML
+            that.text = document.getElementById("htm-info1").innerHTML
+            that.fontSize = 20
+            that.textAlign = "center"
+            that.opacity = 0.6
+            that.textColor = "black"
+            that.center("left")
+
+            // BOX: GitHub Button
+            boxContent.btnGitHub = createCard("View on GitHub", 1, "https://github.com/bug7a/cordova-mobile-app-ui-template")
+            boxContent.add(that);
+            that.center("left")
+            that.top = boxContent.lblInfo1.top + 100
+
+            // BOX: Demo Apps
+            boxContent.boxDemos = createBox(0, 0, 560, 900);
+            boxContent.add(that);
+            that.color = "white";
+            that.border = 1;
+            that.color = "transparent";
+            that.border = 0;
+            that.borderColor = "rgba(0, 0, 0, 0.8)";
+            //that.top = boxContent.btnGitHub.top + 200
+            that.round = 8;
+            that.aline(boxContent.btnGitHub, "bottom", 100, "center");
+            that.center("left");
+
+            // LABEL: Mobile Apps developed with this template:
+            boxContent.boxDemos.lblTitle = createLabel(0, 40, 560, "auto");
+            boxContent.boxDemos.add(that);
+            that.text = "Mobile Apps developed with this template:";
+            that.textAlign = "center";
+
+            // GROUP: Platforms: Android, iOS
+            boxContent.boxDemos.grpApps = createUIGroup();
+            boxContent.boxDemos.add(that);
+            that.setInnerSpaces(0, 0, 0, 0);
+            that.setSpacesBetweenItems(14);
+            that.setItemAlignment("horizontal", "center");
+            that.color = "transparent";
+
+            createAppIcon("image/app-icon/app1.png", "Personal<br>Expense<br>Book", "https://play.google.com/store/apps/details?id=com.bugraozden.expense", "android");
+            boxContent.boxDemos.grpApps.addItem(that);
+
+            createAppIcon("image/app-icon/app2.png", "Photo Notes<br>with<br>Password", "https://play.google.com/store/apps/details?id=com.bugraozden.photo.notes.with.password", "android");
+            boxContent.boxDemos.grpApps.addItem(that);
+
+            createAppIcon("image/app-icon/app3.png", "Math Race<br>Game", "https://play.google.com/store/apps/details?id=com.bugraozden.mathrace", "android");
+            boxContent.boxDemos.grpApps.addItem(that);
+
+            createAppIcon("image/app-icon/app4.png", "Robot:<br>Coding Game", "https://play.google.com/store/apps/details?id=com.bugraozden.roboticcodinggame", "android");
+            boxContent.boxDemos.grpApps.addItem(that);
+
+            boxContent.boxDemos.grpApps.onResize(function(self) {
+                boxContent.boxDemos.grpApps.aline(boxContent.boxDemos.lblTitle, "bottom", 20, "center");
+            });
+
+            // LABEL: 
+            /*
+            boxContent.boxDemos.lblReduceCosts = createLabel();
+            boxContent.boxDemos.add(that);
+            //that.text = "Reduce costs by using these technologies.<br>Develop your app faster and deliver it to your users."; // as soon as possible
+            //that.text = "It reduces the development costs and enables the project to be developed quickly.<br>Most of the JavaScript libraries can be used in the project."
+            //that.fontSize = 16;
+            that.textAlign = "center";
+            that.width = boxContent.boxDemos.width;
+            that.height = "auto";
+            that.bottom = 40;
+            that.fontSize = 20;
+            that.opacity = 0.6;
+            that.textColor = "black";
+            */
+
+            // htm-info2
+            // BOX: info 2
+            boxContent.boxDemos.boxReduceCosts = createBox();
+            boxContent.boxDemos.add(that);
+            //that.text = "Reduce costs by using these technologies.<br>Develop your app faster and deliver it to your users."; // as soon as possible
+            //that.text = "It reduces the development costs and enables the project to be developed quickly.<br>Most of the JavaScript libraries can be used in the project."
+            //that.fontSize = 16;
+            that.html = document.getElementById("htm-info2").innerHTML;
+            //that.textAlign = "center";
+            that.width = boxContent.boxDemos.width;
+            that.height = "auto";
+            that.bottom = 40;
+            that.left = 0;
+            that.fontSize = 20;
+            that.opacity = 0.6;
+            that.textColor = "black";
+
+
+            // BOX: code box
+            boxContent.boxEditor = createBox(0, 1300, 600, 400)
+            boxContent.add(that);
+            that.element.setAttribute("id", "editor1")
+            that.element.setAttribute("class", "editor")
+            that.onResize(function(self) {
+                boxContent.boxFooter.top = self.top + self.height + 20
+            })
+            that.aline(boxContent.boxDemos, "bottom", 60, "center");
+            that.center("left")
+
+            // LABEL: An example piece of code:
+            boxContent.lblCodeTitle = createLabel(0, 0, 560, "auto");
+            boxContent.add(that);
+            that.text = "An example piece of code (home-page.js):";
+            that.textAlign = "center";
+            that.aline(boxContent.boxEditor, "top", 26, "center");
+            
+            // BOX: Footer box
+            boxContent.boxFooter = createBox(0, 2200, 600, 500)
+            boxContent.add(that);
+            that.color = "transparent"
+            that.center("left")
+
+            // BOX: Demo Apps
+            boxContent.boxFooter.boxDemos = createBox(0, 60, 560, 300);
+            boxContent.boxFooter.add(that);
+            that.color = "white";
+            that.border = 1;
+            that.color = "transparent";
+            that.border = 0;
+            that.borderColor = "rgba(0, 0, 0, 0.8)";
+            //that.top = boxContent.boxFooter.btnGitHub.top + 200
+            that.round = 8;
+            that.center("left");
+
+            // LABEL: See in Action
+            boxContent.boxFooter.boxDemos.lblTitle = createLabel(0, 40, 560, "auto");
+            boxContent.boxFooter.boxDemos.add(that);
+            that.text = "Technologies used to develop this template:";
+            that.textAlign = "center";
+
+            // GROUP: Platforms: Android, iOS
+            boxContent.boxFooter.boxDemos.grpApps = createUIGroup();
+            boxContent.boxFooter.boxDemos.add(that);
+            that.setInnerSpaces(0, 0, 0, 0);
+            that.setSpacesBetweenItems(14);
+            that.setItemAlignment("horizontal", "center");
+            that.color = "transparent";
+
+            createTechIcon("image/tech-icon/basic-js-logo.png", "basic.js", "https://bug7a.github.io/basic.js/", "android");
+            boxContent.boxFooter.boxDemos.grpApps.addItem(that);
+
+            createTechIcon("image/tech-icon/basic-ui-logo.png", "basicUI", "https://bug7a.github.io/basic.js-examples/", "android");
+            boxContent.boxFooter.boxDemos.grpApps.addItem(that);
+
+            boxContent.boxFooter.boxDemos.grpApps.onResize(function(self) {
+                boxContent.boxFooter.boxDemos.grpApps.aline(boxContent.boxFooter.boxDemos.lblTitle, "bottom", 20, "center");
+            });
+
+            // BOX: Contact to me:
+            //"You can contact for your mobile application projects (Android, iOS):"
+            boxContent.boxFooter.boxContact = createBox(0, 0, 500, 72);
+            boxContent.boxFooter.add(that);
+            that.color = "white";
+            that.border = 1;
+            that.round = 8;
+            that.aline(boxContent.boxFooter.boxDemos, "bottom", 0, "center")
+            that.visible = 0;
+
+            // LABEL: Contact description text.
+            boxContent.boxFooter.boxContact.lblDesc = createLabel(0, 0, 500);
+            boxContent.boxFooter.boxContact.add(that);
+            that.text = "You can contact me for your mobile application projects;<br>EMail: bugra.ozden@gmail.com";
+            that.fontSize = 12;
+            that.spaceX = 20;
+            that.spaceY = 12;
+            that.textAlign = "center";
+
+            // LABEL: Info.
+            boxContent.boxFooter.lblInfo = createLabel(0, 0, 600, 140)
+            boxContent.boxFooter.add(that)
+            that.text = "Developed by <b onclick='gotoBugraSite();' style='cursor: pointer;'>Bugra Ozden</b><br>Licensed under <b onclick='gotoLicenseSite();'>CC 4.0</b>"
+            that.fontSize = 12
+            that.opacity = 0.8
+            that.textAlign = "center"
+            that.clickable = 1;
+            that.aline(boxContent.boxFooter.boxDemos, "bottom", 40, "center")
+
+            // OBJECT: Mobile App Template Button
+            // boxContent.boxFooter.btn3 = createCard("Mobile App Template", 2, "https://github.com/bug7a/cordova-mobile-app-ui-template")
+            //that.center()
+
+            // OBJECT: All Components Button
+            /*
+            boxContent.boxFooter.btn2 = createCard("DEMO MOBILE APP", 2, "https://bugraozden.com/personal-expense-book/")
+            boxContent.boxFooter.add(that);
+            that.width = 200;
+            that.center()
+            that.left -= 100
+            */
+
+            // OBJECT: basic.js Technique Button
+            /*
+            boxContent.boxFooter.btn4 = createCard("basic.js LIBRARY", 2, "https://bug7a.github.io/basic.js/")
+            boxContent.boxFooter.add(that);
+            that.center()
+            that.left += 100
+            */
+
+            // Code Editor
+            editor1 = ace.edit("editor1");
+            editor1.setReadOnly(true);
+            editor1.setTheme("ace/theme/ambiance");
+            editor1.session.setMode("ace/mode/javascript");
+            editor1.setOption("minLines", 8);
+            editor1.setOption("maxLines", 500);
+            editor1.renderer.setShowGutter(false);
+            // document.getElementById("editor"+$editorNumber).style.zoom = (1 / App.screenRatio);
+            editor1.setValue(document.getElementById("code-example1").innerHTML);
+            editor1.gotoLine(2);
+
+            page.onResize(function() {
+                
+                page.fit(600)
+                boxContent.width = page.width
+                boxContent.height = page.height
+                boxContent.lblTitle.center("left")
+                boxContent.imgTitle.center("left")
+                boxContent.lblDesc.center("left")
+                boxContent.boxSample1.center("left")
+                boxContent.imgPhone.center("left")
+                boxContent.lblInfo1.center("left")
+                boxContent.btnGitHub.center("left")
+                boxContent.boxEditor.center("left")
+                boxContent.boxFooter.center("left")
+                boxContent.boxDemos.center("left")
+                boxContent.lblCodeTitle.center("left");
+
+                boxContent.grpPlatforms.aline(boxContent.lblDesc, "bottom", 4, "center");
+
+            })
+            
+        }
+        
+        // OTHER FUNCTIONS
+        
+        var createCard = function(name, type = 1, link = "") {
+            
+            var ui = createBox(0, 0, 210, 70)
+            that.color = "white"
+            that.round = 8
+            that.border = 2
+            that.borderColor = "gray"
+            that.link = link
+            that.onClick(function(self) {
+                if (self.link != "") {
+                    window.open(self.link, "_blank")
+                }
+            })
+            that.element.style.cursor = "pointer";
+
+            if (type == 2) {
+                that.width = 190
+                that.height = 50
+                that.color = "white"
+                that.border = 1
+                that.borderColor = "lightgray"
+                //that.color = "#EAEAE9"
+                //that.border = 0
+            }
+
+            ui.lblText = createLabel(0, 0, "auto", "auto")
+            ui.add(that)
+            that.text = name
+            if (type == 2) {
+
+                that.fontSize = 16
+            }
+            that.onResize(function(self) {
+                self.center()
+            })
+
+            makeBasicObject(ui)
+
+            return ui
+            
+        }
+
+        const createAppIcon = function(iconFile, name, link, platform) {
+            
+            // Item container.
+            const item = createBox(0, 0, 110, 200);
+            that.color = "transparent";
+            that.round = 0;
+            that.border = 0;
+            that.borderColor = "black";
+            that.link = link;
+            that.element.style.cursor = "pointer";
+            that.onClick(function(self) {
+                if (self.link != "") {
+                    window.open(self.link, "_blank");
+                }
+            })
+
+            item.imgIcon = createImage(0, 0, 110, 110);
+            item.add(that);
+            that.load(iconFile);
+            that.round = 20;
+            that.border = 1;
+            that.center("left");
+
+            if (platform == "android") {
+                // IMAGE: Android.
+                boxContent.imgAndroidIcon = createImage(0, 0, 26, 26);
+                item.add(that);
+                that.load("image/android.png");
+                that.color = "white";
+                that.border = 1;
+                that.round = 4;
+                //that.opacity = 0.6; // 0.6
+                that.right = 0;
+                that.top = 0;
+                that.space = 10;
+            }
+
+            if (platform == "ios") {
+                // IMAGE: IOS.
+                boxContent.imgiOSIcon = createImage(0, 0, 26, 26);
+                item.add(that);
+                that.load("image/ios.png");
+                that.color = "white";
+                that.border = 1;
+                that.round = 4;
+                //that.opacity = 0.6; // 0.6
+                that.right = 0;
+                that.top = 0;
+                that.space = 10;
+            }
+
+            item.lblText = createLabel(0, 0, item.imgIcon.width, "auto");
+            item.add(that);
+            that.text = name;
+            that.fontSize = 16;
+            that.textAlign = "center";
+            that.onResize(function(self) {
+                item.lblText.aline(item.imgIcon, "bottom", 4);
+                //self.center()
+            });
+
+            makeBasicObject(item);
+            return item;
+            
+        }
+
+        const createTechIcon = function(iconFile, name, link, platform) {
+            
+            // Item container.
+            const item = createBox(0, 0, 255, 142);
+            that.color = "transparent";
+            that.round = 0;
+            that.border = 0;
+            that.borderColor = "black";
+            that.link = link;
+            that.onClick(function(self) {
+                if (self.link != "") {
+                    window.open(self.link, "_blank");
+                }
+            })
+            that.element.style.cursor = "pointer";
+
+            item.imgIcon = createImage(0, 0, 255, 142);
+            item.add(that);
+            that.load(iconFile);
+            that.round = 4;
+            that.space = 20;
+            that.border = 1;
+            that.borderColor = "rgba(0, 0, 0, 0.6)";
+            that.color = "white";
+            that.center("left");
+
+            /*
+            item.lblText = createLabel(0, 0, item.imgIcon.width, "auto");
+            item.add(that);
+            that.text = name;
+            that.fontSize = 16;
+            that.textAlign = "center";
+            that.onResize(function(self) {
+                item.lblText.aline(item.imgIcon, "bottom", 4);
+                //self.center()
+            });
+            */
+
+            makeBasicObject(item);
+            return item;
+            
+        }
+
+        const gotoBugraSite = function() {
+            window.open("https://bugraozden.com/", "_blank");
+        }
+
+        const gotoLicenseSite = function() {
+            //window.open("https://creativecommons.org/licenses/by/4.0/", "_blank");
+        }
+
+        </script>
+
+    </head>
+    <body>
+        
+        <!-- HTML content -->
+
+        <div id="htm-title" style="display:none">Mobile UI</div>
+        <div id="htm-desc" style="display:none">Simple and fully customizable<br>user interface template.</div>
+        <div id="htm-info1" style="display:none">Design for mobile app development<br>on <span class='text-highlight'>Apache Cordova</span> framework.</div>
+        <div id="htm-sample1" style="display:none"><iframe src="sample1.htm" width="360" height="640" style="border:0px solid lightgray;border-radius:4px;"></iframe></div>
+
+        <div id="htm-info2" style="display:none;">
+            <div class="title" >What are the advantages of these technologies?</div>
+
+            <ul style="font-size:19px;">
+                <li>It reduces production costs and enables the project to be developed quickly.</li>
+                <li>Developed project; It can run on Android, iOS, and the web.</li>
+                <li>Most of the JavaScript libraries can be used in the project.</li>
+                <li>Native functions can be used with Cordova plugins.<br>(File System, Database, Bluetooth, Camera, File Transfer, BarcodeScanner, Google Maps, etc.)</li>
+                <li>The syntax of the programming language is simple. This makes learning easier.</li>
+                <li>HTML and CSS codes are written automatically by the basic.js library.</li>
+                <li>It is designed with an object-based logic close to software development experience.</li>
+                <li>It has the same positioning logic as the interface design tools. This too; makes it easy to translate your design into an application.</li>
+            </ul>
+        </div>
+
+        <div id="code-example1" style="display:none">
+
+const homePage = {};
+homePage.PAGE_ID = "homePage";
+
+homePage.categoryItemDataList = [
+    { categoryId: "a", title: "Coffee", iconFile: "assets/categories/coffee.png", searchText: "Coffee Hot" },
+    { categoryId: "b", title: "Coffee Cup", iconFile: "assets/categories/coffee-cup.png", searchText: "Coffee Cup Hot" },
+    { categoryId: "c", title: "Iced Caffee", iconFile: "assets/categories/iced-caffee.png", searchText: "Iced Caffee Cold" },
+    { categoryId: "d", title: "Milkshake", iconFile: "assets/categories/milkshake.png", searchText: "Milkshake Cold" },
+    { categoryId: "e", title: "Chocolate", iconFile: "assets/categories/chocolate-milk.png", searchText: "Chocolate Cold" },
+    { categoryId: "f", title: "Cappuccino", iconFile: "assets/categories/cappuccino.png", searchText: "Cappuccino Hot" },
+    { categoryId: "g", title: "Tea", iconFile: "assets/categories/tea.png", searchText: "Tea Hot" },
+    { categoryId: "h", title: "Frappe", iconFile: "assets/categories/frappe.png", searchText: "Frappe Cold" },
+    { categoryId: "i", title: "Orange Juice", iconFile: "assets/categories/orange-juice.png", searchText: "Orange Juice Cold" }
+];
+
+homePage.cardItemDataList = [
+    { title: "Dill", price: "3", iconFile: "assets/cards/dill.png", searchText: "i g h i" },
+    { title: "Fennel", price:"5", iconFile: "assets/cards/fennel.png", searchText: "h f g c" },
+    { title: "Juniper", price:"2", iconFile: "assets/cards/juniper.png", searchText: "g e g" },
+    { title: "Olives", price:"7", iconFile: "assets/cards/olives.png", searchText: "f g c a" },
+    { title: "Oregano", price:"4", iconFile: "assets/cards/oregano.png", searchText: "e c g b" },
+    { title: "Pepper", price:"5", iconFile: "assets/cards/pepper.png", searchText: "d b a" },
+    { title: "Rosehip", price:"3", iconFile: "assets/cards/rosehip.png", searchText: "c a g d" }
+];
+
+homePage.openInDefaultView = function() {
+
+        defaultView.clear();
+
+        const box = defaultView.getContainerBox();
+        // Out of this function, we will use "homePage.box" for "box".
+        homePage.box = box;
+
+        topBar.setVisible(0);
+        //topBar.setTitle("Title Text");
+        //topBar.setBackgroundColor("#FFFFFF");
+        //topBar.setTitleColor("rgba(0, 0, 0, 0.8)");
+        //topBar.setBorderLine(1);
+        //topBar.setTitleAlign("left");
+        //topBar.backButton.setVisible(1);
+        //topBar.menuButton.setVisible(1);
+        
+        bottomBar.setVisible(1);
+        bottomBar.selectItemByIndex(0);
+        bottomBar.setBorderLine(0);
+
+        defaultView.setTopAndBottomOutterSpaces(0, bottomBar.getHeight());
+        //defaultView.setTopAndBottomOutterSpaces(topBar.getHeight(), bottomBar.getHeight());
+
+
+        // Background color of defaultView.
+        box.color = "#5ABB9F";
+        // Background color of all screen.
+        page.color = "white";
+
+
+        // #1
+
+        // UI TITLE: Default values.
+        UITitle.resetDefault();
+        //UITitle.default.title = "Title";
+        //UITitle.default.backButtonVisible = 0;
+        //UITitle.default.backButtonText = "Back";
+        UITitle.default.width = box.width;
+        //UITitle.default.height = 105;
+        //UITitle.default.backgroundColor = "white";
+        //UITitle.default.round = 0;
+        //UITitle.default.border = 0;
+        //UITitle.default.borderColor = "rgba(0, 0, 0, 0.1)";
+        //UITitle.default.bottomBorder = 1;
+        //UITitle.default.bottomInnerSpace = 24;
+        //UITitle.default.leftInnerSpace = 20;
+        //UITitle.default.rightInnerSpace = 20;
+        //UITitle.default.titleFontSize = 28;
+        //UITitle.default.titleTextColor = "rgba(0, 0, 0, 0.8)";
+        //UITitle.default.backButtonIconFile = "js/component/ui-title/arrow-blue.svg";
+        //UITitle.default.backButtonHeight = 20;
+        //UITitle.default.backButtonFontSize = 14;
+        //UITitle.default.backButtonTextColor = "#689BD2";
+        //UITitle.default.backButtonIconBackgroundColor = "rgba(0, 0, 0, 0.0)";
+
+        // UI TITLE: Category title.
+        box.categoryUITitle = createUITitle({ 
+            title: "Categories"
+        });
+        box.add(that);
+        // Show object:
+        that.position = "relative";
+
+        // UI SEARCH BOX: Default values.
+        UISearchBox.resetDefault();
+        //UISearchBox.default.width = 300;
+        //UISearchBox.default.height = 50;
+        //UISearchBox.default.searchIconFile = "js/component/ui-search-box/search.svg";
+        //UISearchBox.default.clearIconFile = "js/component/ui-search-box/clear.svg";
+        //UISearchBox.default.isCancelEnabled = 1;
+        //UISearchBox.default.placeholderText = "Search";
+        //UISearchBox.default.color = "whitesmoke";
+        //UISearchBox.default.textColor = "rgba(0, 0, 0, 0.8)";
+        //UISearchBox.default.border = 0;
+        //UISearchBox.default.borderColor = "rgba(0, 0, 0, 0.1)";
+        //UISearchBox.default.borderBottomStyle = "2px solid rgba(0, 0, 0, 0.06)";
+        //UISearchBox.default.round = 6;
+        //UISearchBox.default.fontSize = 20;
+
+        // UI SEARCH BOX: Search box in box.categoryUITitle.
+        box.categoryUITitle.uiSearchBox = createUISearchBox({ 
+            width: 200
+        });
+        box.categoryUITitle.add(that);
+        // Show object:
+        that.right = UITitle.default.rightInnerSpace;
+        that.bottom = 20;
+
+
+        // #2
+        
+        // UI ITEM LIST: Categoriy items in horizontal list.
+        box.categoryUIItemList = createUIItemList({ 
+            width: box.width, 
+            height: 200 
+        });
+        box.add(that);
+        that.color = "white";
+        //that.color = "whitesmoke";
+
+        that.setItemAlignment(UIItemList.alignType.HORIZONTAL);
+        that.setInnerSpaces(10, 0, 10, 0);
+        that.setItemCreationFunction(homePage.createCategoryItem);
+        that.createItemsByDataList(homePage.categoryItemDataList);
+        that.onSelectionChange(homePage.selectClickedCategoryItem);
+        // Show object:
+        that.position = "relative";
+        
+        // Connect search box with category item list.
+        box.categoryUITitle.uiSearchBox.onSearch(function(searchText, uiSearchBox) {
+            box.categoryUIItemList.searchItemByText(searchText);
+        });
+
+
+        // #3
+
+        // UI TITLE: Cards title
+        box.cardUITitle = createUITitle({ 
+            title: "Cards",
+            backgroundColor: "rgba(0, 0, 0, 0.02)"
+        });
+        box.add(that);
+        // Show object:
+        that.position = "relative";
+
+
+        // #4
+
+        // UI ITEM LIST: Card items in horizontal list.
+        box.cardUIItemList = createUIItemList({ 
+            width: box.width, 
+            height: 400 
+        });
+        box.add(that);
+        that.color = "#5ABB9F";
+        //that.color = "white";
+
+        that.setItemAlignment(UIItemList.alignType.HORIZONTAL);
+        that.setInnerSpaces(20, 0, 20, 0);
+        that.setItemCreationFunction(homePage.createCardItem);
+        that.createItemsByDataList(homePage.cardItemDataList);
+        that.onSelectionChange(homePage.selectClickedCardItem);
+        //that.selectItemByIndex(3); // Olives
+        //that.selectItemByIndex(5); // Pepper
+        // Show object:
+        that.position = "relative";
+
+        // Olives card's stepper object global name
+        //print(homePage.box.cardUIItemList.getItemList()[3].uiStepper.connectedItemName);
+
+        // All selected items:
+        //print(homePage.box.cardUIItemList.getSelectedItemList());
+
+        /*
+        // All items:
+        homePage.box.cardUIItemList.forEach(function(item) {
+            print(item.uiStepper.connectedItemName);
+            print(item.getData());
+        });
+        */
+
+        // Select category, after cardUIItemList created:
+        // NOTE: We connected them in homePage.selectClickedCategoryItem() function.
+        box.categoryUIItemList.selectItemByIndex(0);
+
+        print("Opened page id: " + homePage.PAGE_ID);
+        
+        // Show view:
+        defaultView.setVisible(1);
+        
+}
+
+homePage.createCategoryItem = function(itemData, uiItemList) {
+
+    const ITEM_WIDTH = 129;
+    //const ITEM_WIDTH = 150;
+
+    // BOX: Object container box.
+    const box = createBox();
+    box.width = ITEM_WIDTH;
+    box.height = 200; // uiItemList.height
+    box.color = "transparent";
+
+    // BOX: Item background box
+    box.boxBackground = createBox(2, 5, ITEM_WIDTH - 4, 190);
+    box.add(that);
+    that.color = "transparent";
+    that.round = 13;
+    that.setMotion("background-color 0.3s");
+
+    // BOX: Icon background box
+    box.boxIconBackground = createBox(0, 35, 90, 90);
+    box.add(that);
+    that.round = 50;
+    that.color = "rgba(255, 255, 255, 0.3)";
+    that.setMotion("background-color 0.3s");
+    that.center("left");
+    
+    // IMAGE: icon image
+    box.imgIcon = createImage(0, 0, 70, 70);
+    box.add(that);
+    that.load(itemData.iconFile);
+    that.aline(box.boxIconBackground);
+    that.left += 10;
+    that.top += 10;
+    that.setMotion("transform 0.3s");
+    that.imageElement.style.filter = "grayscale(100%)";
+    // Dont motion at create.
+    that.dontMotion();
+
+    // LABEL: item name text
+    box.lblName = createLabel(0, 0, ITEM_WIDTH, 30);
+    box.add(that);
+    that.text = itemData.title;
+    that.bottom = 30;
+    that.textAlign = "center";
+
+    // NOTE: UIItemList will set box.position = "relative";
+
+    makeBasicObject(box);
+    return box;
+
+}
+
+homePage.selectClickedCategoryItem = function(uiItemList, clickedItem, prevClickedItem) {
+
+    // Single Selection:
+    if (!clickedItem.isSelected()) {
+
+        if (prevClickedItem) {
+
+            // Deselect previous selected item:
+            prevClickedItem.clickable = 1;
+            prevClickedItem.boxBackground.color = "transparent";
+            prevClickedItem.boxIconBackground.color = "rgba(255, 255, 255, 0.3)";
+            prevClickedItem.lblName.element.style.fontFamily = "opensans";
+            prevClickedItem.imgIcon.element.style.transform = "scale(1)";
+            prevClickedItem.imgIcon.element.style.filter = "grayscale(100%)";
+            uiItemList.removeItemFromSelectedList(prevClickedItem);
+        }
+
+        // Select clicked item:
+        clickedItem.clickable = 0;
+        clickedItem.boxBackground.color = "white"
+        clickedItem.boxIconBackground.color = "transparent"
+        clickedItem.lblName.element.style.fontFamily = "opensans-bold"
+        clickedItem.imgIcon.element.style.transform = "scale(1.5)"
+        clickedItem.imgIcon.element.style.filter = "grayscale(30%)";
+        uiItemList.addItemToSelectedList(clickedItem);
+
+        print("Selected category: " + clickedItem.getIndex() + "-" + clickedItem.getData().title);
+
+        // Filter cards by selected category id:
+        if (homePage.box.cardUIItemList) {
+            homePage.box.cardUIItemList.searchItemByText(clickedItem.getData().categoryId);
+        }
+    }
+}
+
+homePage.createCardItem = function(itemData, uiItemList) {
+
+    const ITEM_WIDTH = 350;
+    //const ITEM_WIDTH = 150;
+
+    // BOX: Object container box
+    const box = createBox();
+    box.color = "transparent";
+    box.width = ITEM_WIDTH;
+    box.height = 400; // uiItemList.height
+
+    // BOX: Item background box
+    box.boxBackground = createBox(2, 10, ITEM_WIDTH - 4, 380);
+    box.add(that);
+    that.color = "rgba(255, 255, 255, 0.1)";
+    that.round = 13;
+    that.border = 0;
+    that.borderColor = "rgba(255, 255, 255, 0.8)";
+    that.setMotion("background-color 0.3s");
+
+    // IMAGE: icon image
+    box.imgIcon = createImage(0, 50, 200, 200);
+    box.add(that);
+    that.load(itemData.iconFile);
+    //that.imageElement.style.filter = "grayscale(80%)";
+    that.center("left");
+
+    // LABEL: item name text
+    box.lblName = createLabel(0, 300, ITEM_WIDTH, 38);
+    box.add(that);
+    that.text = itemData.title;
+    that.fontSize = 28;
+    that.textAlign = "center";
+    that.setMotion("top 0.3s");
+
+    // LABEL: item price text
+    box.lblPrice = createLabel(0, 0, "auto", "auto");
+    box.add(that);
+    that.text = "$" + itemData.price;
+    that.top = 20;
+    that.right = 10;
+    that.color = "rgba(255, 255, 255, 0.3)";
+    that.spaceX = 14;
+    that.spaceY = 4;
+    that.round = 6;
+    that.border = 0; //2
+    that.borderColor = "rgba(255, 255, 255, 0.8)";
+    that.fontSize = 28;
+    that.element.style.fontFamily = "opensans-bold";
+    
+    // UI STEPPER: Count of product.
+    UIStepper.resetDefault();
+    UIStepper.default.backgroundColor = "rgba(0, 0, 0, 0.08)";
+    UIStepper.default.buttonOutterSpace = 4;
+    UIStepper.default.buttonColor = "rgba(0, 0, 0, 0.2)";
+    UIStepper.default.buttonBorder = 1;
+    UIStepper.default.buttonBorderColor = "rgba(0, 0, 0, 0.8)";
+    box.uiStepper = createUIStepper();
+    box.add(that);
+    that.connectedItemName = itemData.title;
+    that.opacity = 0;
+    that.setMotion("opacity 0.3s, transform 0.3s");
+    that.element.style.transform = "scale(0.1)";
+    that.setMinimumNumber(1);
+    that.setMaximumNumber(15);
+    that.setValue(1);
+    that.onChange(function(uiStepper) {
+
+        print("Stepper value (" + uiStepper.connectedItemName + "): " + uiStepper.getValue());
+        box.lblPrice.text = "$" + (itemData.price * uiStepper.getValue());
+
+    });
+    that.bottom = 35;
+    that.center("left");
+
+    // NOTE: UIItemList will set box.position = "relative"
+
+    makeBasicObject(box);
+    return box;
+}
+
+homePage.selectClickedCardItem = function(uiItemList, clickedItem, prevClickedItem) {
+
+    // Multi Selection:
+    if (!clickedItem.isSelected()) {
+
+        // Select item:
+        clickedItem.boxBackground.border = 2;
+        //clickedItem.boxBackground.borderColor = "rgba(255, 255, 255, 0.8)";
+        clickedItem.boxBackground.color = "rgba(255, 255, 255, 0.3)";
+        clickedItem.uiStepper.element.style.transform = "scale(1)";
+        clickedItem.uiStepper.opacity = 1;
+        clickedItem.lblName.top = 270;
+        uiItemList.addItemToSelectedList(clickedItem);
+
+    } else {
+
+        // Deselect item:
+        clickedItem.boxBackground.border = 0;
+        //clickedItem.boxBackground.borderColor = "rgba(255, 255, 255, 0.0)";
+        clickedItem.boxBackground.color = "rgba(255, 255, 255, 0.1)";
+        clickedItem.uiStepper.element.style.transform = "scale(0.1)";
+        clickedItem.uiStepper.opacity = 0;
+        //clickedItem.uiStepper.setValue(1);
+        clickedItem.lblName.top = 300;
+        uiItemList.removeItemFromSelectedList(clickedItem);
+
+    }
+
+    print("Total selected cards: " + uiItemList.getSelectedItemList().length);
+
+}
+</div>
+        
+    </body>
+</html>

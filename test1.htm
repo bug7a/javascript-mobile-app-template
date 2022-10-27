@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        
+        <title>Test</title>
+        
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+
+        <link rel="stylesheet" type="text/css" href="library/basic.min.css">
+        <script src="library/basic.min.js" type="text/javascript" charset="utf-8"></script>
+
+        <script>
+
+        const colorList = ["blue", "red", "green", "yellow", "orange"];
+        
+        const start = function() {
+
+            page.color = "white";
+            
+            for (let i = 0; i < 30; i++) {
+                for (let k = 0; k < 40; k++) {
+                    createAnimatedObject(i * 20, k * 20);
+                }
+            }
+            
+        }
+
+        const createAnimatedObject = function(left = 0, top = 0) {
+
+            const box = createBox(left, top);
+            box.width = 2;
+            box.height = 20;
+            box.round = 3;
+            box.color = colorList[random(0, 4)];
+
+            setTimeout(function() {
+                setInterval(function () {
+                    box.rotate += 1;
+                }, 1);
+            }, left + top);
+
+        }
+
+        </script>
+
+    </head>
+    <body>
+        
+        <!-- HTML content -->
+        
+    </body>
+</html>

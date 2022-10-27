@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        
+        <title>HTML Model Usage</title>
+        
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+
+        <link rel="stylesheet" type="text/css" href="library/basic.min.css">
+        <script src="library/basic.min.js" type="text/javascript" charset="utf-8"></script>
+
+        <script src="js/component/ui-item-list.js" type="text/javascript" charset="utf-8"></script>
+        <script src="js/component/ui-search-box.js" type="text/javascript" charset="utf-8"></script>
+
+        <style>
+
+            .item-model {
+
+                position: relative;
+                display: block;
+                width: 100%;
+                height: 100%;
+                background-color: transparent;
+                border: 0px solid white;
+                
+            }
+
+            .item-model.background {
+
+                position:absolute;
+                top: 2px;
+                left: 20px;
+                width: calc(100% - 40px);
+                height: calc(100% - 4px);
+                background-color: transparent;
+                border-radius: 13px;
+                transition: background-color 0.3s ease 0s;
+
+            }
+
+            .item-model.background.selected {
+
+                background-color: whitesmoke;
+
+            }
+
+            .item-model.icon {
+
+                position:absolute;
+                left: 30px;
+                top: 12px;
+                width: 70px;
+                height: 70px;
+                border-radius: 4px;
+                background-color: transparent;
+                border-width: 0px;
+
+            }
+
+            .item-model.title {
+
+                position:absolute;
+                left: 120px;
+                top: 25px;
+                width: 280px;
+                height: auto;
+                font-family: opensans;
+                font-size: 20px;
+                text-align: left;
+                color: #4A4A4A;
+
+            }
+
+            .item-model.description {
+
+                position:absolute;
+                left: 120px;
+                top: 49px;
+                width: 280px;
+                height: auto;
+                color: gray;
+                font-family: opensans;
+                font-size: 14px;
+                text-align: left;
+
+            }
+
+        </style>
+        
+        <script>
+
+        const itemDataList = [
+            { title:"Broccoli", desc:"Vegetable", iconFile:"assets/fruids/brokoli.png", searchText: "Broccoli Vegetable" },
+            { title:"Strawberry", desc:"Fruit", iconFile:"assets/fruids/cilek.png", searchText: "Strawberry Fruit" },
+            { title:"Tomato", desc:"Vegetable", iconFile:"assets/fruids/domates.png", searchText: "Tomato Vegetable" },
+            { title:"Apple", desc:"Fruit", iconFile:"assets/fruids/elma.png", searchText: "Apple Fruit" },
+            { title:"Carrot", desc:"Vegetable", iconFile:"assets/fruids/havuc.png", searchText: "Carrot Vegetable" },
+            { title:"Watermelon", desc:"Fruit", iconFile:"assets/fruids/karpuz.png", searchText: "Watermelon Fruit" },
+            { title:"Lemon", desc:"Fruit", iconFile:"assets/fruids/limon.png", searchText: "Lemon Fruit" },
+            { title:"Banana", desc:"Fruit", iconFile:"assets/fruids/muz.png", searchText: "Banana Fruit" },
+            { title:"Pomegranate", desc:"Fruit", iconFile:"assets/fruids/nar.png", searchText: "Pomegranate Fruit" },
+            { title:"Eggplant", desc:"Vegetable", iconFile:"assets/fruids/patlican.png", searchText: "Eggplant Vegetable" },
+            { title:"Blueberry", desc:"Fruit", iconFile:"assets/fruids/yabanmersini.png", searchText: "Blueberry Fruit" },
+            { title:"Green Pepper", desc:"Vegetable", iconFile:"assets/fruids/yesilbiber.png", searchText: "Green Pepper Vegetable" }
+        ];
+        
+        const start = function() {
+
+            const box = createBox(0, 0, page.width, page.height);
+            page.boxSearchPage = box;
+
+            box.color = "transparent";
+            box.scrollY = 0;
+
+            // #1
+
+            // BOX: Search container.
+            box.boxSearch = createBox(0, 0, box.width, 105);
+            box.add(that);
+            that.color = "transparent";
+            that.border = 0;
+
+            // UI SEARCH BOX: Search box in boxSearch.
+            UISearchBox.resetDefault();
+            box.boxSearch.uiSearchBox = createUISearchBox({ width: box.width - 40 });
+            box.boxSearch.add(that);
+            // Show
+            that.left = 20;
+            that.bottom = 20;
+
+            // #2
+
+            // UI ITEM LIST: Items (VERTICAL)
+            box.uiItemList = createUIItemList({ 
+                width: box.width, 
+                height: box.height - box.boxSearch.height 
+            });
+            box.add(that);
+            that.color = "transparent";
+            that.top = box.boxSearch.height;
+            that.setItemAlignment(UIItemList.alignType.VERTICAL);
+            that.setInnerSpaces(0, 10, 0, 10);
+            that.setItemCreationFunction(createItem);
+            that.createItemsByDataList(itemDataList);
+            that.onSelectionChange(selectedItemChanged);
+            // Show
+            that.aline(box.boxSearch, "bottom");
+
+            // Connect search box with plant item list.
+            box.boxSearch.uiSearchBox.onSearch(function (searchText, uiSearchBox) {
+                box.uiItemList.searchItemByText(searchText);
+            });
+
+            page.onResize(pageResized);
+            
+        }
+
+        const createItem = function(itemData, uiItemList) {
+
+            const ITEM_WIDTH = uiItemList.width;
+            const ITEM_HEIGHT = 94;
+
+            // BOX: Item container.
+            const item = createBox(0, 0, ITEM_WIDTH, ITEM_HEIGHT);
+            that.color = "transparent";
+
+            itemModelHTML = document.getElementById("item-model-num1").innerHTML;
+            
+            itemModelHTML = itemModelHTML.replace("{{iconFile}}", itemData.iconFile);
+            itemModelHTML = itemModelHTML.replace("{{title}}", itemData.title);
+            itemModelHTML = itemModelHTML.replace("{{description}}", itemData.desc);
+            
+            item.html = itemModelHTML;
+
+            //print(item.element.childNodes[1].outerHTML);
+            item.backgroundElement = item.element.childNodes[1];
+
+            // NOTE: check js/page/search-page.js file for using without HTML and CSS.
+
+            makeBasicObject(item);
+            return item;
+
+        }
+
+        const selectedItemChanged = function(uiItemList, clickedItem, prevClickedItem) {
+
+            if (!clickedItem.isSelected()) {
+
+                if (prevClickedItem) {
+
+                    prevClickedItem.backgroundElement.className = "item-model background";
+                    uiItemList.removeItemFromSelectedList(prevClickedItem);
+
+                }
+
+                clickedItem.backgroundElement.className = "item-model background selected";
+                uiItemList.addItemToSelectedList(clickedItem);
+
+            }
+
+            print("Selected item: " + clickedItem.getIndex() + "-" + clickedItem.getData().title);
+
+        }
+
+        const pageResized = function() {
+            /*
+
+            // Resize when page size changes.
+            // NOTE: It does not need to be used for mobile app template.
+
+            page.boxSearchPage.width = page.width;
+            page.boxSearchPage.height = page.height;
+            page.boxSearchPage.boxSearch.width = page.width;
+            page.boxSearchPage.boxSearch.uiSearchBox.width = box.width - 40;
+            page.boxSearchPage.uiItemList.width = page.boxSearchPage.width;
+            page.boxSearchPage.uiItemList.height = page.boxSearchPage.height - page.boxSearchPage.boxSearch.height;
+            page.boxSearchPage.uiItemList.forEach(function(item) {
+                item.width = page.boxSearchPage.uiItemList.width;
+            });
+
+            */
+        }
+
+        </script>
+
+    </head>
+    <body>
+        
+        <!-- HTML MODELS -->
+        <div style="display:none">
+
+            <!-- Alternative use to create repeating patterns  -->
+            <div id="item-model-num1" class="item-model">
+                <div class="item-model background"></div>
+                <img class="item-model icon" src="{{iconFile}}">
+                <div class="item-model title">{{title}}</div>
+                <div class="item-model description">{{description}}</div>
+            </div>
+
+        </div>
+        
+    </body>
+</html>
