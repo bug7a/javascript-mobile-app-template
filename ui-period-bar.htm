@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        
+        <title>UI Period Bar</title>
+        
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+
+        <link rel="stylesheet" type="text/css" href="library/basic.min.css">
+        <script src="library/basic.min.js" type="text/javascript" charset="utf-8"></script>
+
+       <script src="examples-js/ui-period-bar/ui-period-bar.js" type="text/javascript" charset="utf-8"></script>
+
+
+        <script>
+        
+        const start = function() {
+
+            page.color = "white";
+
+            periodBar.create();
+            periodBar.createItemsByDataList(getMonthNameAndTitleDataList());
+            periodBar.selectItemByIndex(periodBar.getLastItemIndex())
+            periodBar.setVisible(1);
+
+        }
+
+        const getMonthNameAndTitleDataList = function() {
+
+            var dataList = [];
+
+            var currentIndex = date.monthNumber - 1;
+            var currentYear = date.year;
+
+            for (var i = 0; i < 12; i++) {
+
+                var dataObject = {};
+
+                if (i == 0) {
+                    dataObject.title = "TODAY";
+                    dataObject.name =  date.today + " " + basic.months[currentIndex];
+                    dataObject.day = date.today;
+                } else if (i == 1) {
+                    dataObject.title = "LAST MONTH";
+                    dataObject.name = basic.months[currentIndex];
+                    dataObject.day = 0;
+                } else {
+                    dataObject.title = ("{value} MONTHS AGO").replace("{value}", i);
+                    if (currentYear == date.year) {
+                        dataObject.name = basic.months[currentIndex];
+                    } else {
+                        dataObject.name = basic.months[currentIndex] + " " + currentYear;
+                    }
+                    dataObject.day = 0;
+                }
+
+                dataObject.year = currentYear;
+                dataObject.monthNumber = currentIndex + 1;
+
+                dataList.unshift(dataObject);
+
+                currentIndex--;
+                
+                if (currentIndex < 0) {
+                    currentIndex = 11;
+                    currentYear--;
+                }
+                
+            }
+
+            /*
+            var dataList = [
+                { "title": "3 AY ÖNCE", "name": "Mart", "mount": "5", "day": "30", "year": "2022" },
+                { "title": "2 AY ÖNCE", "name": "Nisan", "mount": "5", "day": "30", "year": "2022" },
+                { "title": "GEÇEN AY", "name": "Mayıs", "mount": "5", "day": "30", "year": "2022" },
+                { "title": "BU AY", "name": "24 Haziran", "mount": "5", "day": "30", "year": "2022" },
+            ]
+            */
+
+            return dataList;
+
+        }
+
+        </script>
+
+    </head>
+    <body>
+        
+        <!-- HTML content -->
+        
+    </body>
+</html>

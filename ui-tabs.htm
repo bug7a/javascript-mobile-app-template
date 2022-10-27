@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        
+        <title>UI Tabs</title>
+        
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+
+        <!-- LIBRARY FILES -->
+        <link rel="stylesheet" type="text/css" href="library/basic.min.css">
+        <script src="library/basic.min.js" type="text/javascript" charset="utf-8"></script>
+
+        <script src="js/component/ui-tabs.js" type="text/javascript" charset="utf-8"></script>
+
+        <script>
+
+        const itemDataList1 = [
+            { id: "1", text: "LOW", iconFile: "assets/lamp.png", selectedColor: "white", selectedIconFile: "assets/lamp-on.png" },
+            { id: "2", text: "MEDIUM", iconFile: "assets/lamp.png", selectedColor: "white", selectedIconFile: "assets/lamp-on.png" },
+            { id: "3", text: "ALL POWER", iconFile: "assets/lamp.png", selectedColor: "white", selectedIconFile: "assets/lamp-on.png" },
+        ];
+        
+        const itemDataList2 = [
+            { id: "1", text: "Coffee", selectedColor: "Lavender", selectedTextColor: "#734f96" },
+            { id: "2", text: "Milkshake", selectedColor: "PaleTurquoise", selectedTextColor: "#0F4E4E" },
+            { id: "3", text: "Iced Caffee", selectedColor: "Bisque", selectedTextColor: "#B86500" },
+        ];
+        
+        const itemDataList3 = [
+            { id: "1", text: "Coffee", iconFile: "assets/ui-tabs/coffee.png", selectedIconFile: "" },
+            { id: "2", text: "Milkshake", iconFile: "" },
+            { id: "3", text: "Frappe", iconFile: "" },
+            { id: "4", text: "Tea", iconFile: "" },
+            { id: "5", text: "", iconFile: "assets/ui-tabs/search.svg"},
+        ];
+
+        const itemDataList4 = [
+            { id: "1", text: "", iconFile: "assets/ui-tabs/i1-white.png", selectedIconFile: "assets/ui-tabs/i1.png",  },
+            { id: "2", text: "", iconFile: "assets/ui-tabs/i2-white.png", selectedIconFile: "assets/ui-tabs/i2.png",  },
+            { id: "3", text: "", iconFile: "assets/ui-tabs/i3-white.png", selectedIconFile: "assets/ui-tabs/i3.png",  },
+            { id: "4", text: "", iconFile: "assets/ui-tabs/i4-white.png", selectedIconFile: "assets/ui-tabs/i4.png",  },
+            { id: "5", text: "", iconFile: "assets/ui-tabs/i5-white.png", selectedIconFile: "assets/ui-tabs/i5.png",  },
+        ];
+        
+        let uiSegment1, uiSegment2, uiSegment3, uiSegment4;
+        
+        const start = function() {
+
+            page.color = "whitesmoke";
+            
+            // *** EXAMPLE 1:
+
+            // UI TABS: Default values.
+            UITabs.resetDefault();
+            UITabs.default.backgroundColor = "#141414";
+            UITabs.default.itemTextColor = "rgba(255, 255, 255, 0.8)";
+            UITabs.default.itemOutterSpace = 4;
+            // UI TABS: Object description.
+            uiSegment1 = createUITabs({ width: page.width - 40, height: 70 });
+            that.setItemsByDataList(itemDataList1);
+            that.selectItemByIndex(1);
+            that.onChange(function(selectedItem, selectedIndex) {
+                print("uiSegment1: " + selectedItem.getData().id);
+                // selectedItem.getData().text;
+            });
+            that.onResize(function(self) {
+                repositionComponents();
+            });
+            
+
+            // *** EXAMPLE 2:
+
+            // UI TABS: Default values.
+            UITabs.resetDefault();
+            UITabs.default.backgroundColor = "transparent";
+            UITabs.default.itemTextColor = "rgba(0, 0, 0, 0.8)";
+            UITabs.default.round = 6;
+            UITabs.default.itemOutterSpace = 1;
+            // UI TABS: Object description.
+            uiSegment2 = createUITabs();
+            that.setItemsByDataList(itemDataList2);
+            that.selectItemByIndex(2);
+            that.onChange(function(selectedItem, selectedIndex) {
+                print("uiSegment2: " + selectedItem.getData().id);
+            });
+            that.onResize(function(self) {
+                repositionComponents();
+            });
+
+
+            // *** EXAMPLE 3:
+
+            // UI TABS: Default values.
+            UITabs.resetDefault();
+            UITabs.default.backgroundColor = "#EBEAE8";
+            UITabs.default.itemIconSize = 20;
+            UITabs.default.round = 13;
+            // UI TABS: Object description.
+            uiSegment3 = createUITabs();
+            that.setItemsByDataList(itemDataList3);
+            uiSegment3.onChange(function(selectedItem, selectedIndex) {
+                print("uiSegment3: " + selectedItem.getData().id);
+            });
+            that.onResize(function(self) {
+                repositionComponents();
+            });
+
+
+            // *** EXAMPLE 4:
+
+            // UI TABS: Default values.
+            UITabs.resetDefault();
+            UITabs.default.backgroundColor = "#EBEAE8";
+            UITabs.default.itemIconSize = 30;
+            UITabs.default.round = 50;
+            UITabs.default.itemOutterSpace = 2;
+            UITabs.default.itemInnerSpaceX = 8;
+            // UI TABS: Object description.
+            uiSegment4 = createUITabs();
+            that.setItemsByDataList(itemDataList4);
+            that.selectItemByIndex(2);
+            uiSegment4.onChange(function(selectedItem, selectedIndex) {
+                print("uiSegment4: " + selectedItem.getData().id);
+            });
+            that.onResize(function(self) {
+                repositionComponents();
+            });
+            
+        }
+
+        var repositionComponents = function() {
+
+            clearTimeout(page.repositionComponentsTimer);
+
+            page.repositionComponentsTimer = setTimeout(function() {
+                
+                uiSegment1.top = 100;
+                uiSegment1.center("left");
+                uiSegment2.aline(uiSegment1, "bottom", 80, "center");
+                uiSegment3.aline(uiSegment2, "bottom", 80, "center");
+                uiSegment4.aline(uiSegment3, "bottom", 80, "center");
+
+            }, 10);    
+
+        }
+        
+        </script>
+
+    </head>
+    <body>
+        
+        <!-- HTML content -->
+        
+    </body>
+</html>

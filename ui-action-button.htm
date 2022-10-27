@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        
+        <title>UI Action Button</title>
+        
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+
+        <link rel="stylesheet" type="text/css" href="library/basic.min.css">
+        <script src="library/basic.min.js" type="text/javascript" charset="utf-8"></script>
+
+        <script src="js/component/ui-action-button.js" type="text/javascript" charset="utf-8"></script>
+
+        <script>
+
+        const actionDataList = [
+            { id: "1", text: "Take a Photo" },
+            { id: "2", text: "Add from Gallery" },
+            { id: "3", text: "Add from URL" },
+        ];
+
+        const start = function() {
+
+            page.color = "whitesmoke";
+            
+            // *** EXAMPLE 1:
+
+            // UI ACTION BUTTON: Default values.
+            //UIActionButton.resetDefault();
+            //UIActionButton.default.actionButtonColor = "#FFD541"
+            //UIActionButton.default.menuButtonColor = "#FFFFFF"
+            //UIActionButton.default.menuBackgroundColor = "whitesmoke"
+            //UIActionButton.default.menuWidth = 280
+            //UIActionButton.default.actionButtonSelectedColor = "lightgray"
+            //UIActionButton.default.actionButtonIconFile = "js/component/ui-action-button/add.png"
+            //UIActionButton.default.actionButtonIconSelectedFile = "js/component/ui-action-button/add.png"
+            //UIActionButton.default.actionButtonIconRotate = 0
+            //UIActionButton.default.actionButtonSelectedIconRotate = 45
+            //UIActionButton.default.coverBackgroundColor = "rgba(0, 0, 0, 0.0)"
+            //UIActionButton.default.actionButtonBorder = 4
+            //UIActionButton.default.rightOutterSpace = 40
+            //UIActionButton.default.bottomOutterSpace = 40
+            //UIActionButton.default.menuRightOutterSpace = 20
+            //UIActionButton.default.iconSize = 30
+
+            // UI ACTION BUTTON: Object description.
+            page.uiActionButton = createUIActionButton();
+            // boxOfPage.add(that);
+            that.setItemsByDataList(actionDataList);
+            that.onAction(function(actionId) {
+
+                print("Clicked action: " + actionId);
+
+                switch (actionId) {
+
+                    case "id1":
+                        break;
+
+                    case "id2":
+                        break;
+
+                }
+
+            });
+
+            // NOTE: If you dont use .setItemsByDataList() function component call onAction function directly.
+
+        }
+
+        </script>
+
+    </head>
+    <body>
+        
+        <!-- HTML content -->
+        
+    </body>
+</html>

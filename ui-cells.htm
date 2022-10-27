@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        
+        <title>UI CELLS</title>
+        
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+
+        <link rel="stylesheet" type="text/css" href="library/basic.min.css">
+        <script src="library/basic.min.js" type="text/javascript" charset="utf-8"></script>
+
+        <script src="js/component/ui-cells.js" type="text/javascript" charset="utf-8"></script>
+
+        <script>
+        
+        var start = function() {
+
+            page.color = "white";
+
+            // BOX: Page container.
+            const box = createBox(0, 0, 600, page.height);
+
+            // CELLS: 4 vertical cells:
+            createUICells(box, UICells.alignType.VERTICAL, [120, "auto", "auto", 90]);
+            box.cell(0).color = "whitesmoke";
+            box.cell(1).color = "white";
+            box.cell(2).color = "whitesmoke";
+            box.cell(3).color = "white";
+            // CELLS: 4 horizontal cells in box.cell(1)
+            createUICells(box.cell(1), UICells.alignType.HORIZONTAL, ["auto", "auto", "auto"]);
+            box.cell(1).cell(0).color = "white";
+            box.cell(1).cell(1).color = "#E1F0FF";
+            box.cell(1).cell(2).color = "white";
+
+            // Cells count:
+            print(box.cell.getCount());
+            print(box.cell(1).cell.getCount());
+
+            // IMAGE: 
+            createImage(0, 0, 60, 60);
+            that.load("assets/cards/olives.png");
+            box.cell(0).add(that);
+            that.center();
+
+            // IMAGE: 
+            createImage(0, 0, 60, 60);
+            that.load("assets/cards/rosehip.png");
+            box.cell(1).cell(0).add(that);
+            that.center();
+
+            // IMAGE: 
+            createImage(0, 0, 90, 90);
+            that.load("assets/cards/juniper.png");
+            box.cell(1).cell(1).add(that);
+            that.center();
+
+            // IMAGE: 
+            createImage(0, 0, 60, 60);
+            that.load("assets/cards/pepper.png");
+            box.cell(1).cell(2).add(that);
+            that.center();
+
+            // IMAGE: 
+            createImage(0, 0, 60, 60);
+            that.load("assets/cards/dill.png");
+            box.cell(2).add(that);
+            that.center();
+
+            // LABEL:
+            createLabel(0, 0, "auto", "auto");
+            that.text = "cell(3)";
+            box.cell(3).add(that);
+            that.onResize(function(self) {
+                self.center();
+            });
+
+        }
+
+        </script>
+
+    </head>
+    <body>
+        
+        <!-- HTML content -->
+        
+    </body>
+</html>
