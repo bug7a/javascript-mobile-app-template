@@ -27,14 +27,14 @@ sideBar.lockScreenButton.onClickFunc = function() {};
 sideBar.create = function() {
 
     // BOX: UI Component container.
-    const box = createBox(0, 0, page.width, page.height);
+    const box = createBox(0, 0, getDefaultContainerBox().width, getDefaultContainerBox().height);
     sideBar.box = box;
     box.color = "transparent";
     box.border = 0;
     box.visible = 0;
 
     // BOX: Cover.
-    box.boxCover = createBox(0, 0, page.width, page.height);
+    box.boxCover = createBox(0, 0, getDefaultContainerBox().width, getDefaultContainerBox().height);
     box.add(that);
     that.color = "rgba(0, 0, 0, 0.4)";
     that.setMotion("opacity 0.2s");
@@ -52,8 +52,8 @@ sideBar.create = function() {
     //that.color = "white";
     that.color = "whitesmoke";
     that.right = 0;
-    that.width = 450; //page.width * 0.8;
-    that.height = page.height - 8;
+    that.width = 450; //getDefaultContainerBox().width * 0.8;
+    that.height = getDefaultContainerBox().height - 8;
     that.top = 4;
     that.element.style.borderTopLeftRadius = "13px";
     that.element.style.borderBottomLeftRadius = "13px";

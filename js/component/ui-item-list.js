@@ -19,7 +19,7 @@ EXAMPLE: {cordova-mobile-app-ui-template}/js/page/default/examples-page.js
 
 USAGE OF UI COMPONENT:
 
-createUIItemList({ width: 200, height: 200 }) : UIItemList
+UIItemList.create({ width: 200, height: 200 }) : UIItemList
 - Creates a new UIItemList object.
 - UIItemList object extends Box object.
 
@@ -44,7 +44,7 @@ uiItemList.setItemCreationFunction(func: Function)
 
 var createItem = function(itemData) {
 
-    var ITEM_WIDTH = global.usedWidth
+    var ITEM_WIDTH = app.usedWidth
 
     // BOX: Object container box.
     var box = createBox(0, 0, ITEM_WIDTH, 94)
@@ -187,6 +187,7 @@ uiItemList.forEach(function (item) {
 
 */
 
+"use strict";
 const UIItemList = {};
 
 // "list" "columns" "icons"
@@ -195,11 +196,11 @@ UIItemList.alignType.VERTICAL = "vertical";
 UIItemList.alignType.HORIZONTAL = "horizontal";
 UIItemList.alignType.BOTH = "both";
 
-const createUIItemList = function(parameters = {}) {
+UIItemList.create = function(parameters = {}) {
 
     // *** PARAMETERS:
     if (!parameters.width) parameters.width = 600;
-    if (!parameters.height) parameters.height = page.height;
+    if (!parameters.height) parameters.height = getDefaultContainerBox().height;
 
     // BOX: UI object container.
     const box = createBox();

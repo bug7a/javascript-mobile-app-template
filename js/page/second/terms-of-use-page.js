@@ -16,7 +16,7 @@ termsOfUsePage.openInSecondView = function() {
     UITitle.resetDefault();
 
     // UI TITLE: Object description.
-    box.uiTitle = createUITitle({ 
+    box.uiTitle = UITitle.create({ 
         title: "Privacy Policy and Terms of Use", 
         backButtonVisible: 1, 
         backButtonText: "Settings" 

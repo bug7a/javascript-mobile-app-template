@@ -36,19 +36,19 @@ barsTestPage.openInDefaultView = function(resultCallback = function() {}) {
         bottomBar.selectItemByIndex(4);
         bottomBar.setBorderLine(1);
     
-        defaultView.setTopAndBottomOutterSpaces(topBar.getHeight(), bottomBar.getHeight());
+        defaultView.setTopAndBottomOuterSpaces(topBar.getHeight(), bottomBar.getHeight());
 
         box.color = "whitesmoke";
         box.scrollX = 0;
         box.scrollY = 1;
 
         // CELLS: 4 vertical cells:
-        createUICells(box, UICells.alignType.VERTICAL, ["auto", "auto", "auto", "auto", "auto"]);
+        UICells.create(box, UICells.alignType.VERTICAL, ["auto", "auto", "auto", "auto", "auto"]);
         box.cell(0).color = "whitesmoke";
         box.cell(1).color = "white";
         box.cell(2).color = "whitesmoke";
         // CELLS: 4 horizontal cells in box.cell(1)
-        createUICells(box.cell(1), UICells.alignType.HORIZONTAL, ["auto", "auto", "auto"]);
+        UICells.create(box.cell(1), UICells.alignType.HORIZONTAL, ["auto", "auto", "auto"]);
         box.cell(1).cell(0).color = "white";
         box.cell(1).cell(1).color = "#E1F0FF";
         box.cell(1).cell(2).color = "white";

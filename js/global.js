@@ -1,16 +1,6 @@
 
-const APP_ID = "app-id";
-
 // global.js - shared variables storaged at local storage.
 let global = {};
-
-// If you want bigger objects use smaller USED_WIDTH: 550, 600, 700
-global.usedWidth = 600;
-//global.usedWidth = 550;
-global.maxZoomableWidth = 1024;
-
-global.defaultView = {};
-global.defaultView.openedPageListLimit = 10;
 
 global.natifications = {};
 global.natifications.isLampOn = 1;

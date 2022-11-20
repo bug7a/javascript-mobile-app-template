@@ -16,13 +16,12 @@ tasksPage.openInDefaultView = function() {
     bottomBar.selectItemByIndex(3);
     bottomBar.setBorderLine(1);
 
-    defaultView.setTopAndBottomOutterSpaces(0, bottomBar.getHeight());
+    defaultView.setTopAndBottomOuterSpaces(0, bottomBar.getHeight());
 
-    page.color = "white";
     box.color = "transparent";
     box.scrollY = 0;
 
-    box.webView = createUIWebView(0, 0, box.width, box.height);
+    box.webView = UIWebView.create(0, 0, box.width, box.height);
     box.add(that);
     that.loadHTMLFile("app-todo.htm");
 

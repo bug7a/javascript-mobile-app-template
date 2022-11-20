@@ -13,9 +13,10 @@ Site: https://bug7a.github.io/cordova-mobile-app-ui-template/
 
 */
 
+"use strict";
 const UICloseButton = {};
 
-createUICloseButton = function() {
+UICloseButton.create = function() {
 
     // BOX: UI object container.
     const box = createBox(20, 30, 40, 40);

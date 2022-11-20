@@ -14,8 +14,9 @@ Site: https://bug7a.github.io/cordova-mobile-app-ui-template/
 
 */
 
-const UISelectItem = {}
+"use strict";
+const UISelectItem = {};
 
-const createUISelectItem = function() {
+UISelectItem.create = function() {
     
-}
+};

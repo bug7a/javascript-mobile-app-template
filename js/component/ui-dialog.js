@@ -35,9 +35,9 @@ dialog.show({
 
 */
 
-
+"use strict";
 const dialog = {};
 
-const createUIDialog = function() {
+UIDialog.create = function() {
     
 }

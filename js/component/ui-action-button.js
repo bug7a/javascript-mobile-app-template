@@ -17,6 +17,7 @@ EXAMPLE: {cordova-mobile-app-ui-template}/ui-action-button.htm
 
 */
 
+"use strict";
 const UIActionButton = {}
 
 // SHARED VARIABLES:
@@ -35,24 +36,24 @@ UIActionButton.resetDefault = function() {
     UIActionButton.default.actionButtonSelectedIconRotate = 45
     UIActionButton.default.coverBackgroundColor = "rgba(0, 0, 0, 0.0)"
     UIActionButton.default.actionButtonBorder = 4
-    UIActionButton.default.rightOutterSpace = 40
-    UIActionButton.default.bottomOutterSpace = 40
-    UIActionButton.default.menuRightOutterSpace = 20
+    UIActionButton.default.rightOuterSpace = 40
+    UIActionButton.default.bottomOuterSpace = 40
+    UIActionButton.default.menuRightOuterSpace = 20
     UIActionButton.default.iconSize = 30
 
 }
 
 UIActionButton.resetDefault()
 
-const createUIActionButton = function() {
+UIActionButton.create = function(parameters = {}) {
 
     // BOX: UI object container.
-    const box = createBox(0, 0, page.width, page.height)
+    const box = createBox()
 
     // Default values.
     box.default = {}
     for (let parameterName in UIActionButton.default) {
-        box.default[parameterName] = UIActionButton.default[parameterName]
+        box.default[parameterName] = (parameters[parameterName] != undefined) ? parameters[parameterName] : UIActionButton.default[parameterName]
     }
 
     // *** PRIVATE VARIABLES:
@@ -63,9 +64,11 @@ const createUIActionButton = function() {
     box.isMenuOpened = 0
 
     // *** OBJECT MODEL:
+    box.width = basic.getDefaultContainerBox().width
+    box.height = basic.getDefaultContainerBox().height
+    box.color = "transparent"
     box.bottom = 0
     box.right = 0
-    box.color = "transparent"
     
     // BOX: UI background.
     box.boxCover = createBox(0, 0, box.width, box.height)
@@ -78,8 +81,8 @@ const createUIActionButton = function() {
     // BOX: Action button container box.
     box.boxButton = createBox(0, 0, 90, 90)
     box.add(that)
-    that.right = box.default.rightOutterSpace
-    that.bottom = box.default.bottomOutterSpace
+    that.right = box.default.rightOuterSpace
+    that.bottom = box.default.bottomOuterSpace
     that.color = box.default.actionButtonColor
     that.round = 50
     that.border = box.default.actionButtonBorder
@@ -123,8 +126,8 @@ const createUIActionButton = function() {
     // BOX: Menu buttons container.
     box.boxMenu = createBox(0, 0, box.default.menuWidth, 158)
     box.add(that)
-    that.right = box.boxButton.right + box.boxButton.width + box.default.menuRightOutterSpace  //140
-    that.bottom = box.default.bottomOutterSpace
+    that.right = box.boxButton.right + box.boxButton.width + box.default.menuRightOuterSpace  //140
+    that.bottom = box.default.bottomOuterSpace
     that.color = box.default.menuBackgroundColor
     that.round = 13
     that.border = 2

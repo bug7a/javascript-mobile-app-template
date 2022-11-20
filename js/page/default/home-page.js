@@ -45,14 +45,11 @@ homePage.openInDefaultView = function() {
         bottomBar.selectItemByIndex(0);
         bottomBar.setBorderLine(0);
 
-        defaultView.setTopAndBottomOutterSpaces(0, bottomBar.getHeight());
-        //defaultView.setTopAndBottomOutterSpaces(topBar.getHeight(), bottomBar.getHeight());
-
+        defaultView.setTopAndBottomOuterSpaces(0, bottomBar.getHeight());
+        //defaultView.setTopAndBottomOuterSpaces(topBar.getHeight(), bottomBar.getHeight());
 
         // Background color of defaultView.
         box.color = "#5ABB9F";
-        // Background color of all screen.
-        page.color = "white";
 
 
         // #1
@@ -81,7 +78,7 @@ homePage.openInDefaultView = function() {
         //UITitle.default.backButtonIconBackgroundColor = "rgba(0, 0, 0, 0.0)";
 
         // UI TITLE: Category title.
-        box.categoryUITitle = createUITitle({ 
+        box.categoryUITitle = UITitle.create({ 
             title: "Categories"
         });
         box.add(that);
@@ -105,7 +102,7 @@ homePage.openInDefaultView = function() {
         //UISearchBox.default.fontSize = 20;
 
         // UI SEARCH BOX: Search box in box.categoryUITitle.
-        box.categoryUITitle.uiSearchBox = createUISearchBox({ 
+        box.categoryUITitle.uiSearchBox = UISearchBox.create({ 
             width: 200
         });
         box.categoryUITitle.add(that);
@@ -117,7 +114,7 @@ homePage.openInDefaultView = function() {
         // #2
         
         // UI ITEM LIST: Categoriy items in horizontal list.
-        box.categoryUIItemList = createUIItemList({ 
+        box.categoryUIItemList = UIItemList.create({ 
             width: box.width, 
             height: 200 
         });
@@ -142,7 +139,7 @@ homePage.openInDefaultView = function() {
         // #3
 
         // UI TITLE: Cards title
-        box.cardUITitle = createUITitle({ 
+        box.cardUITitle = UITitle.create({ 
             title: "Cards",
             backgroundColor: "rgba(0, 0, 0, 0.02)"
         });
@@ -154,7 +151,7 @@ homePage.openInDefaultView = function() {
         // #4
 
         // UI ITEM LIST: Card items in horizontal list.
-        box.cardUIItemList = createUIItemList({ 
+        box.cardUIItemList = UIItemList.create({ 
             width: box.width, 
             height: 400 
         });
@@ -337,11 +334,11 @@ homePage.createCardItem = function(itemData, uiItemList) {
     // UI STEPPER: Count of product.
     UIStepper.resetDefault();
     UIStepper.default.backgroundColor = "rgba(0, 0, 0, 0.08)";
-    UIStepper.default.buttonOutterSpace = 4;
+    UIStepper.default.buttonOuterSpace = 4;
     UIStepper.default.buttonColor = "rgba(0, 0, 0, 0.2)";
     UIStepper.default.buttonBorder = 1;
     UIStepper.default.buttonBorderColor = "rgba(0, 0, 0, 0.8)";
-    item.uiStepper = createUIStepper();
+    item.uiStepper = UIStepper.create();
     item.add(that);
     that.connectedItemName = itemData.title;
     that.opacity = 0;

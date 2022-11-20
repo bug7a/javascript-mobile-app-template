@@ -24,7 +24,7 @@ USAGE EXAMPLE:
 //UIPageControl.default.changePageMotionString = "left 0.2s";
 
 // UI PAGE CONTROL: Object description.
-var uiPageControl = createUIPageControl({ width: 500, height: page.height });
+var uiPageControl = UIPageControl.create({ width: 500, height: getDefaultContainerBox().height });
 //that.color = "lightgray"
 //that.round = 10
 uiPageControl.createNewPage("homePage");
@@ -46,6 +46,7 @@ uiPageControl.openPageById("homePage");
 
 */
 
+"use strict";
 const UIPageControl = {};
 
 // SHARED VARIABLES:
@@ -62,7 +63,7 @@ UIPageControl.resetDefault = function() {
 }
 UIPageControl.resetDefault();
 
-const createUIPageControl = function(parameters = {}) {
+UIPageControl.create = function(parameters = {}) {
 
     // BOX: UI object container.
     const box = createBox();
@@ -70,7 +71,7 @@ const createUIPageControl = function(parameters = {}) {
     // Default values.
     box.default = {};
     for (let parameterName in UIPageControl.default) {
-        box.default[parameterName] = parameters[parameterName] || UIPageControl.default[parameterName];
+        box.default[parameterName] = (parameters[parameterName] != undefined) ? parameters[parameterName] : UIPageControl.default[parameterName];
     }
 
     // *** PRIVATE VARIABLES:

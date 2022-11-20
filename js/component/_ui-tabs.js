@@ -15,15 +15,14 @@ EXAMPLE: {cordova-mobile-app-ui-template}/ui-tabs.htm
 
 */
 
-"use strict";
+// UITabs
 const UITabs = {};
 
 // SHARED VARIABLES:
 UITabs.default = {};
 UITabs.resetDefault = function() {
     
-    UITabs.default.width = 500;
-    UITabs.default.autoWidth = 1;
+    UITabs.default.width = "auto";
     UITabs.default.height = 50;
     UITabs.default.backgroundColor = "#E4E4E4" // lightgray;
     UITabs.default.selectedItemColor = "white";
@@ -39,7 +38,7 @@ UITabs.resetDefault = function() {
 }
 UITabs.resetDefault();
 
-UITabs.create = function(parameters = {}) {
+const createUITabs = function(parameters = {}) {
 
     // BOX: UI object container.
     const box = createBox();
@@ -64,15 +63,23 @@ UITabs.create = function(parameters = {}) {
     box.border = 0;
     box.round = box.default.round;
     box.color = box.default.backgroundColor;
-    box.setMotion("background-color 0.2s, opacity 0.2s");
     
-    // Autowidth
-    if (box.default.autoWidth) {
+    // With motion.
+    box.opacity = 0;
+    box.setMotion("background-color 0.3s, opacity 0.3s");
+    box.withMotion(function(self) {
+        self.opacity = 1;
+    });
+    
+    
+    if (box.default.width == "auto") {
+        box.default.AutoWidth = 1;
         box.width = 0;
     } else {
+        box.default.AutoWidth = 0;
         box.width = box.default.width;
     }
-
+    
     // *** PUBLIC METHODS:
     box.setItemsByDataList = function(dataList) {
 
@@ -88,18 +95,23 @@ UITabs.create = function(parameters = {}) {
         box.boxSelected = createBox(-1000, 0, box.height, box.height);
         box.add(that);
         that.color = "transparent";
-        //that.left = -1 * box.boxSelected.width;
+        that.left = -1 * box.boxSelected.width;
+        //that.center();
         that.opacity = 0;
-        that.center();
-        //that.left = 0;
-        that.setMotion("left 0.2s, opacity 0.2s"); // width 0.2s, 
+        that.left = 0;
+        //that.setMotion("width 0.2s, left 0.2s, opacity 0.2s");
 
         // BOX: Selected background box.
         box.boxSelected.boxBack = createBox(box.default.itemOuterSpace, box.default.itemOuterSpace);
         box.boxSelected.add(that);
         that.round = box.default.round;
         that.color = box.default.selectedItemColor;
-        that.setMotion("width 0.2s, background-color 0.2s");
+        //that.setMotion("width 0.2s, background-color 0.2s");
+
+        setTimeout(function(self) {
+            box.boxSelected.setMotion("width 0.2s, left 0.2s, opacity 0.2s");
+            box.boxSelected.boxBack.setMotion("width 0.2s, background-color 0.2s");
+        }, 400);
 
         if (dataList[0].selectedColor) {
             box.boxSelected.boxBack.color = dataList[0].selectedColor;
@@ -113,16 +125,15 @@ UITabs.create = function(parameters = {}) {
         })
 
         for (let i = 0; i < dataList.length; i++) {
-
             box.createItem(dataList[i], i);
             box.add(that);
             that.data = dataList[i];
             that.index = i;
             box.itemList.push(that);
-
         }
 
         box.selectItem(box.itemList[0]);
+
         box.refresh();
 
         makeBasicObject(box);
@@ -139,18 +150,13 @@ UITabs.create = function(parameters = {}) {
         that.element.style.cursor = "pointer";
         that.onClick(function(self) {
             box.selectItem(self);
-        });
-        that.opacity = 0;
-        that.left = 0;
-        that.top = 0;
-        that.setMotion("left 0.1s, width 0.1s, opacity 0.1s");
+        })
         
         // BOX: Item background box.
         item.boxBack = createBox(0, box.default.itemOuterSpace, box.height, item.height - box.default.itemOuterSpace - box.default.itemOuterSpace);
         item.add(that);
         that.color = "transparent";
         that.round = box.default.round;
-        that.setMotion("width 0.1s");
         
         // LABEL: Item text.
         item.lblTitle = createLabel(0, 0, "auto", "auto");
@@ -158,7 +164,7 @@ UITabs.create = function(parameters = {}) {
         that.text = dataList.text;
         that.fontSize = box.default.itemFontSize;
         that.textColor = box.default.itemTextColor;
-        that.setMotion("color 0.2s");
+        that.setMotion("color 0.3s");
 
         // IMAGE: item icon image.
         item.imgIcon = createImage(0, 0, box.default.itemIconSize, box.default.itemIconSize);
@@ -188,7 +194,6 @@ UITabs.create = function(parameters = {}) {
                 item.boxBack.width = item.width - box.default.ItemSpace - box.default.ItemSpace;
 
                 self.center();
-
             }
 
             box.refresh();
@@ -231,7 +236,7 @@ UITabs.create = function(parameters = {}) {
 
         box.refreshTimer = setTimeout(function() {
             box.repositionItems();
-        }, 0);     
+        }, 10);     
 
     }
 
@@ -245,7 +250,7 @@ UITabs.create = function(parameters = {}) {
 
         let _startLeft = 0;
 
-        if (box.default.autoWidth) {
+        if (box.default.AutoWidth) {
             _startLeft = 0;
             box.width = box.default.itemTotalWidth;
         } else {
@@ -253,11 +258,8 @@ UITabs.create = function(parameters = {}) {
         }
 
         for (let i = 0; i < box.itemList.length; i++) {
-            
             box.itemList[i].left = _startLeft;
             box.itemList[i].top = 0;
-            box.itemList[i].opacity = 1;
-
             _startLeft += box.itemList[i].width;
         }
 

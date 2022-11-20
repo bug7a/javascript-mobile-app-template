@@ -14,7 +14,7 @@ Site: https://bug7a.github.io/cordova-mobile-app-ui-template/
 
 USAGE OF UI COMPONENT:
 
-createUIStaggeredItemList(left: Float, top: Float, width: Integer, height: Integer) : UIStaggeredItemList
+UIStaggeredItemList.create(left: Float, top: Float, width: Integer, height: Integer) : UIStaggeredItemList
 - Creates a new UIStaggeredItemList object.
 - UIStaggeredItemList object extends Box object.
 
@@ -28,7 +28,7 @@ UIStaggeredItemList.setItemCreationFunction(func: Function)
 
 var createItem = function(itemData) {
 
-    var ITEM_WIDTH = global.usedWidth
+    var ITEM_WIDTH = app.usedWidth
 
     // BOX: Object container box.
     var box = createBox(0, 0, ITEM_WIDTH, 94)
@@ -167,9 +167,10 @@ itemObject.getIndex() : Integer
 
 */
 
+"use strict";
 const UIStaggeredItemList = {};
 
-const createUIStaggeredItemList = function(left = 0, top = 0, width = 600, height = page.height) {
+UIStaggeredItemList.create = function(left = 0, top = 0, width = 600, height = getDefaultContainerBox().height) {
 
     // *** PRIVATE VARIABLES:
     var displayType = "block"

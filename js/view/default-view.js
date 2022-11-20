@@ -14,6 +14,7 @@ Site: https://bug7a.github.io/cordova-mobile-app-ui-template/
 
 */
 
+"use strict";
 const defaultView = {};
 
 defaultView.default = {};
@@ -28,23 +29,16 @@ defaultView.resetDefault();
 
 defaultView.onCloseFunc = function() {};
 
-defaultView.create = function(parameters = {}) {
+defaultView.create = function() {
 
-    // *** PARAMETERS:
-    if (!parameters.width) parameters.width = 600;
-
-    // BOX: Page container.
-    defaultView.box = createBox(0, 
-        0, 
-        parameters.width, 
-        page.height
-    );
-
-    defaultView.box.visible = 0;
-    defaultView.box.setMotion("top 0.2s, opacity 0.2s");
-    // NOTE: If page.width bigger than global.maxZoomableWidth
-    // You may want to center the view.
-    //that.center("left");
+    // BOX: Container.
+    defaultView.box = createBox();
+    that.width = basic.getDefaultContainerBox().width;
+    that.height = basic.getDefaultContainerBox().height;
+    that.visible = 0;
+    that.top = 0;
+    that.left = 0;
+    that.setMotion("top 0.2s, opacity 0.2s");
 
     defaultView.clear();
     
@@ -86,7 +80,7 @@ defaultView.setVisible = function(visible, finishedCallback = function() {}) {
             defaultView.box.visible = 1;
             defaultView.box.opacity = 0; // 0
             defaultView.tempTop = defaultView.box.top;
-            defaultView.box.top = 300; // page.height / 3
+            defaultView.box.top = 300; // getDefaultContainerBox().height / 3
 
             defaultView.box.withMotion(function(self) {
                 defaultView.box.top = defaultView.tempTop;
@@ -111,7 +105,7 @@ defaultView.setVisible = function(visible, finishedCallback = function() {}) {
 
             defaultView.box.withMotion(function(self) {
                 defaultView.box.opacity = 0;
-                defaultView.box.top = 300; // page.height / 3
+                defaultView.box.top = 300; // getDefaultContainerBox().height / 3
             });
 
             setTimeout(function() {
@@ -139,10 +133,10 @@ defaultView.setVisible = function(visible, finishedCallback = function() {}) {
 
 }
 
-defaultView.setTopAndBottomOutterSpaces = function(top, bottom) {
+defaultView.setTopAndBottomOuterSpaces = function(top, bottom) {
 
     defaultView.box.top = top;
-    defaultView.box.height = page.height - top - bottom;
+    defaultView.box.height = getDefaultContainerBox().height - top - bottom;
 
 }
 

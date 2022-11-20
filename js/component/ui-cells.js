@@ -17,13 +17,14 @@ EXAMPLE: {cordova-mobile-app-ui-template}/ui-cells.htm
 
 */
 
+"use strict";
 const UICells = {};
 
 UICells.alignType = {};
 UICells.alignType.VERTICAL = "vertical";
 UICells.alignType.HORIZONTAL = "horizontal";
 
-const createUICells = function(box, align, sizes) {
+UICells.create = function(box, align, sizes) {
 
     let usedSize = 0;
     let autoCellCount = 0;

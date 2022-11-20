@@ -18,9 +18,10 @@ EXAMPLE: {cordova-mobile-app-ui-template}/ui-web-view.htm
 
 */
 
+"use strict";
 const UIWebView = {};
 
-const createUIWebView = function(left = -1000, top = -1000, width = 250, height = 250) {
+UIWebView.create = function(left = -1000, top = -1000, width = 250, height = 250) {
 
     const box = createBox(left, top, width, height);
     box.color = "transparent";

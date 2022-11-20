@@ -17,7 +17,7 @@ EXAMPLE: {cordova-mobile-app-ui-template}/ui-stepper.htm
 
 HANDBOOK:
 
-createUIStepper() : UIStepper
+UIStepper.create() : UIStepper
 - Create a stepper object.
 - UIStepper object extends Box object.
 
@@ -49,6 +49,7 @@ object.onChange(function(self) {
 
 */
 
+"use strict";
 const UIStepper = {};
 
 // SHARED VARIABLES:
@@ -70,7 +71,7 @@ UIStepper.resetDefault = function() {
 
     UIStepper.default.buttonWidth = 42;
     UIStepper.default.buttonHeight = 42;
-    UIStepper.default.buttonOutterSpace = 4;
+    UIStepper.default.buttonOuterSpace = 4;
     UIStepper.default.buttonColor = "white";
     UIStepper.default.buttonBorder = 1;
     UIStepper.default.buttonBorderColor = "rgba(0, 0, 0, 0.8)";
@@ -90,7 +91,7 @@ UIStepper.resetDefault = function() {
 }
 UIStepper.resetDefault();
 
-const createUIStepper = function(parameters = {}) {
+UIStepper.create = function(parameters = {}) {
 
 	// BOX: UI Object container.
 	const box = createBox();
@@ -98,7 +99,7 @@ const createUIStepper = function(parameters = {}) {
 	// Default values.
 	box.default = {};
 	for (let parameterName in UIStepper.default) {
-		box.default[parameterName] = parameters[parameterName] || UIStepper.default[parameterName];
+		box.default[parameterName] = (parameters[parameterName] != undefined) ? parameters[parameterName] : UIStepper.default[parameterName];
 	}
 	
 	// *** PRIVATE VARIABLES:
@@ -140,7 +141,7 @@ const createUIStepper = function(parameters = {}) {
 	});
 
 	// BOX: Decrease button. (-)
-	box.boxDecrease = createBox(box.default.buttonOutterSpace, 0, box.default.buttonWidth, box.default.buttonHeight);
+	box.boxDecrease = createBox(box.default.buttonOuterSpace, 0, box.default.buttonWidth, box.default.buttonHeight);
 	box.add(that);
 	that.border = box.default.buttonBorder;
 	that.borderColor = box.default.buttonBorderColor;
@@ -164,7 +165,7 @@ const createUIStepper = function(parameters = {}) {
 	// BOX: Increase button. (+)
 	box.boxIncrease = createBox(0, 0, box.default.buttonWidth, box.default.buttonHeight);
 	box.add(that);
-	that.right = box.default.buttonOutterSpace;
+	that.right = box.default.buttonOuterSpace;
 	that.border = box.default.buttonBorder;
 	that.borderColor = box.default.buttonBorderColor;
 	that.color = box.default.buttonColor;

@@ -17,7 +17,7 @@ securityPage.openInSecondView = function() {
     UITitle.default.width = box.width;
 
     // UI TITLE: Object description.
-    box.uiTitle = createUITitle({ 
+    box.uiTitle = UITitle.create({ 
         title: "Security", 
         backButtonVisible: 1, 
         backButtonText: "Settings" 

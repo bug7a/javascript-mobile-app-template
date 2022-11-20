@@ -16,7 +16,7 @@ menuStylePage.openInSecondView = function() {
     UITitle.resetDefault();
 
     // UI TITLE: Object description.
-    box.uiTitle = createUITitle({ 
+    box.uiTitle = UITitle.create({ 
         title: "Menu Style", 
         backButtonVisible: 1, 
         backButtonText: "Settings" 

@@ -21,7 +21,7 @@ const loginView = {}
 loginView.create = function() {
 
     // BOX: Content container box.
-    loginView.box = createBox(0, 0, global.usedWidth, page.height);
+    loginView.box = createBox(0, 0, app.usedWidth, getDefaultContainerBox().height);
     that.border = 0;
     that.element.style.backgroundImage = "radial-gradient(white, white, lightgray)";
     //that.center("left");
@@ -92,7 +92,7 @@ loginView.create = function() {
     // UI TOGGLE: Remember me.
     UIToggle.resetDefault();
     UIToggle.default.backgroundOnColor = "#5ABB9F";
-    loginView.box.b1.rememberUIToggle = createUIToggle();
+    loginView.box.b1.rememberUIToggle = UIToggle.create();
     loginView.box.b1.add(that);
     that.setValue(1);
     that.aline(loginView.box.b1.txtPass, "bottom", 45);

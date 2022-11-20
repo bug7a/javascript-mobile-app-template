@@ -75,7 +75,7 @@
             }
 
             // BOX: Container.
-            var box = createBox(0, 0, page.width, page.height)
+            var box = createBox(0, 0, getDefaultContainerBox().width, getDefaultContainerBox().height)
             that.color = "transparent"
 
             // BOX: Cover background.
@@ -145,7 +145,7 @@
                 if (i == 0) {
                     boxColor.aline(box.boxEditColor.txtColorName, "bottom", 30)
                 } else {
-                    boxColor.aline(exThat, "right", 20)
+                    boxColor.aline(previousThat, "right", 20)
                 }
 
                 colorItemList.push(boxColor)

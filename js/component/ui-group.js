@@ -18,7 +18,7 @@ EXAMPLE: {cordova-mobile-app-ui-template}/ui-group.htm
 
 EXAMPLE USAGE CODE:
 
-const group = createUIGroup();
+const group = UIGroup.create();
 that.setInnerSpaces(0, 0, 0, 0);
 that.setSpacesBetweenItems(8);
 that.setItemAlignment(UIGroup.alignType.VERTICAL, "center");
@@ -41,16 +41,17 @@ let lastItem = group.getLastItem();
 
 */
 
+"use strict";
 const UIGroup = {};
 
 UIGroup.alignType = {};
 UIGroup.alignType.VERTICAL = "vertical";
 UIGroup.alignType.HORIZONTAL = "horizontal";
 
-const createUIGroup = function(left = 0, top = 0) {
+UIGroup.create = function() { // left = 0, top = 0
 
     // BOX: Component container.
-    const box = createBox(left, top, 0, 0);
+    const box = createBox();
 
     box.itemList = [];
     box.leftSpace = 0;
@@ -146,7 +147,7 @@ const createUIGroup = function(left = 0, top = 0) {
 
         box.timer = setTimeout(function() {
             box.repositionItems();
-        }, 10);        
+        }, 10);
 
     }
 

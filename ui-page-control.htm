@@ -37,7 +37,7 @@
             //UIPageControl.default.changePageMotionString = "left 0.2s";
 
             // UI PAGE CONTROL: Object description.
-            uiPageControl1 = createUIPageControl({ width: page.width - 40, height: 500 });
+            uiPageControl1 = UIPageControl.create({ width: getDefaultContainerBox().width - 40, height: 500 });
             //that.color = "lightgray"
             that.round = 14;
             that.center();
@@ -115,7 +115,7 @@
             //UITabs.default.round = 13
 
             // IU SEGMENT:
-            uiTabs1 = createUITabs();
+            uiTabs1 = UITabs.create();
             that.opacity = 0;
             that.setMotion("opacity 0.3s");
             that.onResize(function(self) {
@@ -140,8 +140,8 @@
             //uiPageControl1.changePageById("settings")
             /*
             UITabs.default.backgroundColor = "#141414"
-            UITabs.default.itemOutterSpace = 4
-            uiTabs1 = createUITabs({ width: page.width - 40, height: 70 })
+            UITabs.default.itemOuterSpace = 4
+            uiTabs1 = UITabs.create({ width: getDefaultContainerBox().width - 40, height: 70 })
             that.onResize(function(self) {
                 repositionComponents()
             })

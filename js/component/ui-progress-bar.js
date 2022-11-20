@@ -15,7 +15,7 @@ Site: https://bug7a.github.io/cordova-mobile-app-ui-template/
 EXAMPLE: {cordova-mobile-app-ui-template}/ui-progress-bar.htm
 
 
-createUIProgressBar(left = 0, top = 0, width = 300, height = 40)
+UIProgressBar.create(left = 0, top = 0, width = 300, height = 40)
 - Show a percentage of progress bar.
 
 that.setProgressPercentage($percentage)
@@ -43,9 +43,10 @@ UIProgressBar.calculatePercentage($width, $maxWidth)
 
 */
 
-UIProgressBar = {};
+"use strict";
+const UIProgressBar = {};
 
-const createUIProgressBar = function(left = -1000, top = -1000, width = 300, height = 40) {
+UIProgressBar.create = function(left = -1000, top = -1000, width = 300, height = 40) {
 
     // BOX: UI object container.
     const box = createBox(left, top, width, height);

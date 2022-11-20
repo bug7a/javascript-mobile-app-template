@@ -24,7 +24,7 @@ myDocumentsPage.openInSecondView = function() {
     // UI TITLE: Default values.
     UITitle.resetDefault();
     // UI TITLE: Object description.
-    box.DocumentsUITitle = createUITitle({ 
+    box.DocumentsUITitle = UITitle.create({ 
         title: "My Documents", 
         backButtonVisible: 1, 
         backButtonText: "Back"
@@ -37,16 +37,16 @@ myDocumentsPage.openInSecondView = function() {
 
     // UI SEARCH BOX: Search box
     UISearchBox.resetDefault();
-    box.uiSearchBox = createUISearchBox({ width: box.width - 40 });
+    box.uiSearchBox = UISearchBox.create({ width: box.width - 40 });
     box.add(that);
     that.left = 20;
     that.top = box.DocumentsUITitle.height + 20;
 
-    var documentsUIItemListHeight = page.height - box.DocumentsUITitle.height - box.uiSearchBox.height - 40;
+    var documentsUIItemListHeight = getDefaultContainerBox().height - box.DocumentsUITitle.height - box.uiSearchBox.height - 40;
 
     // UI ITEM LIST: Documents items in horizontal list
-    box.documentsUIItemList = createUIItemList({ 
-        width: global.usedWidth, 
+    box.documentsUIItemList = UIItemList.create({ 
+        width: app.usedWidth, 
         height: documentsUIItemListHeight 
     });
     box.add(that);

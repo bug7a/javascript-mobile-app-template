@@ -20,9 +20,9 @@ style.dangerColor = style.colors.red;
 style.lightColor = style.colors.neutral;
 style.darkColor = style.colors.darkGray;
 
-style.topOutterSpace = 30;
-style.leftOutterSpace = 20;
-style.rightOutterSpace = 20;
+style.topOuterSpace = 30;
+style.leftOuterSpace = 20;
+style.rightOuterSpace = 20;
 style.fontSize = 20;
 
 style.titleLabel = function(lbl) {

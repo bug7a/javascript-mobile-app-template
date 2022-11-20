@@ -1,17 +1,18 @@
+"use strict";
 const tool = {};
 
 tool.useImageAsText = function(parameters = {}, editCreatedImage) {
 
     if (!parameters.fontSize) parameters.fontSize = 20;
-    if (!parameters.outterSpaceRight) parameters.outterSpaceRight = 0;
-    if (!parameters.outterSpaceLeft) parameters.outterSpaceLeft = 0;
+    if (!parameters.outerSpaceRight) parameters.outerSpaceRight = 0;
+    if (!parameters.outerSpaceLeft) parameters.outerSpaceLeft = 0;
 
     tool.saveCurrentThat();
 
     const htmText = document.createElement('span');
     htmText.style.display = "inline-block";
-    htmText.style.marginRight = parameters.outterSpaceRight + "px";
-    htmText.style.marginLeft = parameters.outterSpaceLeft + "px";
+    htmText.style.marginRight = parameters.outerSpaceRight + "px";
+    htmText.style.marginLeft = parameters.outerSpaceLeft + "px";
 
     const box = createBox(0, 0, parameters.fontSpace, parameters.fontSpace);
     that.color = "transparent";
@@ -36,13 +37,13 @@ tool.savedExThat = null;
 tool.saveCurrentThat = function() {
 
     tool.savedThat = that;
-    tool.savedExThat = exThat;
+    tool.savedExThat = previousThat;
 
 }
 
 tool.restoreThatFromSaved = function() {
 
     that = tool.savedThat;
-    exThat = tool.savedExThat;
+    previousThat = tool.savedExThat;
 
 }

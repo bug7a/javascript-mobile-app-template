@@ -39,13 +39,13 @@
             //UIActionButton.default.actionButtonSelectedIconRotate = 45
             //UIActionButton.default.coverBackgroundColor = "rgba(0, 0, 0, 0.0)"
             //UIActionButton.default.actionButtonBorder = 4
-            //UIActionButton.default.rightOutterSpace = 40
-            //UIActionButton.default.bottomOutterSpace = 40
-            //UIActionButton.default.menuRightOutterSpace = 20
+            //UIActionButton.default.rightOuterSpace = 40
+            //UIActionButton.default.bottomOuterSpace = 40
+            //UIActionButton.default.menuRightOuterSpace = 20
             //UIActionButton.default.iconSize = 30
 
             // UI ACTION BUTTON: Object description.
-            page.uiActionButton = createUIActionButton();
+            page.uiActionButton = UIActionButton.create();
             // boxOfPage.add(that);
             that.setItemsByDataList(actionDataList);
             that.onAction(function(actionId) {

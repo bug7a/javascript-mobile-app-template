@@ -14,12 +14,12 @@ Site: https://bug7a.github.io/cordova-mobile-app-ui-template/
 
 */
 
-
+"use strict";
 var UINumericKeyboard = {};
 UINumericKeyboard.START_NUMBER = ""; // "0"
 UINumericKeyboard.MAX_NUMBER = "4"; // 10
 
-var createUINumericKeyboard = function($left = 0, $top = 0, $width = 600, $height = 300) {
+UINumericKeyboard.create = function($left = 0, $top = 0, $width = 600, $height = 300) {
 
     var createNumericButton = function($text) {
 

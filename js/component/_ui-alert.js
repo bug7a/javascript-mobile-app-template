@@ -49,7 +49,7 @@ UIAlert.actionButtonColor = "#63C9CF"
 createUIAlert = function(titleText, descriptionText, buttonDataList) {
 
     // BOX: ui container.
-    var ui = createBox(0, 0, page.width, page.height)
+    var ui = createBox(0, 0, getDefaultContainerBox().width, getDefaultContainerBox().height)
     that.color = "transparent"
     that.border = 0
     that.setMotion("opacity 0.3s")
@@ -58,7 +58,7 @@ createUIAlert = function(titleText, descriptionText, buttonDataList) {
     ui.default.backgroundColor = UIAlert.actionButtonColor
 
     // BOX: Background.
-    ui.boxBlack = createBox(0, 0, page.width, page.height)
+    ui.boxBlack = createBox(0, 0, getDefaultContainerBox().width, getDefaultContainerBox().height)
     ui.add(that)
     that.border = 0
     that.color = "rgba(0, 0, 0, 0.85)"
@@ -180,13 +180,13 @@ createUIAlert = function(titleText, descriptionText, buttonDataList) {
 
         ui.top = 0
         ui.left = 0
-        ui.width = page.width
-        ui.height = page.height
+        ui.width = getDefaultContainerBox().width
+        ui.height = getDefaultContainerBox().height
 
         ui.boxBlack.top = 0
         ui.boxBlack.left = 0
-        ui.boxBlack.width = page.width
-        ui.boxBlack.height = page.height
+        ui.boxBlack.width = getDefaultContainerBox().width
+        ui.boxBlack.height = getDefaultContainerBox().height
 
         ui.window.center()
 

@@ -9,16 +9,18 @@ homePage.openInDefaultView = function() {
     const box = defaultView.getContainerBox();
     homePage.box = box;
 
-    defaultView.setTopAndBottomOutterSpaces(0, bottomTabBar.getHeight());
+    defaultView.setTopAndBottomOuterSpaces(0, bottomTabBar.getHeight());
 
     box.color = "white";
     box.scrollY = 0;
 
     // UI PAGE CONTROL:
-    box.uiPageControl = createUIPageControl({ width: box.width, height: box.height });
+    box.uiPageControl = UIPageControl.create({ width: box.width, height: box.height });
     box.add(that);
     that.color = "transparent";
     that.round = 0;
+    that.left = 0;
+    that.top = 0;
 
     // PAGE A:
     box.uiPageControl.createNewPageWithId("aPage");

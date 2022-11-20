@@ -13,6 +13,7 @@ Site: https://bug7a.github.io/cordova-mobile-app-ui-template/
 
 */
 
+"use strict";
 const clickEffect = {};
 clickEffect.isActive = 1;
 clickEffect.boxClick = null;
@@ -41,17 +42,17 @@ clickEffect.showClick = function() {
 
         if (!clickEffect.boxClick) {
 
-            var lastSelectedBox = getSelectedBox();
+            var lastSelectedBox = getDefaultContainerBox();
             if (lastSelectedBox != page) {
-                selectBox(page);
+                setDefaultContainerBox(page);
             }
 
             var e = window.event;
             var posX = e.clientX;
             var posY = e.clientY;
 
-            posX = basic.antiZoom(posX);
-            posY = basic.antiZoom(posY);
+            posX = basic.withPageZoom(posX);
+            posY = basic.withPageZoom(posY);
 
             clickEffect.boxClick = createBox(posX - 40, posY - 40, 80, 80);
             //that.color = "#40A5AF"
@@ -73,7 +74,7 @@ clickEffect.showClick = function() {
                 clickEffect.boxClick = null;
             }, 250);
 
-            selectBox(lastSelectedBox);
+            setDefaultContainerBox(lastSelectedBox);
 
         }
 

@@ -14,6 +14,7 @@ Site: https://bug7a.github.io/cordova-mobile-app-ui-template/
 
 */
 
+"use strict";
 const UISelectText = {};
 
 UISelectText.DEFAULT_WIDTH = 200;
@@ -28,7 +29,7 @@ UISelectText.placeholder = "Search";
 UISelectText.uiBackgroundColor = "whitesmoke";
 
 // Create new component
-UISelectText.createCopy = function(left = 0, 
+UISelectText.create = function(left = 0, 
     top = 0, 
     width = UISelectText.DEFAULT_WIDTH, 
     height = UISelectText.DEFAULT_HEIGHT) {
@@ -176,21 +177,21 @@ UISelectText.createCopy = function(left = 0,
         page.onResize(function() {
 
             if (UISelectText.itemSelection) {
-                UISelectText.itemSelection.width = page.width;
-                UISelectText.itemSelection.height = page.height;
+                UISelectText.itemSelection.width = getDefaultContainerBox().width;
+                UISelectText.itemSelection.height = getDefaultContainerBox().height;
 
-                UISelectText.itemSelection.boxSearch.width = page.width - 40 - 30 - 10;
+                UISelectText.itemSelection.boxSearch.width = getDefaultContainerBox().width - 40 - 30 - 10;
                 UISelectText.itemSelection.boxSearch.txtSearch.width = UISelectText.itemSelection.boxSearch.width - 80;
 
-                UISelectText.itemSelection.boxItems.width = page.width - 10;
-                UISelectText.itemSelection.boxItems.height = page.height - 110;
+                UISelectText.itemSelection.boxItems.width = getDefaultContainerBox().width - 10;
+                UISelectText.itemSelection.boxItems.height = getDefaultContainerBox().height - 110;
 
-                UISelectText.itemSelection.boxMaskTop.width = page.width - 10;
-                UISelectText.itemSelection.boxMaskBottom.width = page.width - 10;
+                UISelectText.itemSelection.boxMaskTop.width = getDefaultContainerBox().width - 10;
+                UISelectText.itemSelection.boxMaskBottom.width = getDefaultContainerBox().width - 10;
 
                 for (let i = 0; i < ui.itemList.length; i++) {
-                    UISelectText.itemSelection.boxItems["b" + i].width = page.width - 20;
-                    UISelectText.itemSelection.boxItems["b" + i].lblName.width = page.width - 70;
+                    UISelectText.itemSelection.boxItems["b" + i].width = getDefaultContainerBox().width - 20;
+                    UISelectText.itemSelection.boxItems["b" + i].lblName.width = getDefaultContainerBox().width - 70;
                 }
             }
         })
@@ -203,13 +204,15 @@ UISelectText.createCopy = function(left = 0,
 
 }
 
+/*
 const createSelectText = function(left = 0, 
     top = 0, 
     width = UISelectText.DEFAULT_WIDTH, 
     height = UISelectText.DEFAULT_HEIGHT) {
 
-    return UISelectText.createCopy(left, top, width, height);
+    return UISelectText.create(left, top, width, height);
 }
+*/
 
 UISelectText.setSelectedColor = function(color) {
     UISelectText.selectedColor = color;
@@ -226,7 +229,7 @@ UISelectText.setUIBackgroundColor = function(color) {
 const createItemSelection = function(connectedUI) {
 
     // BOX: Item selection box
-    UISelectText.itemSelection = createBox(0, 0, page.width, page.height);
+    UISelectText.itemSelection = createBox(0, 0, getDefaultContainerBox().width, getDefaultContainerBox().height);
     that.color = "white";
     that.setMotion("top 0.3s, opacity 0.3s");
     that.opacity = 0;
@@ -239,7 +242,7 @@ const createItemSelection = function(connectedUI) {
     // BOX: Search box
     UISelectText.itemSelection.boxSearch = createBox(20, 40);
     UISelectText.itemSelection.add(that);
-    that.width = page.width - 40 - 30 - 10;
+    that.width = getDefaultContainerBox().width - 40 - 30 - 10;
     that.height = 50;
     that.color = "whitesmoke";
     that.round = 25;
@@ -283,20 +286,20 @@ const createItemSelection = function(connectedUI) {
     UISelectText.itemSelection.add(that);
     that.left = 10;
     that.bottom = 0;
-    that.width = page.width - 10;
-    that.height = page.height - 110;
+    that.width = getDefaultContainerBox().width - 10;
+    that.height = getDefaultContainerBox().height - 110;
     that.color = "white";
     that.border = 0;
     that.borderColor = "lightgray";
     that.scrollY = 1;
 
     // BOX: Items mask box (Top)
-    UISelectText.itemSelection.boxMaskTop = createBox(0, 109, page.width - 10 , 10);
+    UISelectText.itemSelection.boxMaskTop = createBox(0, 109, getDefaultContainerBox().width - 10 , 10);
     UISelectText.itemSelection.add(that);
     that.element.style.background = "linear-gradient(to bottom, #FFFFFF, #FFFFFF00)";
 
     // BOX: Items mask box (Bottom)
-    UISelectText.itemSelection.boxMaskBottom = createBox(0, 189, page.width - 10 , 10);
+    UISelectText.itemSelection.boxMaskBottom = createBox(0, 189, getDefaultContainerBox().width - 10 , 10);
     UISelectText.itemSelection.add(that);
     that.element.style.background = "linear-gradient(to bottom, #FFFFFF00, #FFFFFF)";
     that.bottom = -1;
@@ -307,7 +310,7 @@ const createItemSelection = function(connectedUI) {
         // You can create your own custom item:
 
         // BOX: One of item box
-        const boxItem = createBox(10, 0, page.width - 40, 60);
+        const boxItem = createBox(10, 0, getDefaultContainerBox().width - 40, 60);
         that.index = index;
         that.round = 4;
         that.border = 0;
@@ -318,7 +321,7 @@ const createItemSelection = function(connectedUI) {
         that.onClick(UISelectText.itemSelection.itemClicked);
 
         // LABEL: Item name
-        boxItem.lblName = createLabel(30, 17, page.width - 70, "auto");
+        boxItem.lblName = createLabel(30, 17, getDefaultContainerBox().width - 70, "auto");
         boxItem.add(that);
         that.text = connectedUI.itemList[index].name;
         that.textAlign = "left";

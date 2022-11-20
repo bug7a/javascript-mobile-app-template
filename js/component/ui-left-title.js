@@ -17,6 +17,7 @@ EXAMPLE: {cordova-mobile-app-ui-template}/ui-left-title.htm
 
 */
 
+"use strict";
 const UILeftTitle = {};
 
 // SHARED VARIABLES:
@@ -43,7 +44,7 @@ UILeftTitle.resetDefault = function() {
 }
 UILeftTitle.resetDefault();
 
-const createUILeftTitle = function(parameters = {}) {
+UILeftTitle.create = function(parameters = {}) {
 
     // BOX: UI object container.
     const box = createBox();
@@ -51,7 +52,7 @@ const createUILeftTitle = function(parameters = {}) {
     // Default values.
     box.default = {};
     for (let parameterName in UILeftTitle.default) {
-        box.default[parameterName] = parameters[parameterName] || UILeftTitle.default[parameterName];
+        box.default[parameterName] = (parameters[parameterName] != undefined) ? parameters[parameterName] : UILeftTitle.default[parameterName];
     }
 
     // *** PRIVATE VARIABLES:

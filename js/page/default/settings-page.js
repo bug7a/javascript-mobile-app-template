@@ -62,9 +62,8 @@ settingsPage.openInDefaultView = function() {
     bottomBar.selectItemByIndex(4);
     bottomBar.setBorderLine(1);
 
-    defaultView.setTopAndBottomOutterSpaces(topBar.getHeight(), bottomBar.getHeight());
+    defaultView.setTopAndBottomOuterSpaces(topBar.getHeight(), bottomBar.getHeight());
 
-    page.color = "white";
     box.color = "transparent";
 
     UISelectText.setSelectedColor("#E1F0FF");
@@ -84,7 +83,7 @@ settingsPage.openInDefaultView = function() {
     settingsPage.setLeftTitleDefaultValues();
 
     // UI LEFT TITLE: Dark Mode.
-    box.darkModeUILeftTitle = createUILeftTitle({ 
+    box.darkModeUILeftTitle = UILeftTitle.create({ 
         title: "Dark Mode", 
         description: "Use interface colors inverted." 
     });
@@ -102,7 +101,7 @@ settingsPage.openInDefaultView = function() {
     // A2. Theme: global.settings.themeId
     
     // UI LEFT TITLE: Theme.
-    box.themeUILeftTitle = createUILeftTitle({
+    box.themeUILeftTitle = UILeftTitle.create({
         title: "Theme",
         description: "" 
     });
@@ -121,7 +120,7 @@ settingsPage.openInDefaultView = function() {
     // A3. Menu style:
 
     // UI LEFT TITLE: Menu style.
-    box.categoriesLeftTitle = createUILeftTitle({ 
+    box.categoriesLeftTitle = UILeftTitle.create({ 
         title: "Menu Style", 
         description: "Choose how your navigation menu appears." 
     });
@@ -140,7 +139,7 @@ settingsPage.openInDefaultView = function() {
     // A4. Primary color: global.settings.selectedColor
 
     // UI LEFT TITLE: Primary color.
-    box.colorLeftTitle = createUILeftTitle({ 
+    box.colorLeftTitle = UILeftTitle.create({ 
         title: "Primary Color", 
         description: "Choose a color for the colored interface buttons." 
     });
@@ -183,7 +182,7 @@ settingsPage.openInDefaultView = function() {
     // B1. Update Status: global.settings.updateId
     
     // UI LEFT TITLE: Update status.
-    box.updateUILeftTitle = createUILeftTitle({
+    box.updateUILeftTitle = UILeftTitle.create({
         title: "Update",
         description: "" 
     });
@@ -202,7 +201,7 @@ settingsPage.openInDefaultView = function() {
     // B2. Only When Charging: global.settings.isOnlyWhenChargingOn
 
     // UI LEFT TITLE: Only When Charging.
-    box.onlyWhenChargingUILeftTitle = createUILeftTitle({ 
+    box.onlyWhenChargingUILeftTitle = UILeftTitle.create({ 
         title: "Only When Charging", 
         description: "The app only updates when plugged in." 
     });
@@ -219,7 +218,7 @@ settingsPage.openInDefaultView = function() {
     // B3. Notifications: global.settings.notificationId
     
     // UI LEFT TITLE: Notifications.
-    box.notificationsUILeftTitle = createUILeftTitle({
+    box.notificationsUILeftTitle = UILeftTitle.create({
         title: "Notifications",
         description: "" 
     });
@@ -237,7 +236,7 @@ settingsPage.openInDefaultView = function() {
     // B4. Font Size: global.settings.fontSize
     
     // UI LEFT TITLE: Font size.
-    box.fontSizeUILeftTitle = createUILeftTitle({
+    box.fontSizeUILeftTitle = UILeftTitle.create({
         title: "Font Size",
         description: "" 
     });
@@ -253,7 +252,7 @@ settingsPage.openInDefaultView = function() {
     }, function setCustomStyle() {
 
         //UIStepper.default.backgroundColor = "whitesmoke";
-        //UIStepper.default.buttonOutterSpace = 4;
+        //UIStepper.default.buttonOuterSpace = 4;
         UIStepper.default.width = 180;
 
     }, function setOptions(uiToggle) {
@@ -268,7 +267,7 @@ settingsPage.openInDefaultView = function() {
     // B5. Language: global.settings.languageId
     
     // UI LEFT TITLE: Language.
-    box.languageUILeftTitle = createUILeftTitle({
+    box.languageUILeftTitle = UILeftTitle.create({
         title: "Language",
         description: "" 
     });
@@ -293,7 +292,7 @@ settingsPage.openInDefaultView = function() {
     // C1. Download Over Wi-Fi Only: global.settings.isDownloadWiFiOnlyOn
 
     // UI LEFT TITLE: Download Over Wi-Fi Only.
-    box.downloadWiFiOnlyUILeftTitle = createUILeftTitle({ 
+    box.downloadWiFiOnlyUILeftTitle = UILeftTitle.create({ 
         title: "Download Over Wi-Fi Only", 
         description: "" 
     });
@@ -312,7 +311,7 @@ settingsPage.openInDefaultView = function() {
     // C2. Video Quality: global.settings.videoQualityId
     
     // UI LEFT TITLE: Video Quality.
-    box.videoQualityUILeftTitle = createUILeftTitle({
+    box.videoQualityUILeftTitle = UILeftTitle.create({
         title: "Video Quality",
         description: "" 
     });
@@ -338,7 +337,7 @@ settingsPage.openInDefaultView = function() {
     // UI LEFT TITLE: Delete all downloads
     UILeftTitle.default.titleTextColor = "orangered";
     //UILeftTitle.default.descriptionTextColor = "#FE5D4999";
-    box.deleteAllDownloadsLeftTitle = createUILeftTitle({ 
+    box.deleteAllDownloadsLeftTitle = UILeftTitle.create({ 
         title: "Delete All Downloads",
         description: "Nothing will be deleted. It is a demo."
     });
@@ -371,7 +370,7 @@ settingsPage.openInDefaultView = function() {
     settingsPage.setLeftTitleDefaultValues();
 
     // UI LEFT TITLE: Security.
-    box.securityLeftTitle = createUILeftTitle({ 
+    box.securityLeftTitle = UILeftTitle.create({ 
         title: "Security", 
         description: "" 
     });
@@ -389,7 +388,7 @@ settingsPage.openInDefaultView = function() {
     // D2. Privacy Policy and Terms of Use.
 
     // UI LEFT TITLE: Privacy Policy and Terms of Use.
-    box.termOfUseLeftTitle = createUILeftTitle({ 
+    box.termOfUseLeftTitle = UILeftTitle.create({ 
         title: "Privacy Policy and Terms of Use", 
         description: "" 
     });
@@ -417,7 +416,7 @@ settingsPage.openInDefaultView = function() {
 settingsPage.createRelativeUISubTitle = function(title, color = "whitesmoke") {
 
     // BOX: UI object container
-    const box = createBox(0, 0, global.usedWidth, 90);
+    const box = createBox(0, 0, app.usedWidth, 90);
     that.color = color;
     that.borderColor = "rgba(0, 0, 0, 0.1)";
     that.element.style.borderBottomWidth = "3px";
@@ -437,7 +436,7 @@ settingsPage.createRelativeUISubTitle = function(title, color = "whitesmoke") {
 
 settingsPage.createRelativeUISpace = function(height = 100, color = "transparent") {
 
-    const box = createBox(0, 0, global.usedWidth, height);
+    const box = createBox(0, 0, app.usedWidth, height);
     that.color = color;
     that.element.style.position = "relative";
 
@@ -449,7 +448,7 @@ settingsPage.setLeftTitleDefaultValues = function() {
 
     // UI LEFT TITLE: Default values.
     UILeftTitle.resetDefault();
-    UILeftTitle.default.width = global.usedWidth;
+    UILeftTitle.default.width = app.usedWidth;
     UILeftTitle.default.height = 100;
     UILeftTitle.default.titleFontSize = 20;
     UILeftTitle.default.leftInnerSpace = 20;
@@ -490,7 +489,7 @@ settingsPage.createUIToggleInLeftTitle = function(parameters = {}, setCustomStyl
     // Custom style:
     setCustomStyle();
 
-    parameters.uiLeftTitle.uiToggle = createUIToggle();
+    parameters.uiLeftTitle.uiToggle = UIToggle.create();
     parameters.uiLeftTitle.add(that);
     // Show at:
     that.right = UILeftTitle.default.rightInnerSpace;
@@ -513,7 +512,7 @@ settingsPage.createUISelectTextInLeftTitle = function(parameters = {}, setCustom
     // parameters.itemDataList
 
     // UI SELECT TEXT:
-    parameters.uiLeftTitle.uiSelectText = createSelectText();
+    parameters.uiLeftTitle.uiSelectText = UISelectText.create();
     parameters.uiLeftTitle.add(that);
     // Show at:
     that.right = 20;
@@ -555,11 +554,11 @@ settingsPage.createUIStepperInLeftTitle = function(parameters = {}, setCustomSty
 
     // UI STEPPER: Default values.
     UIStepper.resetDefault();
-    UIStepper.default.buttonOutterSpace = 0;
+    UIStepper.default.buttonOuterSpace = 0;
 
     setCustomStyle();
 
-    parameters.uiLeftTitle.uiStepper = createUIStepper();
+    parameters.uiLeftTitle.uiStepper = UIStepper.create();
     parameters.uiLeftTitle.add(that);
     that.stepperId = parameters.stepperId;
     // Show at:

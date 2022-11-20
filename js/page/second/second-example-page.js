@@ -38,7 +38,7 @@ secondExamplePage.openInSecondView = function(resultCallback = function(results)
     UITitle.resetDefault();
 
     // UI TITLE: Object description.
-    box.uiTitle = createUITitle({ 
+    box.uiTitle = UITitle.create({ 
         title: "Second Example", 
         backButtonVisible: 1, 
         backButtonText: secondExamplePage.backButtonText 

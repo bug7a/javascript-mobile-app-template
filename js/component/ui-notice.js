@@ -51,6 +51,7 @@ notice.show({
 
 */
 
+"use strict";
 const notice = {};
 
 // SHARED VARIABLES:
@@ -94,7 +95,7 @@ notice.show = function(parameters = {}) {
         // Default values.
         box.default = {};
         for (let parameterName in notice.default) {
-            box.default[parameterName] = parameters[parameterName] || notice.default[parameterName];
+            box.default[parameterName] = (parameters[parameterName] != undefined) ? parameters[parameterName] : notice.default[parameterName];
         }
 
         // *** PRIVATE VARIABLES:
@@ -104,8 +105,8 @@ notice.show = function(parameters = {}) {
         box.publicVariable = "publicVariable";
 
         // *** OBJECT MODEL:
-        box.width = page.width;
-        box.height = page.height;
+        box.width = getDefaultContainerBox().width;
+        box.height = getDefaultContainerBox().height;
         box.color = "transparent";
 
         // BOX: Cover background.

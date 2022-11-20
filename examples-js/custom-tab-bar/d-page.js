@@ -16,7 +16,7 @@ dPage.openInSecondView = function() {
     UITitle.resetDefault();
 
     // UI TITLE: Object description.
-    box.uiTitle = createUITitle({ 
+    box.uiTitle = UITitle.create({ 
         title: "Page Title", 
         backButtonVisible: 1, 
         backButtonText: "Home" 

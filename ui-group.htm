@@ -19,7 +19,7 @@
             page.color = "white";
 
             // UI GROUP: First group.
-            page.grp1 = createUIGroup();
+            page.grp1 = UIGroup.create();
             that.setInnerSpaces(0, 0, 0, 0);
             that.setSpacesBetweenItems(8);
             that.setItemAlignment(UIGroup.alignType.HORIZONTAL, "center");
@@ -48,7 +48,7 @@
             });
 
             // UI GROUP: Second group.
-            page.grp2 = createUIGroup();
+            page.grp2 = UIGroup.create();
             that.setInnerSpaces(12, 8, 12, 8);
             that.setSpacesBetweenItems(28);
             that.setItemAlignment(UIGroup.alignType.VERTICAL, "center");

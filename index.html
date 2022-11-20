@@ -11,9 +11,12 @@
         <meta name="msapplication-tap-highlight" content="no">
 
         <!-- LIBRARIES -->
-        <link rel="stylesheet" type="text/css" href="library/basic.min.css">
-        <script src="library/basic.min.js" type="text/javascript" charset="utf-8"></script>
+        <link rel="stylesheet" type="text/css" href="library/basic.css">
+        <script src="library/basic.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- WHICH FRAMEWORK DO YOU USE? Cordova or Capacitor -->
         <script src="cordova.js" type="text/javascript" charset="utf-8"></script>
+        <script src="capacitor.js" type="text/javascript" charset="utf-8"></script>
 
         <!-- GLOBAL VARIABLES -->
         <script src="js/global.js" type="text/javascript" charset="utf-8"></script>
@@ -48,6 +51,7 @@
         <!-- MOBILE APP STRUCTURE -->
         <script src="js/style.js" type="text/javascript" charset="utf-8"></script>
         <script src="js/view/launch-view.js" type="text/javascript" charset="utf-8"></script>
+        <script src="js/view/safe-area.js" type="text/javascript" charset="utf-8"></script>
         <script src="js/view/default-view.js" type="text/javascript" charset="utf-8"></script>
         <script src="js/view/second-view.js" type="text/javascript" charset="utf-8"></script>
         <script src="js/view/small-view.js" type="text/javascript" charset="utf-8"></script>
@@ -70,7 +74,8 @@
         <script src="js/page/second/terms-of-use-page.js" type="text/javascript" charset="utf-8"></script>
         <script src="js/page/second/my-documents-page.js" type="text/javascript" charset="utf-8"></script>
         <script src="js/page/second/example-viewer-page.js" type="text/javascript" charset="utf-8"></script>
-       
+        <script src="js/page/second/template-a-page.js" type="text/javascript" charset="utf-8"></script>
+
         <script src="js/page/default/default-example-page.js" type="text/javascript" charset="utf-8"></script>
         <script src="js/page/default/bars-test-page.js" type="text/javascript" charset="utf-8"></script>
         <script src="js/page/default/settings-page.js" type="text/javascript" charset="utf-8"></script>
@@ -81,6 +86,15 @@
  
         <style>
 
+            /* app.getSafeAreaOuterSpaces() */
+            :root {
+                --sat: env(safe-area-inset-top, 0px);
+                --sar: env(safe-area-inset-right, 0px);
+                --sab: env(safe-area-inset-bottom, 0px);
+                --sal: env(safe-area-inset-left, 0px);
+            }
+
+            /* Search box */
             .search-box::-webkit-input-placeholder {
                 color: rgba(0, 0, 0, 0.4);
             }
@@ -91,62 +105,149 @@
 
         /*
 
-        CORDOVA MOBILE APP UI TEMPLATE (for ANDROID and iOS PLATFORMS)
-        https://bug7a.github.io/cordova-mobile-app-ui-template/
+        MOBILE APP UI TEMPLATE (PLATFORMS; ANDROID, iOS):
+
+        Website:  https://bug7a.github.io/cordova-mobile-app-ui-template/
+        Handbook: https://bug7a.github.io/basic.js-handbook/
             
-        This template, can be used to develop mobile applications
-        with Apache Cordova or similar technology.
-        https://cordova.apache.org/
+        This template, can be used to develop mobile applications with:
+        - Apache Cordova Framework or
+        - Ionic/Capacitor Native Runtime.
 
-        How to make an Android application? (Language: Turkish)
+
+    *** USAGE WITH CORDOVA FRAMEWORK:
+
+        CREATE APP DOCUMENTS: 
+        https://cordova.apache.org/docs/en/latest/guide/cli/index.html
+
+        TUTORIAL VIDEOS:
+        - How to make an Android application? (Language: Turkish)
         https://www.youtube.com/watch?v=B6x7yKhKZbY
-
-        How to make an iOS application? (Language: Turkish)
+        - How to make an iOS application? (Language: Turkish)
         https://www.youtube.com/watch?v=WZZwiI_5WQA
 
-
-        FOR YOUR CORDOVA PROJECT: 
+        SETTINGS FOR YOUR CORDOVA PROJECT:
         - Add these settings to your cordova project config.xml file:
             <preference name="DisallowOverscroll" value="true" />
-            <preference name="StatusBarOverlaysWebView" value="false" />
-            <preference name="StatusBarStyle" value="darkcontent" />
             <preference name="Orientation" value="portrait" />
-        - Add these plugins to your cordova project:
-            cordova plugin add cordova-plugin-statusbar
+
+        PLUGIN LIST: 
+        https://cordova.apache.org/plugins/
+
+
+
+    *** USAGE WITH IONIC / CAPACITOR NATIVE RUNTIME:
+
+        CREATE APP DOCUMENTS: 
+        https://capacitorjs.com/docs/getting-started
+
+        TUTORIAL VIDEOS:
+        - How to make an Android and iOS application?
+        https://youtu.be/rx-z6-_FwU8
+
+        SETTINGS FOR CAPACITOR PROJECT:
+        - Set "bundledwebRuntime": true in "capacitor.config.json" file.
+        Then Capacitor will create a "capacitor.js" file.
+
+        PLUGIN LIST: 
+        https://capacitorjs.com/docs/apis
+
+        PLUGIN USAGE:
+        - Just add "Capacitor.Plugins." before plugin name.
+        NOTE: Because it doesn't work as a module.
+
+        EXAMPLE CODE:
+        const showConfirm = async () => {
+        const { value } = await Capacitor.Plugins.Dialog.confirm({
+            title: 'Confirm',
+            message: `Are you sure you'd like to press the red button?`,
+        });
+
+        console.log('Confirmed:', value);
+        };
+        showConfirm();
+
+        NOTE: Dont forget to install the Dialog plugin to test example code: npm install @capacitor/dialog
 
         */
-            
-        // VARIABLES:
-        
+ 
 
-        // First running function:
-        function startApp() {
+        // VARIABLES:
+        const APP_ID = "app-id";
+
+        // First running function.
+        const prepareApp = function() {
 
             print("App started. Platform: " + app.getPlatformId());
+
+            // If more resolution is desired for large screen device:
+            //app.calculateResolution();
+
+            // Supports all screen resolutions (Orientation: portrait)
+            page.fit(app.usedWidth, app.maxZoomableWidth);
+
+            // Give the browser some time for initial processing.
+            launchView.create({ delayTime: 1300 });
+
+            // Safearea outer spaces.
+            app.getSafeAreaOuterSpaces(function(spaces) {
+
+                app.safeAreaInsetTop = basic.withPageZoom(spaces.top);
+                app.safeAreaInsetBottom = basic.withPageZoom(spaces.bottom);
+                app.safeAreaInsetLeft = basic.withPageZoom(spaces.left);
+                app.safeAreaInsetRight = basic.withPageZoom(spaces.right);
+
+                // SAFE AREA: Default values.
+                safeArea.default.width = app.usedWidth;
+                safeArea.default.topOuterSpace = app.safeAreaInsetTop;
+                safeArea.default.bottomOuterSpace = app.safeAreaInsetBottom;
+                //safeArea.default.backgroundColor = "transparent";
+                //safeArea.default.outerBackgroundColor = "white";
+                //safeArea.default.statusBarBackgroundColor = "rgba(0, 0, 0, 0.05)";
+                safeArea.default.statusBarBackgroundHeight = app.safeAreaInsetTop;
+
+                // SAFE AREA: Left some space for status bar.
+                safeArea.create();
+                // Objects are first created in the "safeArea". (Previous value is the "page")
+                basic.setDefaultContainerBox(safeArea.getContainerBox());
+
+                // Change launchView layer.
+                launchView.showOnSafearea();
+                
+                // Start the app.
+                startApp();
+
+            });
+
+        };
+
+        // Second running function.
+        const startApp = function() {
 
             saveGlobal(); // Close this line to store data.
             // NOTE: For reseting global variables, run saveGlobal() before loadGlobal():
 
             loadGlobal();
 
-            //app.calculateResolution();
-            // Supports all screen resolutions (Orientation: portrait)
-            page.fit(global.usedWidth, global.maxZoomableWidth);
-            
-            page.color = "white";
+            safeArea.setBackgroundColor("transparent");
+            safeArea.setOuterBackgroundColor("white");
+            // safeArea.setStatusBarBackgroundColor() works only at notched devices.
+            safeArea.setStatusBarBackgroundColor("rgba(0, 0, 0, 0.0)");
             
             // UI DEFAULT VIEW: Default page view:
             //defaultView.default.backgroundColor = "white";
             //defaultView.default.scrollY = 1;
             //defaultView.default.showWithMotion = 1;
-            defaultView.create({ width: global.usedWidth });
+            defaultView.create();
 
             // UI TOP BAR: Title and buttons:
-            topBar.create({ width: global.usedWidth });
+            //topBar.default.height = 105;
+            topBar.create();
             topBar.menuButton.onClick(showSideBar);
             
             // UI BOTTOM BAR: Image buttons at bottom:
-            bottomBar.create({ width: global.usedWidth });
+            //bottomBar.default.height = 80;
+            bottomBar.create();
             bottomBar.createItemsByDataList(database.getBottomBarItemDataList());
             bottomBar.onItemClick(openPageById);
 
@@ -154,7 +255,7 @@
             //secondView.default.backgroundColor = "white";
             //secondView.default.scrollY = 1;
             //secondView.default.showWithMotion = 1;
-            secondView.create({ width: global.usedWidth });
+            secondView.create();
 
             // UI SMALL VIEW: For small pages, extra info, custom dialogs etc.
             //smallView.default.height = 500;
@@ -163,7 +264,7 @@
             //smallView.default.topRound = 13;
             //smallView.default.scrollY = 0;
             //smallView.default.showWithMotion = 1;
-            smallView.create({ width: global.usedWidth });
+            smallView.create();
 
             // UI SIDE MENU BAR: Right side menu:
             sideBar.create();
@@ -180,9 +281,6 @@
             // Shows where did you tap.
             clickEffect.create();
 
-            // Give the browser some time for initial processing.
-            launchView.create({ delayTime: 1300 });
-
             // UI WAITING VIEW: It prevents the user from touching the screen until the process is complete.
             //waitingView.default.coverBackground = "rgba(0, 0, 0, 0.4)";
             //waitingView.default.waitingIconFile = "js/component/ui-waiting-view/clock.png";
@@ -195,7 +293,7 @@
 
         }
 
-        function openPageById(pageId) {
+        const openPageById = function(pageId) {
 
             switch(pageId) {
 
@@ -223,23 +321,23 @@
 
         }
 
-        function sideBarItemSelectionChanged(item, itemId) {
+        const sideBarItemSelectionChanged = function(item, itemId) {
             print("Side bar selection changed: " + itemId);
         }
 
-        function showSideBar() {
+        const showSideBar = function() {
             sideBar.setVisible(1);
         }
 
-        function lockScreen() {
+        const lockScreen = function() {
 
             sideBar.setVisible(0);
             loginView.show();
 
         }
 
-        // Run the startApp() function when the app is ready:
-        app.cordovaOnDeviceReady(startApp);
+        // Run the prepareApp() function when the app is ready:
+        app.onDeviceReady(prepareApp);
 
         </script>
         

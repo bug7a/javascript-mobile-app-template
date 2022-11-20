@@ -17,6 +17,7 @@ EXAMPLE: {cordova-mobile-app-ui-template}/ui-title.htm
 
 */
 
+"use strict";
 const UITitle = {};
 
 // SHARED VARIABLES:
@@ -26,7 +27,7 @@ UITitle.resetDefault = function() {
     UITitle.default.title = "Title";
     UITitle.default.backButtonVisible = 0;
     UITitle.default.backButtonText = "Back";
-    UITitle.default.width = 600;
+    UITitle.default.width = "auto";
     UITitle.default.height = 105;
     UITitle.default.backgroundColor = "white";
     UITitle.default.round = 0;
@@ -47,7 +48,7 @@ UITitle.resetDefault = function() {
 }
 UITitle.resetDefault();
 
-const createUITitle = function(parameters = {}) {
+UITitle.create = function(parameters = {}) {
 
     // BOX: UI object container.
     const box = createBox();
@@ -55,7 +56,11 @@ const createUITitle = function(parameters = {}) {
     // Default values.
     box.default = {};
     for (let parameterName in UITitle.default) {
-        box.default[parameterName] = parameters[parameterName] || UITitle.default[parameterName];
+        box.default[parameterName] = (parameters[parameterName] != undefined) ? parameters[parameterName] : UITitle.default[parameterName];
+    }
+
+    if (box.default.width == "auto") {
+        box.default.width = basic.getDefaultContainerBox().width;
     }
 
     // *** PRIVATE VARIABLES:
@@ -76,13 +81,16 @@ const createUITitle = function(parameters = {}) {
     box.round = box.default.round;
     
     // LABEL: title text.
-    box.lblTitle = createLabel(box.default.leftInnerSpace, 0, 540, 40);
+    box.lblTitle = createLabel();
     box.add(that);
+    that.width = 540;
+    that.height = 40;
     that.text = box.default.title;
     that.fontSize = box.default.titleFontSize;
     that.color = "transparent";
     that.textColor = "rgba(0, 0, 0, 0.8)";
     that.element.style.fontFamily = "opensans-bold";
+    that.left = box.default.leftInnerSpace;
     that.bottom = box.default.bottomInnerSpace;
 
     // BOX: Back button container.
@@ -97,19 +105,25 @@ const createUITitle = function(parameters = {}) {
     });
 
     // IMAGE: Back icon.
-    box.boxBackButton.imgIcon = createImage(0, 0, 20, 20);
+    box.boxBackButton.imgIcon = createImage();
     box.boxBackButton.add(that);
+    that.width = 20;
+    that.height = 20;
     that.load(box.default.backButtonIconFile);
     that.color = box.default.backButtonIconBackgroundColor;
     that.round = 4;
+    that.left = 0;
+    that.top = 0;
 
     // LABEL: Back text.
-    box.boxBackButton.lblBack = createLabel(0, 0, "auto", "auto");
+    box.boxBackButton.lblBack = createLabel();
     box.boxBackButton.add(that);
-    that.aline(box.boxBackButton.imgIcon, "right", 3);
+    that.width = "auto";
+    that.height = "auto";
     that.fontSize = box.default.backButtonFontSize;
     that.text = box.default.backButtonText;
     that.textColor = box.default.backButtonTextColor;
+    that.aline(box.boxBackButton.imgIcon, "right", 3);
     that.onResize(function(self) {
         box.boxBackButton.width = self.width + self.left + self.fontSize;
     })

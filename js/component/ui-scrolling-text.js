@@ -19,5 +19,5 @@ HOW TO USE (COPY, PASTE CODE):
 
 */
 
-
+"use strict";
 const UIScrollingText = {};

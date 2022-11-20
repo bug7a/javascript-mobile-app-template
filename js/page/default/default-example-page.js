@@ -49,7 +49,7 @@ defaultExamplePage.openInDefaultView = function(resultCallback = function() {}) 
 
         bottomBar.setVisible(0);
         //bottomBar.selectItemByIndex(2)
-        defaultView.setTopAndBottomOutterSpaces(topBar.getHeight(), 0);
+        defaultView.setTopAndBottomOuterSpaces(topBar.getHeight(), 0);
 
         box.color = "whitesmoke";
         box.scrollX = 0;

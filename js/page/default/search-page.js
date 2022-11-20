@@ -36,10 +36,9 @@ searchPage.openInDefaultView = function() {
     bottomBar.selectItemByIndex(1);
     bottomBar.setBorderLine(1);
 
-    defaultView.setTopAndBottomOutterSpaces(0, bottomBar.getHeight());
-    //defaultView.setTopAndBottomOutterSpaces(topBar.getHeight(), bottomBar.getHeight());
+    defaultView.setTopAndBottomOuterSpaces(0, bottomBar.getHeight());
+    //defaultView.setTopAndBottomOuterSpaces(topBar.getHeight(), bottomBar.getHeight());
 
-    page.color = "white";
     box.color = "transparent";
     box.scrollY = 0;
 
@@ -70,7 +69,7 @@ searchPage.openInDefaultView = function() {
     //UISearchBox.default.borderBottomStyle = "2px solid rgba(0, 0, 0, 0.06)"
     //UISearchBox.default.round = 6
     //UISearchBox.default.fontSize = 20
-    box.boxSearch.uiSearchBox = createUISearchBox({ width: box.width - 40 });
+    box.boxSearch.uiSearchBox = UISearchBox.create({ width: box.width - 40 });
     box.boxSearch.add(that);
     // Show object at:
     that.left = 20;
@@ -80,7 +79,7 @@ searchPage.openInDefaultView = function() {
     // #2
 
     // UI ITEM LIST: Items (VERTICAL)
-    box.uiItemList = createUIItemList({ 
+    box.uiItemList = UIItemList.create({ 
         width: box.width, 
         height: box.height - box.boxSearch.height
     });

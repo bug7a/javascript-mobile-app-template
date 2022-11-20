@@ -17,6 +17,7 @@ EXAMPLE: {cordova-mobile-app-ui-template}/ui-waiting-view.htm
 
 */
 
+"use strict";
 const waitingView = {};
 
 waitingView.default = {};
@@ -33,12 +34,12 @@ waitingView.create = function() {
     box.color = "transparent";
     box.opacity = 0;
     box.visible = 0;
-    box.width = page.width;
-    box.height = page.height;
+    box.width = getDefaultContainerBox().width;
+    box.height = getDefaultContainerBox().height;
     box.setMotion("opacity 0.2s");
     
     // BOX: Cover.
-    box.boxCover = createBox(0, 0, page.width, page.height);
+    box.boxCover = createBox(0, 0, getDefaultContainerBox().width, getDefaultContainerBox().height);
     box.add(that);
     that.color = waitingView.default.coverBackground;
 

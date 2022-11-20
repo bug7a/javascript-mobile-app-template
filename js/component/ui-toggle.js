@@ -17,6 +17,7 @@ EXAMPLE: {cordova-mobile-app-ui-template}/ui-toggle.htm
 
 */
 
+"use strict";
 const UIToggle = {};
 
 // SHARED VARIABLES:
@@ -61,7 +62,7 @@ UIToggle.resetDefault = function() {
 }
 UIToggle.resetDefault();
 
-const createUIToggle = function(parameters = {}) {
+UIToggle.create = function(parameters = {}) {
 
     // BOX: UI Object container.
     const box = createBox();
@@ -69,7 +70,7 @@ const createUIToggle = function(parameters = {}) {
     // Default values.
     box.default = {};
     for (let parameterName in UIToggle.default) {
-        box.default[parameterName] = parameters[parameterName] || UIToggle.default[parameterName];
+        box.default[parameterName] = (parameters[parameterName] != undefined) ? parameters[parameterName] : UIToggle.default[parameterName];
     }
 
     // *** PRIVATE VARIABLES:

@@ -17,9 +17,9 @@ EXAMPLE: {cordova-mobile-app-ui-template}/ui-table.htm
 
 */
 
-
+"use strict";
 const UITable = {};
 
-const createUITable = function() {
+UITable.create = function() {
     
 }

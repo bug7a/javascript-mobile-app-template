@@ -34,14 +34,14 @@ selectColorDialog.openInSmallView = function(colorSelectedCallback = function() 
     box.height = 240;
 
     // LABEL: Title text.
-    box.lblTitle = createLabel(0, 60, global.usedWidth, "auto");
+    box.lblTitle = createLabel(0, 60, app.usedWidth, "auto");
     box.add(that);
     that.text = "Select a Color";
     that.fontSize = 28;
     that.textAlign = "center";
 
     // UI GROUP: Color items.
-    box.grpColor = createUIGroup();
+    box.grpColor = UIGroup.create();
     box.add(that);
     that.setInnerSpaces(0, 0, 0, 0);
     that.setSpacesBetweenItems(20);

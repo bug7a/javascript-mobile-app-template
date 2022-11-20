@@ -19,7 +19,7 @@ exampleViewerPage.openInSecondView = function() {
     UITitle.resetDefault();
 
     // UI TITLE: Object description.
-    box.uiTitle = createUITitle({
+    box.uiTitle = UITitle.create({
         title: "Example Preview", 
         backButtonVisible: 1, 
         backButtonText: "Back" 
@@ -34,7 +34,7 @@ exampleViewerPage.openInSecondView = function() {
     });
 
     // UI WEB VIEW:
-    box.webView = createUIWebView(0, box.uiTitle.height, box.width, box.height - box.uiTitle.height);
+    box.webView = UIWebView.create(0, box.uiTitle.height, box.width, box.height - box.uiTitle.height);
     box.add(that);
     that.loadHTMLFile(exampleViewerPage.htmlFile);
 

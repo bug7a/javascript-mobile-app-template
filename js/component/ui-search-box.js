@@ -17,6 +17,7 @@ Site: https://bug7a.github.io/cordova-mobile-app-ui-template/
 
 */
 
+"use strict";
 var UISearchBox = {};
 
 // SHARED VARIABLES:
@@ -40,7 +41,7 @@ UISearchBox.resetDefault = function() {
 }
 UISearchBox.resetDefault();
 
-const createUISearchBox = function(parameters = {}) {
+UISearchBox.create = function(parameters = {}) {
 
     // BOX: UI object container.
     const box = createBox();
@@ -48,7 +49,7 @@ const createUISearchBox = function(parameters = {}) {
     // Default values.
     box.default = {};
     for (let parameterName in UISearchBox.default) {
-        box.default[parameterName] = parameters[parameterName] || UISearchBox.default[parameterName];
+        box.default[parameterName] = (parameters[parameterName] != undefined) ? parameters[parameterName] : UISearchBox.default[parameterName];
     }
     
     // *** PRIVATE VARIABLES:

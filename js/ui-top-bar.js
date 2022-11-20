@@ -20,28 +20,31 @@ topBar.setTitleAlign("center"); // center, left
 const topBar = {};
 topBar.backButton = {};
 topBar.menuButton = {};
-
-topBar.HEIGHT = 105;
 topBar.backButton.onClickFunc = function() {};
 topBar.menuButton.onClickFunc = function() {};
 
-topBar.create = function(parameters = {}) {
+topBar.default = {};
+topBar.resetDefault = function() {
+    topBar.default.height = 105;
+}
+topBar.resetDefault();
 
-    // *** PARAMETERS:
-    if (!parameters.width) parameters.width = 600;
+topBar.create = function() {
 
     // BOX: Object container.
-    topBar.box = createBox(0, 0, parameters.width, topBar.HEIGHT);
+    topBar.box = createBox();
+    that.width = basic.getDefaultContainerBox().width;
+    that.height = topBar.default.height;
     that.border = 0;
     that.color = "white";
     //that.element.style.boxShadow = "0px 6px 8px rgba(0, 0, 0, 0.1)";
     that.borderColor = "rgba(0, 0, 0, 0)";
     that.element.style.borderBottomWidth = "2px";
-    that.setMotion("top 0.2s, opacity 0.2s");
-    that.top = 0;
-    //that.opacity = 0;
     that.visible = 0;
+    that.opacity = 0;
     that.top = -1 * that.height;
+    that.left = 0;
+    that.setMotion("top 0.2s, opacity 0.2s");
 
     // IMAGE: Go back button.
     topBar.box.btnBack = createImage(20, 32, 34, 34);
@@ -114,9 +117,13 @@ topBar.setSubTitle = function(subTitleText) {
 
 topBar.setVisible = function(visible) {
 
-    if (visible != topBar.box.visible) {
+    if (visible != topBar.box.visibleValue) {
+
+        topBar.box.visibleValue = visible;
 
         if (visible) {
+
+            clearTimeout(topBar.box.visibleTimeout);
 
             topBar.box.top = -1 * topBar.box.height;
             topBar.box.opacity = 0;
@@ -124,14 +131,14 @@ topBar.setVisible = function(visible) {
             topBar.box.withMotion(function(self) {
                 self.top = 0;
                 self.opacity = 1;
-            })
+            });
 
         } else {
 
             topBar.box.withMotion(function(self) {
                 self.top = -1 * self.height;
                 self.opacity = 0;
-                setTimeout(function() {
+                topBar.box.visibleTimeout = setTimeout(function() {
                     topBar.box.visible = 0;
                 }, 250);
             });

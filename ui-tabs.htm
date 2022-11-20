@@ -55,9 +55,10 @@
             UITabs.resetDefault();
             UITabs.default.backgroundColor = "#141414";
             UITabs.default.itemTextColor = "rgba(255, 255, 255, 0.8)";
-            UITabs.default.itemOutterSpace = 4;
+            UITabs.default.itemOuterSpace = 4;
+            UITabs.default.autoWidth = 0;
             // UI TABS: Object description.
-            uiSegment1 = createUITabs({ width: page.width - 40, height: 70 });
+            uiSegment1 = UITabs.create({ width: getDefaultContainerBox().width - 40, height: 70 });
             that.setItemsByDataList(itemDataList1);
             that.selectItemByIndex(1);
             that.onChange(function(selectedItem, selectedIndex) {
@@ -76,9 +77,9 @@
             UITabs.default.backgroundColor = "transparent";
             UITabs.default.itemTextColor = "rgba(0, 0, 0, 0.8)";
             UITabs.default.round = 6;
-            UITabs.default.itemOutterSpace = 1;
+            UITabs.default.itemOuterSpace = 1;
             // UI TABS: Object description.
-            uiSegment2 = createUITabs();
+            uiSegment2 = UITabs.create();
             that.setItemsByDataList(itemDataList2);
             that.selectItemByIndex(2);
             that.onChange(function(selectedItem, selectedIndex) {
@@ -97,7 +98,7 @@
             UITabs.default.itemIconSize = 20;
             UITabs.default.round = 13;
             // UI TABS: Object description.
-            uiSegment3 = createUITabs();
+            uiSegment3 = UITabs.create();
             that.setItemsByDataList(itemDataList3);
             uiSegment3.onChange(function(selectedItem, selectedIndex) {
                 print("uiSegment3: " + selectedItem.getData().id);
@@ -114,10 +115,10 @@
             UITabs.default.backgroundColor = "#EBEAE8";
             UITabs.default.itemIconSize = 30;
             UITabs.default.round = 50;
-            UITabs.default.itemOutterSpace = 2;
+            UITabs.default.itemOuterSpace = 2;
             UITabs.default.itemInnerSpaceX = 8;
             // UI TABS: Object description.
-            uiSegment4 = createUITabs();
+            uiSegment4 = UITabs.create();
             that.setItemsByDataList(itemDataList4);
             that.selectItemByIndex(2);
             uiSegment4.onChange(function(selectedItem, selectedIndex) {

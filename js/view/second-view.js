@@ -15,6 +15,7 @@ Site: https://bug7a.github.io/cordova-mobile-app-ui-template/
 
 */
 
+"use strict";
 const secondView = {};
 
 secondView.default = {};
@@ -29,22 +30,16 @@ secondView.resetDefault();
 
 secondView.onCloseFunc = function() {};
 
-secondView.create = function(parameters = {}) {
-
-    // *** PARAMETERS:
-    if (!parameters.width) parameters.width = 600;
+secondView.create = function() {
 
     // BOX: Content container.
-    secondView.box = createBox(0, 
-        0, 
-        parameters.width, 
-        page.height
-    );
+    secondView.box = createBox();
+    that.width = basic.getDefaultContainerBox().width;
+    that.height = basic.getDefaultContainerBox().height;
     secondView.box.visible = 0;
     secondView.box.setMotion("left 0.2s, opacity 0.2s");
-    // NOTE: If page.width bigger than global.maxZoomableWidth
-    // You may want to center the view.
-    //that.center("left");
+    that.left = 0;
+    that.top = 0;
 
     secondView.clear();
 
@@ -90,7 +85,7 @@ secondView.setVisible = function(visible, finishedCallback = function() {}) {
                 secondView.box.visible = 1;
                 //secondView.box.opacity = 0;
                 secondView.tempLeft = secondView.box.left;
-                secondView.box.left = page.width;
+                secondView.box.left = getDefaultContainerBox().width;
 
                 secondView.box.withMotion(function(self) {
 
@@ -111,7 +106,7 @@ secondView.setVisible = function(visible, finishedCallback = function() {}) {
 
                 secondView.box.withMotion(function(self) {
                     //secondView.box.opacity = 0;
-                    secondView.box.left = page.width;
+                    secondView.box.left = getDefaultContainerBox().width;
                 });
 
                 setTimeout(function() {

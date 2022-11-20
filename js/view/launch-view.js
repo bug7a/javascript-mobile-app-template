@@ -4,18 +4,33 @@ launchView.create = function(parameters = {}) {
 
     if (!parameters.delayTime) parameters.delayTime = 1300;
 
-    // BOX: Content container box.
-    const box = createBox(0, 0, page.width, page.height);
-    that.border = 0;
-    that.color = "whitesmoke";
-    that.setMotion("opacity 0.2s");
+    setDefaultContainerBox(page);
 
-    // IMAGE: clock icon or your app logo image.
-    box.imgLogo = createImage(0, 0, 50, 50);
+    // BOX: Content container box.
+    const box = createBox();
+    launchView.box = box;
+
+    box.width = page.width;
+    box.height = page.height;
+    box.border = 0;
+    box.color = "whitesmoke";
+    box.setMotion("opacity 0.2s");
+    box.left = 0;
+    box.top = 0;
+
+    // IMAGE: clock icon or your app logo.
+    box.imgLogo = createImage();
     box.add(that);
+    that.width = 50;
+    that.height = 50;
+    //that.autoSize = 2;
     that.load("assets/launch-view/logo.png");
     that.opacity = 1;
-    that.center();
+    that.onLoad(function(self) {
+        self.center();
+    });
+
+    restoreDefaultContainerBox();
 
     setTimeout(function() {
 
@@ -27,4 +42,8 @@ launchView.create = function(parameters = {}) {
 
     }, parameters.delayTime);
 
+}
+
+launchView.showOnSafearea = function() {
+    page.element.appendChild(launchView.box.element);
 }

@@ -17,23 +17,66 @@
         - An application that keeps a to-do list.
         - When the application is closed, the information is stored in local storage.
     
-        To make an android or iOS application with Apache Cordova or similar technology.
-        https://cordova.apache.org/
-        
-        How to make an Android application? (Language: Turkish)
+        Handbook: https://bug7a.github.io/basic.js-handbook/
+            
+        This template, can be used to develop mobile applications with:
+        - Apache Cordova Framework or
+        - Ionic/Capacitor Native Runtime.
+
+
+    *** USAGE WITH CORDOVA FRAMEWORK:
+
+        CREATE APP DOCUMENTS: 
+        https://cordova.apache.org/docs/en/latest/guide/cli/index.html
+
+        TUTORIAL VIDEOS:
+        - How to make an Android application? (Language: Turkish)
         https://www.youtube.com/watch?v=B6x7yKhKZbY
-        
-        How to make an iOS application? (Language: Turkish)
+        - How to make an iOS application? (Language: Turkish)
         https://www.youtube.com/watch?v=WZZwiI_5WQA
-        
-        FOR YOUR CORDOVA PROJECT: 
+
+        SETTINGS FOR YOUR CORDOVA PROJECT:
         - Add these settings to your cordova project config.xml file:
             <preference name="DisallowOverscroll" value="true" />
-            <preference name="StatusBarOverlaysWebView" value="false" />
-            <preference name="StatusBarStyle" value="darkcontent" />
             <preference name="Orientation" value="portrait" />
-        - Add these plugins to your cordova project:
-            cordova plugin add cordova-plugin-statusbar
+
+        PLUGIN LIST: 
+        https://cordova.apache.org/plugins/
+
+
+
+    *** USAGE WITH IONIC / CAPACITOR NATIVE RUNTIME:
+
+        CREATE APP DOCUMENTS: 
+        https://capacitorjs.com/docs/getting-started
+
+        TUTORIAL VIDEOS:
+        - How to make an Android and iOS application?
+        https://youtu.be/rx-z6-_FwU8
+
+        SETTINGS FOR CAPACITOR PROJECT:
+        - Set "bundledwebRuntime": true in "capacitor.config.json" file.
+        Then Capacitor will create a "capacitor.js" file.
+
+        PLUGIN LIST: 
+        https://capacitorjs.com/docs/apis
+
+        PLUGIN USAGE:
+        - Just add "Capacitor.Plugins." before plugin name.
+        NOTE: Because it doesn't work as a module.
+
+        EXAMPLE CODE:
+        const showConfirm = async () => {
+        const { value } = await Capacitor.Plugins.Dialog.confirm({
+            title: 'Confirm',
+            message: `Are you sure you'd like to press the red button?`,
+        });
+
+        console.log('Confirmed:', value);
+        };
+        showConfirm();
+
+        NOTE: Dont forget to install the Dialog plugin to test example code: npm install @capacitor/dialog
 
         */
 
@@ -61,8 +104,11 @@
 
             // UI: HOME PAGE:
             // BOX: Container box of home content. Parameters: left, top, width, height.
-            homePage = createBox(0, 0, USED_WIDTH, page.height)
+            homePage = createBox()
+            that.width = USED_WIDTH
+            that.height = basic.getDefaultContainerBox().height
             that.color = "white"
+            that.top = 0
             that.center("left")
             
             // UI: ADD NEW TASK:
@@ -99,7 +145,7 @@
             
             // UI: TASK ITEMS:
             // BOX: Scrollable container box of task items.
-            homePage.boxTaskItemList = createBox(10, 100, 480, page.height - 110)
+            homePage.boxTaskItemList = createBox(10, 100, 480, getDefaultContainerBox().height - 110)
             homePage.add(that)
             that.color = "white"
             that.border = 0
@@ -160,8 +206,8 @@
 
             page.fit(USED_WIDTH, MAX_ZOOMABLE_WIDTH)
 
-            homePage.height = page.height
-            homePage.boxTaskItemList.height = page.height - 110
+            homePage.height = getDefaultContainerBox().height
+            homePage.boxTaskItemList.height = getDefaultContainerBox().height - 110
             homePage.center("left")
         }
 

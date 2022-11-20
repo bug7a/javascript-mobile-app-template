@@ -15,10 +15,9 @@ Site: https://bug7a.github.io/cordova-mobile-app-ui-template/
 
 */
 
-
+"use strict";
 const smallView = {};
 
-// SHARED VARIABLES:
 smallView.default = {};
 smallView.resetDefault = function() {
 
@@ -34,24 +33,25 @@ smallView.resetDefault();
 
 smallView.onCloseFunc = function() {};
 
-smallView.create = function(parameters = {}) {
-
-    // *** PARAMETERS:
-    if (!parameters.width) parameters.width = 600;
+smallView.create = function() {
 
     // BOX: Content container.
-    smallView.box = createBox(0, 
-        0, 
-        page.width, 
-        page.height
-    );
+    smallView.box = createBox();
+    that.width = basic.getDefaultContainerBox().width;
+    that.height = basic.getDefaultContainerBox().height;
     that.color = "transparent";
     that.visible = 0;
+    that.top = 0;
+    that.left = 0;
 
     // BOX: Cover background.
-    smallView.box.boxCover = createBox(0, 0, page.width, page.height);
+    smallView.box.boxCover = createBox();
     smallView.box.add(that);
+    that.width = basic.getDefaultContainerBox().width;
+    that.height = basic.getDefaultContainerBox().height;
     that.setMotion("opacity 0.2s");
+    that.top = 0;
+    that.left = 0;
     that.onClick(function() {
 
         smallView.close();
@@ -59,13 +59,13 @@ smallView.create = function(parameters = {}) {
     });
 
     // BOX: Content (Page) container.
-    smallView.box.boxContent = createBox(0, 0, parameters.width, smallView.default.height);
+    smallView.box.boxContent = createBox();
     smallView.box.add(that);
-    that.bottom = 0;
+    that.width = basic.getDefaultContainerBox().width;
+    that.height = smallView.default.height;
     that.setMotion("bottom 0.2s");
-    // NOTE: If page.width bigger than global.maxZoomableWidth
-    // You may want to center the view.
-    //that.center("left");
+    that.left = 0;
+    that.bottom = 0;
     
     smallView.clear();
 

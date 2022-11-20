@@ -19,9 +19,9 @@ HOW TO USE:
 
 */
 
-
+"use strict";
 const UIinput = {};
 
-const createUIInput = function() {
+UIInput.create = function() {
     
 }

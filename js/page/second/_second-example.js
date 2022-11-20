@@ -78,7 +78,7 @@ secondExamplePage.openInSecondView = function() {
     })
 
     // CLOSE BUTTON: Close button.
-    box.btnClose = createUICloseButton()
+    box.btnClose = UICloseButton.create()
     box.add(that)
     //that.color = "rgba(255, 255, 255, 0.1)"
     //that.border = 2

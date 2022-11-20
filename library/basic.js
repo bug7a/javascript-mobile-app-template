@@ -4,7 +4,7 @@
 /*
 
 
-(v1.6.5) Create interactive user interfaces with basic programming skills.
+(v1.7) Create interactive user interfaces with basic programming skills.
 - Project Site: https://bug7a.github.io/basic.js/
 
 
@@ -31,7 +31,7 @@ Have Fun.
 
 */
 
-"use strict"
+"use strict";
 const basic = {};
 basic.startTime = Date.now();
 
@@ -110,9 +110,10 @@ basic.months = [
 let page;
 
 let that = "";
-let exThat = "";
+let previousThat = "";
 
-basic.selectedBox;
+basic.defaultContainerBox;
+basic.previousDefaultContainerBox;
 basic.loopTimer;
 basic.resizeDetection = {};
 basic.resizeDetection.objectAndFunctionList = [];
@@ -124,14 +125,12 @@ basic.motionController.DONT_MOTION_TIME = 40;
 basic.start = function () {
 
     page = new MainBox();
-    selectBox(page);
+    setDefaultContainerBox(page);
 
     page.bodyElement.style.margin = "0px";
     page.bodyElement.style.overflow = "hidden";
-    page.box = createBox(0, 0, page.width, page.height);
+    page.mainBox = createBox(0, 0, page.width, page.height);
     that.element.style.position = "fixed";
-    //that.element.style.width = "100%";
-    //that.element.style.height = "100%";
     that.color = "transparent";
     
     page.onResize(function() {
@@ -149,17 +148,17 @@ basic.start = function () {
         if(!basic.loopTimer) setLoopTimer(1000);
     }
 
-}
+};
 
 basic.afterStart = function () {
     // Hız testi:
     // var timeUsed = (Date.now() - basic.startTime)
     // print(timeUsed);
-}
+};
 
 basic.print = function ($message) {
     console.log($message);
-}
+};
 var print = basic.print;
 
 basic.random = function ($first, $second) {
@@ -181,7 +180,7 @@ basic.random = function ($first, $second) {
 
     return result;
 
-}
+};
 var random = basic.random;
 
 basic.num = function ($str, $type = "float") {
@@ -194,12 +193,12 @@ basic.num = function ($str, $type = "float") {
         return parseInt($str);
     }
 
-}
+};
 var num = basic.num;
 
 basic.str = function ($num) {
     return String($num);
-}
+};
 var str = basic.str;
 
 basic.isMobile = function () {
@@ -213,7 +212,7 @@ basic.isMobile = function () {
 
     return answer;
 
-}
+};
 var isMobile = basic.isMobile;
 
 basic.go = function ($url, $windowType = "_self") {
@@ -224,7 +223,7 @@ basic.go = function ($url, $windowType = "_self") {
 
     return openedWindow;
 
-}
+};
 var go = basic.go;
 
 // Tek haneli sayıyı, başına "0" ekleyerek iki haneli yapar. 03:10:05
@@ -236,7 +235,7 @@ basic.twoDigitFormat = function($number) {
 
     return $number;
 
-}
+};
 var twoDigitFormat = basic.twoDigitFormat;
 
 basic.storage = {
@@ -248,10 +247,10 @@ basic.storage = {
         return JSON.parse(window.localStorage.getItem(key));
     },
     remove(key) {
-        window.localStorage.removeItem(key)
+        window.localStorage.removeItem(key);
     }
 
-}
+};
 var storage = basic.storage;
 
 basic.clock = {
@@ -312,7 +311,7 @@ basic.date = {
         return Date.now();
     }
 
-}
+};
 var date = basic.date;
 
 // Common methods and properties of basic objects.
@@ -320,7 +319,7 @@ class Basic_UIComponent {
 
     /*
     _type;
-    _upperObject;
+    _containerBox;
 
     _element;
     _visible;
@@ -357,12 +356,12 @@ class Basic_UIComponent {
 
     }
 
-    get upperObject() {
-        return this._upperObject;
+    get containerBox() {
+        return this._containerBox;
     }
 
-    set upperObject($value) {
-        this._upperObject = $value;
+    set containerBox($value) {
+        this._containerBox = $value;
     }
 
     // Hizalama ve boyutlandırma.
@@ -716,11 +715,11 @@ class MainBox {
         return this._bodyElement;
     }
 
-    get box() {
+    get mainBox() {
         return this._box;
     }
 
-    set box($value) {
+    set mainBox($value) {
         this._box = $value;
         this._element = this._box.element;
     }
@@ -728,13 +727,13 @@ class MainBox {
     get width() {
         let _w;
         _w = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
-        return basic.antiZoom(_w);
+        return basic.withPageZoom(_w);
     }
 
     get height() {
         let _h;
         _h = window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight;
-        return basic.antiZoom(_h);
+        return basic.withPageZoom(_h);
     }
 
     get zoom() {
@@ -777,8 +776,8 @@ class MainBox {
     }
 
     refreshSize() {
-        page.box.width = page.width;
-        page.box.height = page.height;
+        page.mainBox.width = page.width;
+        page.mainBox.height = page.height;
     }
 
     onClick($func) {
@@ -799,8 +798,8 @@ class MainBox {
 
     add($obj) {
         // Eklenen nesnenin, üst nesnesi değişiyor.
-        if ($obj.upperObject != this) {
-            $obj.upperObject = this;
+        if ($obj.containerBox != this) {
+            $obj.containerBox = this;
             // this.box.clickable = 1;
             this.element.appendChild($obj.contElement);
         }
@@ -835,8 +834,8 @@ class Box extends Basic_UIComponent {
         divElement.style.top = $top + "px";
 
         this._element = divElement;
-        this._upperObject = basic.selectedBox;
-        basic.selectedBox.element.appendChild(this._element);
+        this._containerBox = basic.defaultContainerBox;
+        basic.defaultContainerBox.element.appendChild(this._element);
 
         // Genişliğin "auto" olmasına izin verme.
         if ($width == "auto") {
@@ -943,9 +942,9 @@ class Box extends Basic_UIComponent {
     }
 
     add($obj) {
-        if ($obj.upperObject != this) {
+        if ($obj.containerBox != this) {
             // Eklenen nesnenin, üst nesnesini değiştir.
-            $obj.upperObject = this;
+            $obj.containerBox = this;
             // İçine başka bir nesne eklendiğinde, artık basılabilir.
             this.clickable = 1;
             this.element.appendChild($obj.contElement);
@@ -954,10 +953,10 @@ class Box extends Basic_UIComponent {
 
     // Ağaç şeklinde kod blokları oluştumak için bir teknik. (Deneysel Teknik)
     in($func) {
-        var _selectedBox = getSelectedBox();
-        selectBox(this);
+        var _selectedBox = getDefaultContainerBox();
+        setDefaultContainerBox(this);
         $func(this);
-        selectBox(_selectedBox);
+        setDefaultContainerBox(_selectedBox);
     }
 
 }
@@ -1007,8 +1006,8 @@ class Button extends Basic_UIComponent {
         buttonElement.style.top = $top + "px";
 
         this._element = buttonElement;
-        this._upperObject = basic.selectedBox;
-        basic.selectedBox.element.appendChild(this._element);
+        this._containerBox = basic.defaultContainerBox;
+        basic.defaultContainerBox.element.appendChild(this._element);
 
         // Yüksekliğin "auto" olmasına izin verme.
         if ($height == "auto") {
@@ -1176,8 +1175,8 @@ class TextBox extends Basic_UIComponent {
         mainElement.appendChild(this._titleElement);
         mainElement.appendChild(this._element);
 
-        this._upperObject = basic.selectedBox;
-        basic.selectedBox.element.appendChild(this._mainElement);
+        this._containerBox = basic.defaultContainerBox;
+        basic.defaultContainerBox.element.appendChild(this._mainElement);
 
         makeBasicObject(this);
 
@@ -1370,8 +1369,8 @@ class Label extends Basic_UIComponent {
         divElement.style.top = $top + "px";
 
         this._element = divElement;
-        this._upperObject = basic.selectedBox;
-        basic.selectedBox.element.appendChild(this._element);
+        this._containerBox = basic.defaultContainerBox;
+        basic.defaultContainerBox.element.appendChild(this._element);
 
         this.width = $width;
         this.height = $height;
@@ -1535,8 +1534,8 @@ class Image extends Basic_UIComponent {
         });
 
         this._element = imageElement;
-        this._upperObject = basic.selectedBox;
-        basic.selectedBox.element.appendChild(this._element);
+        this._containerBox = basic.defaultContainerBox;
+        basic.defaultContainerBox.element.appendChild(this._element);
 
         makeBasicObject(this);
 
@@ -1767,7 +1766,7 @@ class Sound {
         this.contElement.remove();
     }
 
-}
+};
 
 
 /* ### FUNCTIONS ### */
@@ -1779,19 +1778,19 @@ basic.setProparties = function ($this, $values = []) {
         $this[valueTitle] = $values[valueTitle];
     }
 
-}
+};
 
 // Centering one object to box.
 basic.moveToCenter = function ($this, $position) {
 
     if ($position == "left" || !$position) {
-        let _w = $this.upperObject.width - (($this.upperObject.border || 0) * 2);
+        let _w = $this.containerBox.width - (($this.containerBox.border || 0) * 2);
         $this.left = parseInt((_w - $this.width) / 2);
 
     }
 
     if ($position == "top" || !$position) {
-        let _h = $this.upperObject.height - (($this.upperObject.border || 0) * 2);
+        let _h = $this.containerBox.height - (($this.containerBox.border || 0) * 2);
         $this.top = parseInt((_h - $this.height) / 2);
 
     }
@@ -1799,7 +1798,7 @@ basic.moveToCenter = function ($this, $position) {
     // Her zaman tam sayı olarak ortala, yoksa bulanıklık yapabilir.
     // NOT: Eğer, kenarlık kalınlıkları, aynı olmaz ise, hesaba katılmaz.
 
-}
+};
 
 // Alignment of one object with respect to another object.
 basic.moveToAline = function ($this, $obj, $position, $space, $secondPosition) {
@@ -1964,11 +1963,12 @@ basic.moveToAline = function ($this, $obj, $position, $space, $secondPosition) {
 
     }
     
-}
+};
 
-basic.antiZoom = function ($value) {
+basic.withPageZoom = function ($value) {
     return parseInt($value * (1 / page.zoom));
-}
+};
+var withPageZoom = basic.withPageZoom;
 
 basic.setLoopTimer = function ($time) {
     
@@ -1988,39 +1988,38 @@ basic.setLoopTimer = function ($time) {
         
     }
 
-}
+};
 var setLoopTimer = basic.setLoopTimer;
 
-// Hangi box nesnesi seçili ise, yeni eklenen nesneler onun içinde oluşturulur.
-basic.selectBox = function ($box) {
+// Yeni eklenen nesneler, seçili box nesnesinin içinde oluşturulur.
+basic.setDefaultContainerBox = function ($box) {
 
-    basic.selectedBox = $box;
+    basic.previousDefaultContainerBox = basic.defaultContainerBox || page;
+    basic.defaultContainerBox = $box;
 
-    // Bir div elementine, Box nesnesi eklemek için;
-    // document.getElementById("elementID").appendChild(boxObject.element)
+};
+var setDefaultContainerBox = basic.setDefaultContainerBox;
 
-    // Bir div elementini, Box nesnesi eklemek için;
-    // box.html = document.getElementById("elementID").innerHTML
-
-}
-var selectBox = basic.selectBox;
+basic.restoreDefaultContainerBox = function() {
+    basic.defaultContainerBox = basic.previousDefaultContainerBox || page;
+};
+var restoreDefaultContainerBox = basic.restoreDefaultContainerBox;
 
 // Nesne hangi kutu nesnesinin içine eklendiği.
-basic.getSelectedBox = function () {
-    
-    return basic.selectedBox;
-
-}
-var getSelectedBox = basic.getSelectedBox;
+basic.getDefaultContainerBox = function () {
+    return basic.defaultContainerBox;
+};
+var getDefaultContainerBox = basic.getDefaultContainerBox;
 
 // Add your custom object to basic.js ecosystem.
-const makeBasicObject = function($newObject) {
+basic.makeBasicObject = function($newObject) {
 
     // Object can be called as that.
-    exThat = that
-    that = $newObject
+    previousThat = that;
+    that = $newObject;
 
-}
+};
+var makeBasicObject = basic.makeBasicObject;
 
 basic.resizeDetection.onResize = function($object, $func) {
 
@@ -2032,7 +2031,7 @@ basic.resizeDetection.onResize = function($object, $func) {
     basic.resizeDetection.objectAndFunctionList.push(object);
     basic.resizeDetection.whenDetected.observe($object.element);
 
-}
+};
 
 basic.resizeDetection.remove_onResize = function($element, $func) {
 
@@ -2051,7 +2050,7 @@ basic.resizeDetection.remove_onResize = function($element, $func) {
 
     basic.resizeDetection.whenDetected.unobserve($element);
 
-}
+};
 
 basic.resizeDetection.whenDetected = new ResizeObserver(function(entries) {
 
@@ -2067,10 +2066,9 @@ basic.resizeDetection.whenDetected = new ResizeObserver(function(entries) {
         }
 	}
 
-})
+});
 
 // When content is loaded,
-
 window.addEventListener("load", function () {
     basic.start();
 });

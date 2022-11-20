@@ -19,16 +19,16 @@
             page.color = "white";
 
             // BOX: Page container.
-            const box = createBox(0, 0, 600, page.height);
+            const box = createBox(0, 0, 600, getDefaultContainerBox().height);
 
             // CELLS: 4 vertical cells:
-            createUICells(box, UICells.alignType.VERTICAL, [120, "auto", "auto", 90]);
+            UICells.create(box, UICells.alignType.VERTICAL, [120, "auto", "auto", 90]);
             box.cell(0).color = "whitesmoke";
             box.cell(1).color = "white";
             box.cell(2).color = "whitesmoke";
             box.cell(3).color = "white";
             // CELLS: 4 horizontal cells in box.cell(1)
-            createUICells(box.cell(1), UICells.alignType.HORIZONTAL, ["auto", "auto", "auto"]);
+            UICells.create(box.cell(1), UICells.alignType.HORIZONTAL, ["auto", "auto", "auto"]);
             box.cell(1).cell(0).color = "white";
             box.cell(1).cell(1).color = "#E1F0FF";
             box.cell(1).cell(2).color = "white";
