@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        
+        <title>UI Group</title>
+        
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+
+        <link rel="stylesheet" type="text/css" href="library/basic.min.css">
+        <script src="library/basic.min.js" type="text/javascript" charset="utf-8"></script>
+
+        <script src="js/component/ui-group.js" type="text/javascript" charset="utf-8"></script>
+
+        <script>
+        
+        var start = function() {
+
+            page.color = "white";
+
+            // UI GROUP: First group.
+            page.grp1 = UIGroup.create();
+            that.setInnerSpaces(0, 0, 0, 0);
+            that.setSpacesBetweenItems(8);
+            that.setItemAlignment(UIGroup.alignType.HORIZONTAL, "center");
+            // fromTopToBottom
+            // fromLeftToRight, center
+            that.bottom = 30;
+            
+            // BUTTON: Home.
+            createButton(0, 0, "auto");
+            that.text = "Home";
+            that.color = "#D8D8D8";
+            that.spaceX = 20;
+            that.minimal = 1;
+            page.grp1.addItem(that);
+
+            // BUTTON: Second page.
+            createButton(0, 0, "auto");
+            that.text = "Second Page";
+            that.color = "#D8D8D8";
+            that.spaceX = 20;
+            that.minimal = 1;
+            page.grp1.addItem(that);
+
+            page.grp1.onResize(function(self) {
+                page.grp1.center("left");
+            });
+
+            // UI GROUP: Second group.
+            page.grp2 = UIGroup.create();
+            that.setInnerSpaces(12, 8, 12, 8);
+            that.setSpacesBetweenItems(28);
+            that.setItemAlignment(UIGroup.alignType.VERTICAL, "center");
+            //that.color = "whitesmoke";
+            that.borderColor = "rgba(0, 0, 0, 0.1)";
+            that.border = 1;
+            that.round = 4;
+
+            // LABEL: Vegetables are healthy text.
+            createLabel(0, 0, "auto", "auto");
+            that.text = "Vegetables are healthy.";
+            page.grp2.addItem(that);
+            that.onClick(function() {
+
+            });
+
+            // IMAGE: Broccoli icon.
+            createImage(0, 0, 32, 32);
+            that.load("assets/fruids/brokoli.png");
+            page.grp2.addItem(that);
+            that.onClick(function() {
+
+            });
+
+            // BUTTON: Broccoli.
+            createButton(0, 0, "auto");
+            that.text = "Broccoli";
+            that.color = "seagreen";
+            that.spaceX = 20;
+            page.grp2.addItem(that);
+
+            page.grp2.onResize(function(self) {
+                page.grp2.center();
+            });
+
+        }
+
+        </script>
+
+    </head>
+    <body>
+        
+        <!-- HTML content -->
+        
+    </body>
+</html>

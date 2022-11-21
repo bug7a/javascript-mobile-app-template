@@ -1,0 +1,361 @@
+<!-- Bismillah -->
+<!DOCTYPE html>
+<html>
+    <head>
+        
+        <title>Cordova Mobile App UI Template</title>
+        
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, viewport-fit=cover">
+        <meta name="format-detection" content="telephone=no">
+        <meta name="msapplication-tap-highlight" content="no">
+
+        <!-- LIBRARIES -->
+        <link rel="stylesheet" type="text/css" href="library/basic.css">
+        <script src="library/basic.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- WHICH FRAMEWORK DO YOU USE? Cordova or Capacitor -->
+        <script src="cordova.js" type="text/javascript" charset="utf-8"></script>
+        <script src="capacitor.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- GLOBAL VARIABLES -->
+        <script src="js/global.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- CONTROLLERS -->
+        <script src="js/database.js" type="text/javascript" charset="utf-8"></script>
+        
+        <!-- UI COMPONENTS -->
+        <script src="js/component/tool.js" type="text/javascript" charset="utf-8"></script>
+        <script src="js/component/ui-title.js" type="text/javascript" charset="utf-8"></script>
+        <script src="js/component/ui-left-title.js" type="text/javascript" charset="utf-8"></script>
+        <script src="js/component/ui-click-effect.js" type="text/javascript" charset="utf-8"></script>
+        <script src="js/component/ui-search-box.js" type="text/javascript" charset="utf-8"></script>
+        <script src="js/component/ui-close-button.js" type="text/javascript" charset="utf-8"></script>
+        <script src="js/component/ui-item-list.js" type="text/javascript" charset="utf-8"></script>
+        <script src="js/component/ui-select-text.js" type="text/javascript" charset="utf-8"></script>
+        <script src="js/component/ui-stepper.js" type="text/javascript" charset="utf-8"></script>
+        <script src="js/component/ui-toggle.js" type="text/javascript" charset="utf-8"></script>
+        <script src="js/component/ui-web-view.js" type="text/javascript" charset="utf-8"></script>
+        <script src="js/component/ui-waiting-view.js" type="text/javascript" charset="utf-8"></script>
+        <script src="js/component/ui-group.js" type="text/javascript" charset="utf-8"></script>
+        <script src="js/component/ui-cells.js" type="text/javascript" charset="utf-8"></script>
+        <script src="js/component/ui-notice.js" type="text/javascript" charset="utf-8"></script>
+        <script src="js/component/ui-tabs.js" type="text/javascript" charset="utf-8"></script>
+        <script src="js/component/ui-page-control.js" type="text/javascript" charset="utf-8"></script>
+        <script src="js/component/ui-action-button.js" type="text/javascript" charset="utf-8"></script>
+        <script src="js/component/ui-progress-bar.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- SHARED FUNCTIONS -->
+        <script src="js/app.js" type="text/javascript" charset="utf-8"></script>
+        
+        <!-- MOBILE APP STRUCTURE -->
+        <script src="js/style.js" type="text/javascript" charset="utf-8"></script>
+        <script src="js/view/launch-view.js" type="text/javascript" charset="utf-8"></script>
+        <script src="js/view/safe-area.js" type="text/javascript" charset="utf-8"></script>
+        <script src="js/view/default-view.js" type="text/javascript" charset="utf-8"></script>
+        <script src="js/view/second-view.js" type="text/javascript" charset="utf-8"></script>
+        <script src="js/view/small-view.js" type="text/javascript" charset="utf-8"></script>
+        <script src="js/ui-top-bar.js" type="text/javascript" charset="utf-8"></script>
+        <script src="js/ui-bottom-bar.js" type="text/javascript" charset="utf-8"></script>
+        <script src="js/ui-side-bar.js" type="text/javascript" charset="utf-8"></script>
+        
+        <!-- PAGES WITH OWN CONTAINER (VIEW) -->
+        <script src="js/view/login-view.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- PAGES -->
+        <script src="js/page/small/small-example-page.js" type="text/javascript" charset="utf-8"></script>
+        <script src="js/page/small/select-color-dialog.js" type="text/javascript" charset="utf-8"></script>
+        <script src="js/page/small/search-preview-page.js" type="text/javascript" charset="utf-8"></script>
+        <script src="js/page/small/edit-item-dialog.js" type="text/javascript" charset="utf-8"></script>
+
+        <script src="js/page/second/second-example-page.js" type="text/javascript" charset="utf-8"></script>
+        <script src="js/page/second/menu-style-page.js" type="text/javascript" charset="utf-8"></script>
+        <script src="js/page/second/security-page.js" type="text/javascript" charset="utf-8"></script>
+        <script src="js/page/second/terms-of-use-page.js" type="text/javascript" charset="utf-8"></script>
+        <script src="js/page/second/my-documents-page.js" type="text/javascript" charset="utf-8"></script>
+        <script src="js/page/second/example-viewer-page.js" type="text/javascript" charset="utf-8"></script>
+        <script src="js/page/second/template-a-page.js" type="text/javascript" charset="utf-8"></script>
+
+        <script src="js/page/default/default-example-page.js" type="text/javascript" charset="utf-8"></script>
+        <script src="js/page/default/bars-test-page.js" type="text/javascript" charset="utf-8"></script>
+        <script src="js/page/default/settings-page.js" type="text/javascript" charset="utf-8"></script>
+        <script src="js/page/default/tasks-page.js" type="text/javascript" charset="utf-8"></script>
+        <script src="js/page/default/examples-page.js" type="text/javascript" charset="utf-8"></script>
+        <script src="js/page/default/search-page.js" type="text/javascript" charset="utf-8"></script>
+        <script src="js/page/default/home-page.js" type="text/javascript" charset="utf-8"></script>
+ 
+        <style>
+
+            /* app.getSafeAreaOuterSpaces() */
+            :root {
+                --sat: env(safe-area-inset-top, 0px);
+                --sar: env(safe-area-inset-right, 0px);
+                --sab: env(safe-area-inset-bottom, 0px);
+                --sal: env(safe-area-inset-left, 0px);
+            }
+
+            /* Search box */
+            .search-box::-webkit-input-placeholder {
+                color: rgba(0, 0, 0, 0.4);
+            }
+
+        </style>
+        
+        <script>
+
+        /*
+
+        MOBILE APP UI TEMPLATE (PLATFORMS; ANDROID, iOS):
+
+        Website:  https://bug7a.github.io/cordova-mobile-app-ui-template/
+        Handbook: https://bug7a.github.io/basic.js-handbook/
+            
+        This template, can be used to develop mobile applications with:
+        - Apache Cordova Framework or
+        - Ionic/Capacitor Native Runtime.
+
+
+    *** USAGE WITH CORDOVA FRAMEWORK:
+
+        CREATE APP DOCUMENTS: 
+        https://cordova.apache.org/docs/en/latest/guide/cli/index.html
+
+        TUTORIAL VIDEOS:
+        - How to make an Android application? (Language: Turkish)
+        https://www.youtube.com/watch?v=B6x7yKhKZbY
+        - How to make an iOS application? (Language: Turkish)
+        https://www.youtube.com/watch?v=WZZwiI_5WQA
+
+        SETTINGS FOR YOUR CORDOVA PROJECT:
+        - Add these settings to your cordova project config.xml file:
+            <preference name="DisallowOverscroll" value="true" />
+            <preference name="Orientation" value="portrait" />
+
+        PLUGIN LIST: 
+        https://cordova.apache.org/plugins/
+
+
+
+    *** USAGE WITH IONIC / CAPACITOR NATIVE RUNTIME:
+
+        CREATE APP DOCUMENTS: 
+        https://capacitorjs.com/docs/getting-started
+
+        TUTORIAL VIDEOS:
+        - How to make an Android and iOS application?
+        https://youtu.be/rx-z6-_FwU8
+
+        SETTINGS FOR CAPACITOR PROJECT:
+        - Set "bundledwebRuntime": true in "capacitor.config.json" file.
+        Then Capacitor will create a "capacitor.js" file.
+
+        PLUGIN LIST: 
+        https://capacitorjs.com/docs/apis
+
+        PLUGIN USAGE:
+        - Just add "Capacitor.Plugins." before plugin name.
+        NOTE: Because it doesn't work as a module.
+
+        EXAMPLE CODE:
+        const showConfirm = async () => {
+        const { value } = await Capacitor.Plugins.Dialog.confirm({
+            title: 'Confirm',
+            message: `Are you sure you'd like to press the red button?`,
+        });
+
+        console.log('Confirmed:', value);
+        };
+        showConfirm();
+
+        NOTE: Dont forget to install the Dialog plugin to test example code: npm install @capacitor/dialog
+
+        */
+ 
+
+        // VARIABLES:
+        const APP_ID = "app-id";
+
+        // First running function.
+        const prepareApp = function() {
+
+            print("App started. Platform: " + app.getPlatformId());
+
+            // If more resolution is desired for large screen device:
+            //app.calculateResolution();
+
+            // Supports all screen resolutions (Orientation: portrait)
+            page.fit(app.usedWidth, app.maxZoomableWidth);
+
+            // Give the browser some time for initial processing.
+            launchView.create({ delayTime: 1300 });
+
+            // Safearea outer spaces.
+            app.getSafeAreaOuterSpaces(function(spaces) {
+
+                app.safeAreaInsetTop = basic.withPageZoom(spaces.top);
+                app.safeAreaInsetBottom = basic.withPageZoom(spaces.bottom);
+                app.safeAreaInsetLeft = basic.withPageZoom(spaces.left);
+                app.safeAreaInsetRight = basic.withPageZoom(spaces.right);
+
+                // SAFE AREA: Default values.
+                safeArea.default.width = app.usedWidth;
+                safeArea.default.topOuterSpace = app.safeAreaInsetTop;
+                safeArea.default.bottomOuterSpace = app.safeAreaInsetBottom;
+                //safeArea.default.backgroundColor = "transparent";
+                //safeArea.default.outerBackgroundColor = "white";
+                //safeArea.default.statusBarBackgroundColor = "rgba(0, 0, 0, 0.05)";
+                safeArea.default.statusBarBackgroundHeight = app.safeAreaInsetTop;
+
+                // SAFE AREA: Left some space for status bar.
+                safeArea.create();
+                // Objects are first created in the "safeArea". (Previous value is the "page")
+                basic.setDefaultContainerBox(safeArea.getContainerBox());
+
+                // Change launchView layer.
+                launchView.showOnSafearea();
+                
+                // Start the app.
+                startApp();
+
+            });
+
+        };
+
+        // Second running function.
+        const startApp = function() {
+
+            saveGlobal(); // Close this line to store data.
+            // NOTE: For reseting global variables, run saveGlobal() before loadGlobal():
+
+            loadGlobal();
+
+            safeArea.setBackgroundColor("transparent");
+            safeArea.setOuterBackgroundColor("white");
+            // safeArea.setStatusBarBackgroundColor() works only at notched devices.
+            safeArea.setStatusBarBackgroundColor("rgba(0, 0, 0, 0.0)");
+            
+            // UI DEFAULT VIEW: Default page view:
+            //defaultView.default.backgroundColor = "white";
+            //defaultView.default.scrollY = 1;
+            //defaultView.default.showWithMotion = 1;
+            defaultView.create();
+
+            // UI TOP BAR: Title and buttons:
+            //topBar.default.height = 105;
+            topBar.create();
+            topBar.menuButton.onClick(showSideBar);
+            
+            // UI BOTTOM BAR: Image buttons at bottom:
+            //bottomBar.default.height = 80;
+            bottomBar.create();
+            bottomBar.createItemsByDataList(database.getBottomBarItemDataList());
+            bottomBar.onItemClick(openPageById);
+
+            // UI SECOND VIEW: If you need a view without unload page in defaultView:
+            //secondView.default.backgroundColor = "white";
+            //secondView.default.scrollY = 1;
+            //secondView.default.showWithMotion = 1;
+            secondView.create();
+
+            // UI SMALL VIEW: For small pages, extra info, custom dialogs etc.
+            //smallView.default.height = 500;
+            //smallView.default.backgroundColor = "white";
+            //smallView.default.coverColor = "rgba(0, 0, 0, 0.4)";
+            //smallView.default.topRound = 13;
+            //smallView.default.scrollY = 0;
+            //smallView.default.showWithMotion = 1;
+            smallView.create();
+
+            // UI SIDE MENU BAR: Right side menu:
+            sideBar.create();
+            sideBar.setTitle("CATEGORIES");
+            sideBar.createItemsByDataList(database.getSideMenuBarItemDataList());
+            sideBar.selectItemByIndex(0);
+            sideBar.onSelectionChange(sideBarItemSelectionChanged);
+
+            // UI OBJECT: Login view:
+            loginView.create();
+            //loginView.show()
+            sideBar.lockScreenButton.onClick(lockScreen);
+
+            // Shows where did you tap.
+            clickEffect.create();
+
+            // UI WAITING VIEW: It prevents the user from touching the screen until the process is complete.
+            //waitingView.default.coverBackground = "rgba(0, 0, 0, 0.4)";
+            //waitingView.default.waitingIconFile = "js/component/ui-waiting-view/clock.png";
+            waitingView.create();
+            
+            // Open the home page.
+            openPageById(homePage.PAGE_ID);
+
+            // NOTE: The order in which objects are created determines the layers they are in.
+
+        }
+
+        const openPageById = function(pageId) {
+
+            switch(pageId) {
+
+                case homePage.PAGE_ID:
+                    homePage.openInDefaultView();
+                    break;
+
+                case searchPage.PAGE_ID:
+                    searchPage.openInDefaultView();
+                    break;
+
+                case examplesPage.PAGE_ID:
+                    examplesPage.openInDefaultView();
+                    break;
+
+                case tasksPage.PAGE_ID:
+                    tasksPage.openInDefaultView();
+                    break;
+
+                case settingsPage.PAGE_ID:
+                    settingsPage.openInDefaultView();
+                    break;
+
+            }
+
+        }
+
+        const sideBarItemSelectionChanged = function(item, itemId) {
+            print("Side bar selection changed: " + itemId);
+        }
+
+        const showSideBar = function() {
+            sideBar.setVisible(1);
+        }
+
+        const lockScreen = function() {
+
+            sideBar.setVisible(0);
+            loginView.show();
+
+        }
+
+        // Run the prepareApp() function when the app is ready:
+        app.onDeviceReady(prepareApp);
+
+        </script>
+        
+    </head>
+    <body>
+        
+        <!-- HTML MODELS -->
+        <div style="display:none">
+
+            <!-- Alternative use to create repeating patterns (See Example: html-model-usage.htm)  -->
+            <div id="item-model-num1" class="item-model">
+                <div class="item-model background"></div>
+                <img class="item-model icon" src="{{iconFile}}">
+                <div class="item-model title">{{title}}</div>
+                <div class="item-model description">{{description}}</div>
+            </div>
+            
+        </div>
+        
+    </body>
+</html>

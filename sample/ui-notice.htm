@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        
+        <title>UI Notice</title>
+        
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+
+        <link rel="stylesheet" type="text/css" href="library/basic.min.css">
+        <script src="library/basic.min.js" type="text/javascript" charset="utf-8"></script>
+
+        <script src="js/component/tool.js" type="text/javascript" charset="utf-8"></script>
+        <script src="js/component/ui-notice.js" type="text/javascript" charset="utf-8"></script>
+
+        <script>
+        
+        var start = function() {
+
+            page.color = "white";
+
+            // *** EXAMPLE 1:
+            
+            // UI TINY ALERT: Default values.
+            //notice.resetDefault();
+            //notice.default.backgroundColor = notice.colors.WHITE;
+            //notice.default.coverBackgroundColor = "rgba(0, 0, 0, 0.2)";
+            //notice.default.coverMotionString = "opacity 0.3s";
+            //notice.default.fontSize = 20;
+            //notice.default.round = 20;
+            //notice.default.border = 0;
+            //notice.default.borderColor = "rgba(0, 0, 0, 0.3)";
+            //notice.default.spaceX = 24;
+            //notice.default.spaceY = 18;
+            //notice.default.shadow = "0px 0px 12px rgba(0, 0, 0, 0.2)";
+            //notice.default.textMotionString = "opacity 0.3s";
+            //notice.default.textColor = "rgba(0, 0, 0, 0.8)";
+            notice.default.displayTime = 2500;
+            //notice.default.fontFamily = "opensans";
+            //notice.default.motionTime = 300 + basic.motionController.WITH_MOTION_TIME;
+
+            // BUTTON: Info message.
+            createButton(30, 30, 250);
+            that.text = "Info Message";
+            that.color = "whitesmoke";
+            that.minimal = 1;
+            that.border = 1;
+            that.borderColor = "rgba(0, 0, 0, 0.3)";
+            that.center("left");
+            that.onClick(function(self) {
+
+                notice.show({ message: "Process completed" });
+
+            })
+
+
+            // *** EXAMPLE 2:
+
+            // BUTTON: Alert message.
+            createButton(0, 0, 250);
+            that.text = "Alert Message";
+            that.color = notice.colors.YELLOW;
+            that.minimal = 1;
+            that.border = 1;
+            that.borderColor = "rgba(0, 0, 0, 0.3)";
+            that.onClick(function(self) {
+
+                notice.show({ 
+                        message: "No internet connection.<br><span style='font-size:17px;opacity:0.8;'>Please, try again later.<span>", 
+                        backgroundColor: notice.colors.YELLOW,
+                        textColor: "#141414"
+                    });
+
+            })
+            that.aline(previousThat, "bottom", 4);
+
+
+            // *** EXAMPLE 3:
+
+            // Alert icon:
+            var alertIconAsText = tool.useImageAsText({
+                fontSpace: 16,
+                outerSpaceRight: 20, 
+                outerSpaceLeft: 0 
+            }, function editCreatedImage(img) {
+
+                img.load("assets/ui-notice/alert.png");
+                img.width = 28;
+                img.height = 28;
+                img.opacity = 0.95;
+                img.imageElement.style.filter = "grayscale(60%)";
+
+            });
+
+            //print(alertIconAsText)
+
+            // BUTTON: Error message.
+            createButton(0, 0, 250);
+            that.text = alertIconAsText + "Error Message";
+            that.color = notice.colors.RED;
+            that.minimal = 1;
+            that.border = 1;
+            that.borderColor = "rgba(0, 0, 0, 0.3)";
+            that.onClick(function(self) {
+
+                notice.show({ 
+                    message: alertIconAsText + "Failed to copy", 
+                    backgroundColor: notice.colors.RED,
+                    textColor: "#141414"
+                });
+                
+            })
+            that.aline(previousThat, "bottom", 4);
+            
+        }
+
+        </script>
+
+    </head>
+    <body>
+        
+        <!-- HTML content -->
+        
+    </body>
+</html>

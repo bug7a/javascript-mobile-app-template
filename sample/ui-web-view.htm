@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        
+        <title>UI Web View</title>
+        
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+
+        <link rel="stylesheet" type="text/css" href="library/basic.min.css">
+        <script src="library/basic.min.js" type="text/javascript" charset="utf-8"></script>
+
+        <script src="js/component/ui-web-view.js" type="text/javascript" charset="utf-8"></script>
+
+        <script>
+
+        let htmPage = null;
+        
+        const start = function() {
+
+            page.color = "whitesmoke";
+            
+            // *** EXAMPLE 1:
+
+            // UI WEB VIEW: Object description.
+            htmPage = UIWebView.create();
+            that.width = 400;
+            that.height = 400;
+            that.loadHTMLFile("app-todo.htm");
+            //that.remove();
+            that.round = 4;
+            // Show at:
+            that.center();
+            //that.left = 0;
+            //that.top = 0;
+            //that.position = "relative";
+            
+        }
+
+        </script>
+
+    </head>
+    <body>
+        
+        <!-- HTML content -->
+        
+    </body>
+</html>

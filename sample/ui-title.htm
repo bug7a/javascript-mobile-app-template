@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        
+        <title>UI Title</title>
+        
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+
+        <link rel="stylesheet" type="text/css" href="library/basic.min.css">
+        <script src="library/basic.min.js" type="text/javascript" charset="utf-8"></script>
+
+        <script src="js/component/ui-title.js" type="text/javascript" charset="utf-8"></script>
+
+        <script>
+        
+        var start = function() {
+            
+            // *** EXAMPLE 1:
+
+            // UI TITLE: Default values.
+            UITitle.resetDefault();
+            //UITitle.default.title = "Title";
+            //UITitle.default.backButtonVisible = 0;
+            //UITitle.default.backButtonText = "Back";
+            //UITitle.default.width = "auto";
+            //UITitle.default.height = 140;
+            //UITitle.default.backgroundColor = "white";
+            //UITitle.default.round = 0;
+            //UITitle.default.border = 0;
+            //UITitle.default.borderColor = "rgba(0, 0, 0, 0.1)";
+            //UITitle.default.bottomBorder = 1;
+            //UITitle.default.topInnerSpace = 40;
+            //UITitle.default.leftInnerSpace = 30;
+            //UITitle.default.rightInnerSpace = 30;
+            //UITitle.default.titleFontSize = 30;
+            //UITitle.default.titleTextColor = "rgba(0, 0, 0, 0.8)";
+            //UITitle.default.backButtonIconFile = "js/component/ui-title/arrow-blue.svg";
+            //UITitle.default.backButtonHeight = 20;
+            //UITitle.default.backButtonFontSize = 14;
+            //UITitle.default.backButtonTextColor = "#689BD2";
+            UITitle.default.backButtonIconBackgroundColor = "rgba(0, 0, 0, 0.05)";
+
+            // UI TITLE: Object description.
+            page.uiTitle = UITitle.create({ 
+                title: "Settings", 
+                backButtonVisible: 1, 
+                backButtonText: "Back" 
+            });
+            //boxContainer.add(that);
+            that.left = 0;
+            that.top = 0;
+            //that.setTitle("Languages");
+            //that.backButton.setText("Settings");
+            //that.backButton.setVisible(0);
+            that.backButton.onClick(function(uiTitleBackButton) {
+                print("Go Back");
+            });
+            //that.add(basicObject);
+            
+        }
+
+        </script>
+
+    </head>
+    <body>
+        
+        <!-- HTML content -->
+        
+    </body>
+</html>

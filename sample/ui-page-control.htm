@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        
+        <title>UI Page Control</title>
+        
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+
+        <link rel="stylesheet" type="text/css" href="library/basic.min.css">
+        <script src="library/basic.min.js" type="text/javascript" charset="utf-8"></script>
+
+        <script src="js/component/ui-page-control.js" type="text/javascript" charset="utf-8"></script>
+        <script src="js/component/ui-tabs.js" type="text/javascript" charset="utf-8"></script>
+
+        <script>
+
+        const tabsDataList = [
+            { id: "home", text: "Home" },
+            { id: "tasks", text: "Tasks" },
+            { id: "settings", text: "Settings" }
+        ];
+        
+        var uiPageControl1
+        var uiTabs1
+        
+        const start = function() {
+
+            page.color = "whitesmoke";
+            
+            // *** EXAMPLE 1:
+
+            UIPageControl.resetDefault();
+            //UIPageControl.default.startWithMotion = 1;
+            //UIPageControl.default.motionString = "opacity 0.3s";
+            //UIPageControl.default.changePageWithMotion = 1;
+            //UIPageControl.default.changePageMotionString = "left 0.2s";
+
+            // UI PAGE CONTROL: Object description.
+            uiPageControl1 = UIPageControl.create({ width: getDefaultContainerBox().width - 40, height: 500 });
+            //that.color = "lightgray"
+            that.round = 14;
+            that.center();
+
+            // PAGE 1:
+            uiPageControl1.createNewPageWithId("home")
+            uiPageControl1.home.color = "Lavender"
+
+            //var pageContainerBox = uiPageControl1.home;
+            //var pageId = uiPageControl1.home.id;
+            //var pageIndex = uiPageControl1.getPageIndexById("home");
+
+            // LABEL: Description text
+            uiPageControl1.home.lblDescription = createLabel(0, 0, "auto", "auto");
+            uiPageControl1.home.add(that);
+            that.text = "Lavender";
+            that.textColor = "#734f96";
+            that.onResize(function(self) {
+                self.center();
+            })
+
+            // PAGE 2:
+            uiPageControl1.createNewPageWithId("tasks")
+            uiPageControl1.tasks.color = "PaleTurquoise"
+
+            // LABEL: Description text
+            uiPageControl1.tasks.lblDescription = createLabel(0, 0, "auto", "auto")
+            uiPageControl1.tasks.add(that)
+            that.text = "Pale Turquoise";
+            that.textColor = "#0F4E4E";
+            that.onResize(function(self) {
+                self.center()
+            })
+
+            // PAGE 3:
+            uiPageControl1.createNewPageWithId("settings")
+            uiPageControl1.settings.color = "Bisque"
+
+            // LABEL: Description text
+            uiPageControl1.settings.lblDescription = createLabel(0, 0, "auto", "auto");
+            uiPageControl1.settings.add(that);
+            that.text = "Bisque";
+            that.textColor = "#B86500";
+            that.onResize(function(self) {
+                self.center();
+            })
+
+            uiPageControl1.openPageById("home");
+            //var selectedPageId = uiPageControl1.getSelectedPageId();
+            //var pageCount = uiPageControl1.getPageCount();
+            //uiPageControl1.openNextpage()
+            //uiPageControl1.openPreviousPage()
+            //var pageIdList = uiPageControl1.getPageIdList();
+            //uiPageControl1.removePageById("home");
+            //uiPageControl1.removeAllPages()
+            //uiPageControl1.setSizes(500, 500);
+
+            /* border
+            var boxBorder = createBox();
+            that.color = "transparent";
+            that.border = 2;
+            that.top = uiPageControl1.top;
+            that.left = uiPageControl1.left;
+            that.width = uiPageControl1.width;
+            that.height = uiPageControl1.height;
+            that.round = uiPageControl1.round;
+            that.borderColor = "rgba(0, 0, 0, 0.2)"
+            */
+            
+
+            // *** END OF EXAMPLE ***
+
+            //UITabs.default.backgroundColor = "#EBEAE8"
+            //UITabs.default.itemIconSize = 20
+            //UITabs.default.round = 13
+
+            // IU SEGMENT:
+            uiTabs1 = UITabs.create();
+            that.opacity = 0;
+            that.setMotion("opacity 0.3s");
+            that.onResize(function(self) {
+                uiTabs1.aline(uiPageControl1, "top", 10, "center");
+            })
+            uiTabs1.onChange(function(selectedItem, selectedIndex) {
+                print("uiTabs1: " + selectedItem.getData().id);
+                uiPageControl1.openPageById(selectedItem.getData().id);
+            })
+            that.setItemsByDataList(tabsDataList);
+            uiTabs1.withMotion(function(self) {
+                self.opacity = 1;
+            })
+
+            //uiPageControl1.boxPageGroup.dontMotion()
+            //uiPageControl1.boxPageGroup.setMotion("none")
+            /*
+            uiPageControl1.withMotion(function(self) {
+                uiPageControl1.changePageBy()
+            })
+            */
+            //uiPageControl1.changePageById("settings")
+            /*
+            UITabs.default.backgroundColor = "#141414"
+            UITabs.default.itemOuterSpace = 4
+            uiTabs1 = UITabs.create({ width: getDefaultContainerBox().width - 40, height: 70 })
+            that.onResize(function(self) {
+                repositionComponents()
+            })
+            that.setItemsByDataList(itemDataList1)
+            that.onChange(function(selectedItem, selectedIndex) {
+                print("uiTabs1: " + selectedItem.getData().id)
+                // selectedItem.getData().text
+            })
+            that.selectItemByIndex(1)
+            */
+
+            page.onResize(pageResized);
+            
+        }
+
+        const pageResized = function() {    
+            
+            uiPageControl1.center();
+            uiTabs1.aline(uiPageControl1, "top", 10, "center");
+
+        }
+        
+        </script>
+
+    </head>
+    <body>
+        
+        <!-- HTML content -->
+        
+    </body>
+</html>

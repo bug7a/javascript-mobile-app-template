@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        
+        <title>UI Search Box</title>
+        
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+
+        <!-- LIBRARY FILES -->
+        <link rel="stylesheet" type="text/css" href="library/basic.min.css">
+        <script src="library/basic.min.js" type="text/javascript" charset="utf-8"></script>
+
+        <script src="js/component/ui-search-box.js" type="text/javascript" charset="utf-8"></script>
+
+        <style>
+
+        /* 
+        body {
+            overflow: auto !important;
+        }
+        */
+
+        .search-box::-webkit-input-placeholder {
+            color: rgba(0, 0, 0, 0.4);
+        }
+
+        </style>
+
+        <script>
+        
+        var box1, box2
+        var uiSearchBox1, uiSearchBox2
+
+        var start = function() {
+
+        // BOX: Container for uiSearchBox1
+        box1 = createBox(0, 0, getDefaultContainerBox().width, getDefaultContainerBox().height / 2)
+        that.color = "#5ABB9F"
+
+        // BOX: Container for uiSearchBox2
+        box2 = createBox(0, 0, box1.width, box1.height)
+        that.color = "white"
+        that.top = box1.height
+
+        // EXAMPLE 1
+
+        // UI SEARCH BOX 1:
+        UISearchBox.resetDefault();
+        //UISearchBox.default.width = 300;
+        //UISearchBox.default.height = 50;
+        UISearchBox.default.searchIconFile = "js/component/ui-search-box/search.svg";
+        UISearchBox.default.clearIconFile = "js/component/ui-search-box/clear.svg";
+        //UISearchBox.default.isCancelEnabled = 1;
+        //UISearchBox.default.placeholderText = "Search";
+        UISearchBox.default.color = "rgba(0, 0, 0, 0.2)";
+        UISearchBox.default.textColor = "rgba(0, 0, 0, 0.65)";
+        //UISearchBox.default.border = 0;
+        //UISearchBox.default.borderColor = "rgba(0, 0, 0, 0.1)";
+        UISearchBox.default.borderBottomStyle = "2px solid rgba(0, 0, 0, 0.2)";
+        //UISearchBox.default.round = 6;
+        //UISearchBox.default.fontSize = 20;
+
+        uiSearchBox1 = UISearchBox.create({ width: 300, height: 50 });
+        box1.add(that);
+        
+        uiSearchBox1.txtSearch.inputElement.classList.add('search-box');
+        uiSearchBox1.center();
+        uiSearchBox1.onSearch(function(searchText, uiSearchBox) {
+            print("uiSearchBox1 text: " + searchText);
+        })
+
+        // EXAMPLE 2
+
+        // UI SEARCH BOX 2:
+        UISearchBox.resetDefault();
+        UISearchBox.default.searchIconFile = "js/component/ui-search-box/filter.png";
+        UISearchBox.default.isCancelEnabled = 0;
+        UISearchBox.default.placeholderText = "Filter";
+        
+        uiSearchBox2 = UISearchBox.create({ width: 300, height: 50 });
+        box2.add(that);
+        that.center();
+        uiSearchBox2.onSearch(function(searchText, uiSearchBox) {
+            print("uiSearchBox2 text: " + searchText);
+        })
+            
+        }
+
+        </script>
+
+    </head>
+    <body>
+        
+        <!-- HTML content -->
+        
+    </body>
+</html>

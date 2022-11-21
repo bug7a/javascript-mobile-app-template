@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        
+        <title>UI Scrolling Text</title>
+        
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+
+        <link rel="stylesheet" type="text/css" href="library/basic.min.css">
+        <script src="library/basic.min.js" type="text/javascript" charset="utf-8"></script>
+
+        <script src="js/component/ui-scrolling-text.js" type="text/javascript" charset="utf-8"></script>
+
+        <style>
+
+            @keyframes scrolling-item {
+
+                20% { -webkit-transform: translateX(calc(0px)); }
+                55% { -webkit-transform: translateX(calc(-100% + 200px)); }
+                65% { -webkit-transform: translateX(calc(-100% + 200px)); }
+
+            }
+
+        </style>
+
+        <script>
+        
+        var start = function() {
+
+            // TODO: Make ui component.
+
+            page.color = "white";
+
+            // BOX: Button container.
+            const box = createBox(0, 0, 220, 50);
+            that.color = "white";
+            that.round = 8;
+            that.border = 1;
+            that.borderColor = "rgba(0, 0, 0, 0.1)";
+            that.center();
+
+            // BOX: Scrolling text.
+            box.boxScrollingText = createBox(10, 11, 200, 26);
+            box.add(that);
+            that.color = "transparent";
+
+            // LABEL: Vegetables are healthy text.
+            createLabel(0, 0, "auto", 26);
+            box.boxScrollingText.add(that);
+            that.text = "Start. Vegetables are healthy. End.";
+            that.color = "transparent";
+            that.spaceX = 10;
+            that.element.style.whiteSpace = "nowrap";
+            that.element.style.animation = "scrolling-item 15s linear 0s infinite";
+
+            // BOX: Right mask for box.boxScrollingText.
+            box.boxRightMask = createBox(0, 0, 10, box.boxScrollingText.height);
+            box.add(that);
+            that.element.style.background = "linear-gradient(to right, #FFFFFF00, white, white)";
+            that.aline(box.boxScrollingText, "right", -9);
+            that.border = 0;
+
+            // BOX: Top left for box.boxScrollingText.
+            box.boxLeftMask = createBox(0, 0, 10, box.boxScrollingText.height);
+            box.add(that);
+            that.element.style.background = "linear-gradient(to left, #FFFFFF00, white, white)";
+            that.aline(box.boxScrollingText, "left", -9);
+            that.border = 0;
+            
+        }
+
+        </script>
+
+    </head>
+    <body>
+        
+        <!-- HTML content -->
+        
+    </body>
+</html>

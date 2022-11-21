@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        
+        <title>UI Toggle</title>
+        
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+
+        <link rel="stylesheet" type="text/css" href="library/basic.min.css">
+        <script src="library/basic.min.js" type="text/javascript" charset="utf-8"></script>
+
+        <script src="js/component/ui-toggle.js" type="text/javascript" charset="utf-8"></script>
+
+        <script>
+        
+        var start = function() {
+
+            // *** EXAMPLE 1:
+
+            // UI TOGGLE: Default values.
+            //UIToggle.resetDefault();
+            //UIToggle.default.width = 60;
+            //UIToggle.default.height = 40;
+            //UIToggle.default.backgroundWidth = 60;
+            //UIToggle.default.backgroundHeight = 40;
+            //UIToggle.default.backgroundOffColor = "lightgray";
+            //UIToggle.default.backgroundOffBorder = 0;
+            //UIToggle.default.backgroundOffBorderColor = "rgba(0, 0, 0, 0.1)";
+            //UIToggle.default.backgroundOffRound = 20;
+            //UIToggle.default.backgroundOnColor = "#3871E0";
+            //UIToggle.default.backgroundOnBorder = 0;
+            //UIToggle.default.backgroundOnBorderColor = "rgba(0, 0, 0, 0.1)";
+            //UIToggle.default.backgroundOnRound = 20;
+            //UIToggle.default.buttonWidth = 32;
+            //UIToggle.default.buttonHeight = 32;
+            //UIToggle.default.buttonSpace = 4;
+            //UIToggle.default.buttonOffColor = "white";
+            //UIToggle.default.buttonOffBorder = 0;
+            //UIToggle.default.buttonOffBorderColor = "rgba(0, 0, 0, 0.1)";
+            //UIToggle.default.buttonOffRound = 16;
+            //UIToggle.default.buttonOffShadow = "1px 0px 6px rgba(0, 0, 0, 0.3)";
+            //UIToggle.default.buttonOnColor = "white";
+            //UIToggle.default.buttonOnBorder = 0;
+            //UIToggle.default.buttonOnBorderColor = "rgba(0, 0, 0, 0.1)";
+            //UIToggle.default.buttonOnRound = 16;
+            //UIToggle.default.buttonOnShadow = "-1px 0px 6px rgba(0, 0, 0, 0.6)";
+            //UIToggle.default.butttonMotionString = "left 0.2s";
+            //UIToggle.default.backgroundMotionString = "background-color 0.2s";
+            
+            // UI TOGGLE: Object description.
+            page.uiToggle = UIToggle.create();
+            page.uiToggle.center("left");
+            page.uiToggle.setValue(1);
+            page.uiToggle.onChange(function(self) {
+                print(self.getValue());
+            });
+            // Show object at:
+            //page.uiToggle.left = 0;
+            page.uiToggle.top = 100;
+            page.uiToggle.center("left");
+
+            // *** EXAMPLE 2:
+
+            // UI TOGGLE: Default values.
+            UIToggle.style.google();
+            // UI TOGGLE: Object description.
+            page.uiToggle2 = UIToggle.create();
+            page.uiToggle2.setValue(1);
+            page.uiToggle2.onChange(function(self) {
+                print(self.getValue());
+            });
+            // Show object at:
+            page.uiToggle2.top = 200;
+            page.uiToggle2.center("left");
+
+            // *** EXAMPLE 3:
+
+            // UI TOGGLE: Default values.
+            UIToggle.style.apple();
+            // UI TOGGLE: Object description.
+            page.uiToggle3 = UIToggle.create();
+            page.uiToggle3.setValue(1);
+            page.uiToggle3.onChange(function(self) {
+                print(self.getValue());
+            });
+            // Show object at:
+            page.uiToggle3.top = 300;
+            page.uiToggle3.center("left");
+
+            // *** EXAMPLE 4:
+
+            // UI TOGGLE: Default values.
+            UIToggle.style.ibm();
+            // UI TOGGLE: Object description.
+            page.uiToggle4 = UIToggle.create();
+            page.uiToggle4.setValue(1);
+            page.uiToggle4.onChange(function(self) {
+                print(self.getValue());
+            });
+            // Show object at:
+            page.uiToggle4.top = 400;
+            page.uiToggle4.center("left");
+
+            // *** EXAMPLE 5:
+
+            // UI TOGGLE: Default values.
+            UIToggle.style.microsoft();
+            // UI TOGGLE: Object description.
+            page.uiToggle5 = UIToggle.create();
+            page.uiToggle5.setValue(1);
+            page.uiToggle5.onChange(function(self) {
+                print(self.getValue());
+            });
+            // Show object at:
+            page.uiToggle5.top = 500;
+            page.uiToggle5.center("left");
+
+            // *** EXAMPLE 6:
+
+            // UI TOGGLE: Default values.
+            UIToggle.style.default2();
+            UIToggle.default.backgroundOnColor = "#CC75AA";
+            // UI TOGGLE: Object description.
+            page.uiToggle6 = UIToggle.create();
+            page.uiToggle6.setValue(1);
+            page.uiToggle6.onChange(function(self) {
+                print(self.getValue());
+            });
+            // Show object at:
+            page.uiToggle6.top = 600;
+            page.uiToggle6.center("left");
+            
+        }
+
+        </script>
+
+    </head>
+    <body>
+        
+        <!-- HTML content -->
+        
+    </body>
+</html>

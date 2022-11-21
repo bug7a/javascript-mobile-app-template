@@ -119,6 +119,11 @@
             that.setSpacesBetweenItems(6);
             that.setItemAlignment("horizontal", "center");
             that.color = "transparent";
+            that.opacity = 0;
+            that.setMotion("opacity 0.3s");
+            boxContent.grpPlatforms.withMotion(function(self) {
+                self.opacity = 1;
+            });
 
             // LABEL: Platforms.
             boxContent.lblPlatforms = createLabel(0, 0, "auto", "auto");
@@ -572,8 +577,8 @@
 
         <div id="htm-title" style="display:none">Mobile UI</div>
         <div id="htm-desc" style="display:none">Simple and fully customizable<br>user interface template.</div>
-        <div id="htm-info1" style="display:none">Design for mobile app development<br>on <span class='text-highlight'>Apache Cordova</span> framework.</div>
-        <div id="htm-sample1" style="display:none"><iframe src="sample1.htm" width="360" height="640" style="border:0px solid lightgray;border-radius:4px;"></iframe></div>
+        <div id="htm-info1" style="display:none">Design for mobile app development<br>on <span class='text-highlight'>Apache Cordova</span> or <span class='text-highlight'>Ionic / Capacitor</span></div><!-- on <span class='text-highlight'>Apache Cordova</span> framework<br>or <span class='text-highlight'>Ionic / Capacitor</span> native runtime. -->
+        <div id="htm-sample1" style="display:none"><iframe src="sample/index.html" width="360" height="640" style="border:0px solid lightgray;border-radius:4px;"></iframe></div>
 
         <div id="htm-info2" style="display:none;">
             <div class="title" >What are the advantages of these technologies?</div>
@@ -583,7 +588,7 @@
                 <li>Developed project; It can run on Android, iOS, and the web.</li>
                 <li>Most of the JavaScript libraries can be used in the project.</li>
                 <li>Native functions can be used with Cordova plugins.<br>(File System, Database, Bluetooth, Camera, File Transfer, BarcodeScanner, Google Maps, etc.)</li>
-                <li>The syntax of the programming language is simple. This makes learning easier.</li>
+                <li>The syntax of the programming language is simple.</li>
                 <li>HTML and CSS codes are written automatically by the basic.js library.</li>
                 <li>It is designed with an object-based logic close to software development experience.</li>
                 <li>It has the same positioning logic as the interface design tools. This too; makes it easy to translate your design into an application.</li>
@@ -638,14 +643,11 @@ homePage.openInDefaultView = function() {
         bottomBar.selectItemByIndex(0);
         bottomBar.setBorderLine(0);
 
-        defaultView.setTopAndBottomOutterSpaces(0, bottomBar.getHeight());
-        //defaultView.setTopAndBottomOutterSpaces(topBar.getHeight(), bottomBar.getHeight());
-
+        defaultView.setTopAndBottomOuterSpaces(0, bottomBar.getHeight());
+        //defaultView.setTopAndBottomOuterSpaces(topBar.getHeight(), bottomBar.getHeight());
 
         // Background color of defaultView.
         box.color = "#5ABB9F";
-        // Background color of all screen.
-        page.color = "white";
 
 
         // #1
@@ -674,7 +676,7 @@ homePage.openInDefaultView = function() {
         //UITitle.default.backButtonIconBackgroundColor = "rgba(0, 0, 0, 0.0)";
 
         // UI TITLE: Category title.
-        box.categoryUITitle = createUITitle({ 
+        box.categoryUITitle = UITitle.create({ 
             title: "Categories"
         });
         box.add(that);
@@ -698,7 +700,7 @@ homePage.openInDefaultView = function() {
         //UISearchBox.default.fontSize = 20;
 
         // UI SEARCH BOX: Search box in box.categoryUITitle.
-        box.categoryUITitle.uiSearchBox = createUISearchBox({ 
+        box.categoryUITitle.uiSearchBox = UISearchBox.create({ 
             width: 200
         });
         box.categoryUITitle.add(that);
@@ -710,7 +712,7 @@ homePage.openInDefaultView = function() {
         // #2
         
         // UI ITEM LIST: Categoriy items in horizontal list.
-        box.categoryUIItemList = createUIItemList({ 
+        box.categoryUIItemList = UIItemList.create({ 
             width: box.width, 
             height: 200 
         });
@@ -735,7 +737,7 @@ homePage.openInDefaultView = function() {
         // #3
 
         // UI TITLE: Cards title
-        box.cardUITitle = createUITitle({ 
+        box.cardUITitle = UITitle.create({ 
             title: "Cards",
             backgroundColor: "rgba(0, 0, 0, 0.02)"
         });
@@ -747,7 +749,7 @@ homePage.openInDefaultView = function() {
         // #4
 
         // UI ITEM LIST: Card items in horizontal list.
-        box.cardUIItemList = createUIItemList({ 
+        box.cardUIItemList = UIItemList.create({ 
             width: box.width, 
             height: 400 
         });
@@ -795,32 +797,32 @@ homePage.createCategoryItem = function(itemData, uiItemList) {
     const ITEM_WIDTH = 129;
     //const ITEM_WIDTH = 150;
 
-    // BOX: Object container box.
-    const box = createBox();
-    box.width = ITEM_WIDTH;
-    box.height = 200; // uiItemList.height
-    box.color = "transparent";
+    // BOX: Object container.
+    const item = createBox();
+    item.width = ITEM_WIDTH;
+    item.height = 200; // uiItemList.height
+    item.color = "transparent";
 
     // BOX: Item background box
-    box.boxBackground = createBox(2, 5, ITEM_WIDTH - 4, 190);
-    box.add(that);
+    item.boxBackground = createBox(2, 5, ITEM_WIDTH - 4, 190);
+    item.add(that);
     that.color = "transparent";
     that.round = 13;
     that.setMotion("background-color 0.3s");
 
     // BOX: Icon background box
-    box.boxIconBackground = createBox(0, 35, 90, 90);
-    box.add(that);
+    item.boxIconBackground = createBox(0, 35, 90, 90);
+    item.add(that);
     that.round = 50;
     that.color = "rgba(255, 255, 255, 0.3)";
     that.setMotion("background-color 0.3s");
     that.center("left");
     
     // IMAGE: icon image
-    box.imgIcon = createImage(0, 0, 70, 70);
-    box.add(that);
+    item.imgIcon = createImage(0, 0, 70, 70);
+    item.add(that);
     that.load(itemData.iconFile);
-    that.aline(box.boxIconBackground);
+    that.aline(item.boxIconBackground);
     that.left += 10;
     that.top += 10;
     that.setMotion("transform 0.3s");
@@ -829,16 +831,16 @@ homePage.createCategoryItem = function(itemData, uiItemList) {
     that.dontMotion();
 
     // LABEL: item name text
-    box.lblName = createLabel(0, 0, ITEM_WIDTH, 30);
-    box.add(that);
+    item.lblName = createLabel(0, 0, ITEM_WIDTH, 30);
+    item.add(that);
     that.text = itemData.title;
     that.bottom = 30;
     that.textAlign = "center";
 
-    // NOTE: UIItemList will set box.position = "relative";
+    // NOTE: UIItemList will set item.position = "relative";
 
-    makeBasicObject(box);
-    return box;
+    makeBasicObject(item);
+    return item;
 
 }
 
@@ -883,14 +885,14 @@ homePage.createCardItem = function(itemData, uiItemList) {
     //const ITEM_WIDTH = 150;
 
     // BOX: Object container box
-    const box = createBox();
-    box.color = "transparent";
-    box.width = ITEM_WIDTH;
-    box.height = 400; // uiItemList.height
+    const item = createBox();
+    item.color = "transparent";
+    item.width = ITEM_WIDTH;
+    item.height = 400; // uiItemList.height
 
     // BOX: Item background box
-    box.boxBackground = createBox(2, 10, ITEM_WIDTH - 4, 380);
-    box.add(that);
+    item.boxBackground = createBox(2, 10, ITEM_WIDTH - 4, 380);
+    item.add(that);
     that.color = "rgba(255, 255, 255, 0.1)";
     that.round = 13;
     that.border = 0;
@@ -898,23 +900,23 @@ homePage.createCardItem = function(itemData, uiItemList) {
     that.setMotion("background-color 0.3s");
 
     // IMAGE: icon image
-    box.imgIcon = createImage(0, 50, 200, 200);
-    box.add(that);
+    item.imgIcon = createImage(0, 50, 200, 200);
+    item.add(that);
     that.load(itemData.iconFile);
     //that.imageElement.style.filter = "grayscale(80%)";
     that.center("left");
 
     // LABEL: item name text
-    box.lblName = createLabel(0, 300, ITEM_WIDTH, 38);
-    box.add(that);
+    item.lblName = createLabel(0, 300, ITEM_WIDTH, 38);
+    item.add(that);
     that.text = itemData.title;
     that.fontSize = 28;
     that.textAlign = "center";
     that.setMotion("top 0.3s");
 
     // LABEL: item price text
-    box.lblPrice = createLabel(0, 0, "auto", "auto");
-    box.add(that);
+    item.lblPrice = createLabel(0, 0, "auto", "auto");
+    item.add(that);
     that.text = "$" + itemData.price;
     that.top = 20;
     that.right = 10;
@@ -930,12 +932,12 @@ homePage.createCardItem = function(itemData, uiItemList) {
     // UI STEPPER: Count of product.
     UIStepper.resetDefault();
     UIStepper.default.backgroundColor = "rgba(0, 0, 0, 0.08)";
-    UIStepper.default.buttonOutterSpace = 4;
+    UIStepper.default.buttonOuterSpace = 4;
     UIStepper.default.buttonColor = "rgba(0, 0, 0, 0.2)";
     UIStepper.default.buttonBorder = 1;
     UIStepper.default.buttonBorderColor = "rgba(0, 0, 0, 0.8)";
-    box.uiStepper = createUIStepper();
-    box.add(that);
+    item.uiStepper = UIStepper.create();
+    item.add(that);
     that.connectedItemName = itemData.title;
     that.opacity = 0;
     that.setMotion("opacity 0.3s, transform 0.3s");
@@ -946,16 +948,16 @@ homePage.createCardItem = function(itemData, uiItemList) {
     that.onChange(function(uiStepper) {
 
         print("Stepper value (" + uiStepper.connectedItemName + "): " + uiStepper.getValue());
-        box.lblPrice.text = "$" + (itemData.price * uiStepper.getValue());
+        item.lblPrice.text = "$" + (itemData.price * uiStepper.getValue());
 
     });
     that.bottom = 35;
     that.center("left");
 
-    // NOTE: UIItemList will set box.position = "relative"
+    // NOTE: UIItemList will set item.position = "relative"
 
-    makeBasicObject(box);
-    return box;
+    makeBasicObject(item);
+    return item;
 }
 
 homePage.selectClickedCardItem = function(uiItemList, clickedItem, prevClickedItem) {
@@ -989,6 +991,7 @@ homePage.selectClickedCardItem = function(uiItemList, clickedItem, prevClickedIt
     print("Total selected cards: " + uiItemList.getSelectedItemList().length);
 
 }
+
 </div>
         
     </body>

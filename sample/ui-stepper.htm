@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        
+        <title>UI Stepper</title>
+        
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+
+        <link rel="stylesheet" type="text/css" href="library/basic.min.css">
+        <script src="library/basic.min.js" type="text/javascript" charset="utf-8"></script>
+
+        <script src="js/component/ui-stepper.js" type="text/javascript" charset="utf-8"></script>
+
+        <script>
+        
+        var start = function() {
+
+            page.color = "whitesmoke";
+
+            // *** EXAMPLE 1:
+
+            // UI STEPPER: Defaul values.
+            //UIStepper.resetDefault();
+            //UIStepper.default.width = 150;
+            //UIStepper.default.height = 50;
+
+            //UIStepper.default.backgroundColor = "transparent";
+            //UIStepper.default.backgroundBorder = 0;
+            //UIStepper.default.backgroundBorderColor = "rgba(0, 0, 0, 0.1)";
+            //UIStepper.default.backgroundRound = 23;
+
+            //UIStepper.default.buttonWidth = 42;
+            //UIStepper.default.buttonHeight = 42;
+            //UIStepper.default.buttonOuterSpace = 4;
+            //UIStepper.default.buttonColor = "white";
+            //UIStepper.default.buttonBorder = 1;
+            //UIStepper.default.buttonBorderColor = "rgba(0, 0, 0, 0.8)";
+            //UIStepper.default.buttonRound = 23;
+            //UIStepper.default.buttonRightShadow = "-1px 0px 3px rgba(0, 0, 0, 0.0)";
+            //UIStepper.default.buttonLeftShadow = "1px 0px 3px rgba(0, 0, 0, 0.0)";
+            //UIStepper.default.buttonOpacity = 0.9;
+            //UIStepper.default.buttonDisableOpacity = 0.4;
+
+            //UIStepper.default.iconWidth = 32;
+            //UIStepper.default.iconHeight = 32;
+            //UIStepper.default.iconFileDecrease = "js/component/ui-stepper/decrease.svg";
+            //UIStepper.default.iconFileIncrease = "js/component/ui-stepper/increase.svg";
+            //UIStepper.default.textColor = "rgba(0, 0, 0, 0.8)";
+            //UIStepper.default.fontSize = 22;
+
+            // UI STEPPER: Object description.
+            UIStepper.create({
+                minimumNumber: 5,
+                maximumNumber: 10,
+                value: 8
+            });
+            // Show at:
+            //that.top = 20;
+            //that.left = 20;
+            that.center();
+
+            //let value = that.getValue();
+            //that.setValue(5);
+            //that.setMinimumNumber(1);
+            //that.setMaximumNumber(10);
+            //let minimumNumber = that.getMinimumNumber();
+            //let maximumNumber = that.getMaximumNumber();
+
+            that.onChange(function(uiStepper) {
+                print(uiStepper.getValue());
+            });
+            
+        }
+
+        </script>
+
+    </head>
+    <body>
+        
+        <!-- HTML content -->
+        
+    </body>
+</html>

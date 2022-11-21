@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        
+        <title>UI Left Title</title>
+        
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+
+        <link rel="stylesheet" type="text/css" href="library/basic.min.css">
+        <script src="library/basic.min.js" type="text/javascript" charset="utf-8"></script>
+
+        <script src="js/component/ui-left-title.js" type="text/javascript" charset="utf-8"></script>
+
+        <script>
+
+        var uiLeftTitleItem1
+        
+        var start = function() {
+
+            page.color = "whitesmoke";
+            
+            // *** EXAMPLE 1:
+
+            // UI LEFT TITLE: Default values.
+            UILeftTitle.resetDefault();
+            UILeftTitle.default.width = 400;
+            //UILeftTitle.default.height = 90;
+            //UILeftTitle.default.titleFontSize = 24;
+            //UILeftTitle.default.titleTextColor = "rgba(0, 0, 0, 0.8)";
+            UILeftTitle.default.descriptionFontSize = 16;
+            //UILeftTitle.default.descriptionTextColor = "rgba(0, 0, 0, 0.5)";
+            UILeftTitle.default.textSpaceToCenter = 12;
+            UILeftTitle.default.leftInnerSpace = 30;
+            UILeftTitle.default.rightInnerSpace = 20;
+            UILeftTitle.default.border = 1;
+            //UILeftTitle.default.borderColor = "rgba(0, 0, 0, 0.2)";
+            UILeftTitle.default.bottomBorder = 4;
+            UILeftTitle.default.backgroundColor = "whitesmoke";
+            UILeftTitle.default.round = 13;
+            
+            // UI LEFT TITLE ITEM: Object description.
+            uiLeftTitleItem1 = UILeftTitle.create({ 
+                title: "Languages", 
+                description: "Select a language for system." 
+            });
+            that.center();
+
+            var uiComponent = createImage(0, 0, 36, 36);
+            that.load("js/component/ui-left-title/arrow.svg");
+            that.opacity = 0.8;
+
+            uiLeftTitleItem1.addObject(uiComponent);
+            //uiComponent.right = 20;
+            //uiComponent.color = "lightgray";
+            //uiComponent.round = 8;
+            //uiComponent.remove();
+
+            uiLeftTitleItem1.onClick(function(self) {
+                print("uiLeftTitleItem1 clicked.");
+            });
+
+
+            // *** EXAMPLE 2:
+
+            // UI LEFT TITLE: Default values.
+            UILeftTitle.resetDefault();
+
+            // UI LEFT TITLE ITEM: Object description.
+            page.uiLeftTitleItem2 = UILeftTitle.create({ 
+                title: "Languages", 
+                description: "Select a language for system." 
+            });
+            // Show at:
+            that.left = 0;
+            that.bottom = 0;
+
+            page.onResize(pageResized);
+            
+        }
+
+        var pageResized = function() {
+            uiLeftTitleItem1.center();
+        }
+        
+        </script>
+
+    </head>
+    <body>
+        
+        <!-- HTML content -->
+        
+    </body>
+</html>
