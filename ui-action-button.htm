@@ -7,10 +7,10 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
 
-        <link rel="stylesheet" type="text/css" href="library/basic.min.css">
-        <script src="library/basic.min.js" type="text/javascript" charset="utf-8"></script>
+        <link rel="stylesheet" type="text/css" href="basic/basic.css">
+        <script src="basic/basic.js" type="text/javascript" charset="utf-8"></script>
 
-        <script src="js/component/ui-action-button.js" type="text/javascript" charset="utf-8"></script>
+        <script src="components/ui-action-button.js" type="text/javascript" charset="utf-8"></script>
 
         <script>
 
@@ -33,8 +33,8 @@
             //UIActionButton.default.menuBackgroundColor = "whitesmoke"
             //UIActionButton.default.menuWidth = 280
             //UIActionButton.default.actionButtonSelectedColor = "lightgray"
-            //UIActionButton.default.actionButtonIconFile = "js/component/ui-action-button/add.png"
-            //UIActionButton.default.actionButtonIconSelectedFile = "js/component/ui-action-button/add.png"
+            //UIActionButton.default.actionButtonIconFile = "components/ui-action-button/add.png"
+            //UIActionButton.default.actionButtonIconSelectedFile = "components/ui-action-button/add.png"
             //UIActionButton.default.actionButtonIconRotate = 0
             //UIActionButton.default.actionButtonSelectedIconRotate = 45
             //UIActionButton.default.coverBackgroundColor = "rgba(0, 0, 0, 0.0)"
@@ -50,7 +50,7 @@
             that.setItemsByDataList(actionDataList);
             that.onAction(function(actionId) {
 
-                print("Clicked action: " + actionId);
+                console.log("Clicked action: " + actionId);
 
                 switch (actionId) {
 

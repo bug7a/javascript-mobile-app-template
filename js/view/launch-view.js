@@ -2,7 +2,7 @@ const launchView = {};
 
 launchView.create = function(parameters = {}) {
 
-    if (!parameters.delayTime) parameters.delayTime = 1300;
+    //if (!parameters.delayTime) parameters.delayTime = 1300;
 
     setDefaultContainerBox(page);
 
@@ -32,6 +32,7 @@ launchView.create = function(parameters = {}) {
 
     restoreDefaultContainerBox();
 
+    /*
     setTimeout(function() {
 
         box.opacity = 0;
@@ -41,9 +42,27 @@ launchView.create = function(parameters = {}) {
         }, 250);
 
     }, parameters.delayTime);
+    */
 
 }
 
-launchView.showOnSafearea = function() {
+launchView.showOnSafeArea = function() {
     page.element.appendChild(launchView.box.element);
+    // page.add(launchView.getContainerBox());
+}
+
+launchView.remove = function(delayTime = 0) {
+
+    setTimeout(function() {
+    
+        launchView.box.withMotion(function() {
+            launchView.box.opacity = 0;
+        });
+
+        setTimeout(function() {
+            launchView.box.remove();
+        }, 250);
+
+    }, delayTime);
+
 }

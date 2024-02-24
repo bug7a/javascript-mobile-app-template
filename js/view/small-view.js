@@ -10,7 +10,7 @@ UI COMPONENT TEMPLATE
 Started Date: 22 February 2022
 Developer: Bugra Ozden
 Email: bugra.ozden@gmail.com
-Site: https://bug7a.github.io/cordova-mobile-app-ui-template/
+Site: https://bug7a.github.io/javascript-mobile-app-template/
 
 
 */
@@ -21,6 +21,7 @@ const smallView = {};
 smallView.default = {};
 smallView.resetDefault = function() {
 
+    smallView.default.width = "container-width";
     smallView.default.height = 500;
     smallView.default.backgroundColor = "white";
     smallView.default.coverColor = "rgba(0, 0, 0, 0.4)";
@@ -33,12 +34,22 @@ smallView.resetDefault();
 
 smallView.onCloseFunc = function() {};
 
-smallView.create = function() {
+smallView.create = function(parameters = {}) {
+
+    // Default values.
+    for (let parameterName in smallView.default) {
+        smallView.default[parameterName] = (parameters[parameterName] != undefined) ? parameters[parameterName] : smallView.default[parameterName];
+    }
+
+    if (smallView.default.width == "container-width") {
+        smallView.default.width = basic.getDefaultContainerBox().width;
+    }
 
     // BOX: Content container.
     smallView.box = createBox();
-    that.width = basic.getDefaultContainerBox().width;
-    that.height = basic.getDefaultContainerBox().height;
+    // *** OBJECT MODEL:
+    that.width = smallView.default.width;
+    that.height = that.containerBox.height;
     that.color = "transparent";
     that.visible = 0;
     that.top = 0;
@@ -47,8 +58,8 @@ smallView.create = function() {
     // BOX: Cover background.
     smallView.box.boxCover = createBox();
     smallView.box.add(that);
-    that.width = basic.getDefaultContainerBox().width;
-    that.height = basic.getDefaultContainerBox().height;
+    that.width = smallView.default.width;
+    that.height = smallView.box.height;
     that.setMotion("opacity 0.2s");
     that.top = 0;
     that.left = 0;
@@ -61,11 +72,12 @@ smallView.create = function() {
     // BOX: Content (Page) container.
     smallView.box.boxContent = createBox();
     smallView.box.add(that);
-    that.width = basic.getDefaultContainerBox().width;
+    that.width = smallView.default.width;
     that.height = smallView.default.height;
     that.setMotion("bottom 0.2s");
     that.left = 0;
     that.bottom = 0;
+    that.clickable = 1;
     
     smallView.clear();
 

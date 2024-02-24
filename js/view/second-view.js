@@ -10,7 +10,7 @@ UI COMPONENT TEMPLATE
 Started Date: 22 February 2022
 Developer: Bugra Ozden
 Email: bugra.ozden@gmail.com
-Site: https://bug7a.github.io/cordova-mobile-app-ui-template/
+Site: https://bug7a.github.io/javascript-mobile-app-template/
 
 
 */
@@ -21,6 +21,8 @@ const secondView = {};
 secondView.default = {};
 secondView.resetDefault = function() {
 
+    secondView.default.width = "container-width";
+    secondView.default.height = "container-height";
     secondView.default.backgroundColor = "white";
     secondView.default.scrollY = 1;
     secondView.default.showWithMotion = 1;
@@ -30,12 +32,27 @@ secondView.resetDefault();
 
 secondView.onCloseFunc = function() {};
 
-secondView.create = function() {
+secondView.create = function(parameters = {}) {
 
     // BOX: Content container.
     secondView.box = createBox();
-    that.width = basic.getDefaultContainerBox().width;
-    that.height = basic.getDefaultContainerBox().height;
+
+    // Default values.
+    for (let parameterName in secondView.default) {
+        secondView.default[parameterName] = (parameters[parameterName] != undefined) ? parameters[parameterName] : secondView.default[parameterName];
+    }
+
+    if (secondView.default.width == "container-width") {
+        secondView.default.width = basic.getDefaultContainerBox().width;
+    }
+
+    if (secondView.default.height == "container-height") {
+        secondView.default.height = basic.getDefaultContainerBox().height;
+    }
+    
+    // *** OBJECT MODEL:
+    that.width = secondView.default.width;
+    that.height = secondView.default.height;
     secondView.box.visible = 0;
     secondView.box.setMotion("left 0.2s, opacity 0.2s");
     that.left = 0;
@@ -85,7 +102,7 @@ secondView.setVisible = function(visible, finishedCallback = function() {}) {
                 secondView.box.visible = 1;
                 //secondView.box.opacity = 0;
                 secondView.tempLeft = secondView.box.left;
-                secondView.box.left = getDefaultContainerBox().width;
+                secondView.box.left = secondView.default.width;
 
                 secondView.box.withMotion(function(self) {
 
@@ -106,7 +123,7 @@ secondView.setVisible = function(visible, finishedCallback = function() {}) {
 
                 secondView.box.withMotion(function(self) {
                     //secondView.box.opacity = 0;
-                    secondView.box.left = getDefaultContainerBox().width;
+                    secondView.box.left = secondView.default.width;
                 });
 
                 setTimeout(function() {

@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        
+        <title>Autolayout Group Example (startFlexBox)</title>
+        
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+
+        <link rel="stylesheet" type="text/css" href="basic/basic.min.css">
+        <script src="basic/basic.min.js" type="text/javascript" charset="utf-8"></script>
+
+        <script>
+        
+        window.onload = () => {
+
+            page.color = "white";
+
+            // GROUP: Centered. (Autolayout)
+            startFlexBox();
+
+                // GROUP: #1 (Autolayout)
+                startFlexBox({
+                    width: "auto",
+                    height: "auto",
+                    flexDirection: "column", // row, column
+                    //flexWrap: "nowrap", // wrap, nowrap
+                    //alignContent: "center", // flex-start, center, flex-end, space-between, space-around, stretch (up to down)
+                    //justifyContent: "center", // flex-start, center, flex-end, space-between, space-around, space-evenly (left to right)
+                    //alignItems: "center", // flex-start, flex-end, center, baseline, stretch
+                    borderColor: "rgba(0, 0, 0, 0.1)",
+                    border: 1,
+                    round: 4,
+                });
+                that.elem.style.padding = "12px 8px 12px 8px";
+
+                    // LABEL: Vegetables are healthy text.
+                    Label({
+                        text: "Vegetables are healthy.",
+                    });
+                    that.elem.style.marginBottom = "28px";
+                    that.onClick((clickedLabel) => { });
+
+                    // ICON: Broccoli icon.
+                    Icon(0, 0, 32, 32);
+                    that.load("assets/fruids/brokoli.png");
+                    that.elem.style.marginBottom = "28px";
+                    that.onClick((clickedIcon) => { });
+
+                    // BUTTON: Broccoli.
+                    Button({
+                        width: "auto",
+                        text: "Broccoli",
+                        color: "seagreen",
+                        spaceX: 20,
+                    });
+
+                endFlexBox();
+
+            endFlexBox();
+
+            const primaryButtonStyle = (obj) => {
+                obj.width = "auto";
+                obj.color = "#D8D8D8";
+                obj.spaceX = 20;
+                obj.minimal = 1;
+            };
+
+            // GROUP: #2 (Autolayout)
+            startFlexBox({
+                //left: 0,
+                bottom: 30,
+                //width: "100%",
+                height: "auto",
+                //flexDirection: "row", // row, column
+                //flexWrap: "nowrap", // wrap, nowrap
+                //alignContent: "center", // flex-start, center, flex-end, space-between, space-around, stretch (up to down)
+                //justifyContent: "center", // flex-start, center, flex-end, space-between, space-around, space-evenly (left to right)
+                //alignItems: "center", // flex-start, flex-end, center, baseline, stretch
+            });
+
+                // BUTTON: Home.
+                Button({
+                    text: "Home",
+                });
+                primaryButtonStyle(that);
+
+                // BUTTON: Second page.
+                Button({
+                    text: "Second Page",
+                });
+                primaryButtonStyle(that);
+                that.elem.style.marginLeft = "8px";
+                
+            endFlexBox();
+
+        }
+
+        </script>
+
+    </head>
+    <body>
+        
+        <!-- HTML content -->
+        
+    </body>
+</html>

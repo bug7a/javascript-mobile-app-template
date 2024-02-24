@@ -1,0 +1,66 @@
+JAVASCRIPT MOBILE APP TEMPLATE AND UI COMPONENTS 
+(PLATFORMS; ANDROID, iOS)
+
+    Website:  https://bug7a.github.io/javascript-mobile-app-template/
+    Handbook: https://bug7a.github.io/basic.js-handbook/
+        
+    This template, can be used to develop mobile applications with:
+    - Ionic/Capacitor Native Runtime (recommended) or
+    - Apache Cordova Framework.
+    
+
+
+*** USAGE WITH IONIC / CAPACITOR NATIVE RUNTIME:
+
+    CREATE APP DOCUMENTS: 
+    https://capacitorjs.com/docs/getting-started
+
+    TUTORIAL VIDEOS (on YouTube):
+    - How to make an Android and iOS application?
+    https://youtu.be/rx-z6-_FwU8
+
+    SETTINGS FOR CAPACITOR PROJECT:
+    - Set "bundledwebRuntime": true in "capacitor.config.json" file.
+    Then Capacitor will create a "capacitor.js" file.
+
+    PLUGIN LIST: 
+    https://capacitorjs.com/docs/apis
+
+    PLUGIN USAGE:
+    - Just add "Capacitor.Plugins." before plugin name.
+    NOTE: Because it doesn't work as a module.
+
+    EXAMPLE CODE:
+    const showConfirm = async () => {
+        const { value } = await Capacitor.Plugins.Dialog.confirm({
+            title: 'Confirm',
+            message: `Are you sure you'd like to press the red button?`,
+        });
+
+        console.log('Confirmed:', value);
+    };
+    showConfirm();
+
+    NOTE: Dont forget to install the Dialog plugin to test example code: npm install @capacitor/dialog
+    NOTE: Errors in javascript code; It can be followed via xcode or android studio.
+
+
+
+*** USAGE WITH CORDOVA FRAMEWORK:
+
+    CREATE APP DOCUMENTS: 
+    https://cordova.apache.org/docs/en/latest/guide/cli/index.html
+
+    TUTORIAL VIDEOS:
+    - How to make an Android application? (Language: Turkish)
+    https://www.youtube.com/watch?v=B6x7yKhKZbY
+    - How to make an iOS application? (Language: Turkish)
+    https://www.youtube.com/watch?v=WZZwiI_5WQA
+
+    SETTINGS FOR YOUR CORDOVA PROJECT:
+    - Add these settings to your cordova project config.xml file:
+        <preference name="DisallowOverscroll" value="true" />
+        <preference name="Orientation" value="portrait" />
+
+    PLUGIN LIST: 
+    https://cordova.apache.org/plugins/

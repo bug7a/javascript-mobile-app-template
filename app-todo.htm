@@ -5,8 +5,8 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-        <link rel="stylesheet" type="text/css" href="library/basic.min.css">
-        <script src="library/basic.min.js" type="text/javascript" charset="utf-8"></script>
+        <link rel="stylesheet" type="text/css" href="basic/basic.min.css">
+        <script src="basic/basic.min.js" type="text/javascript" charset="utf-8"></script>
 
         <script>
 
@@ -254,6 +254,7 @@
         const addTaskData = function(taskText) {
             taskDataList.unshift(taskText)
             saveTaskDataList()
+            updateBarBudgeCallback()
         }
 
         // Create new task item object.
@@ -338,6 +339,7 @@
             taskDataList = newTaskDataList
             taskList = newTaskList
             saveTaskDataList()
+            updateBarBudgeCallback()
 
             repositionTasks()
 
@@ -366,6 +368,14 @@
                 top += taskList[i].height
             }
         }
+
+        const updateBarBudgeCallback = function() {
+            if (window.top.updateBottomBarTasksUIBudge) window.top.updateBottomBarTasksUIBudge(taskList.length || 0);
+        }
+
+        window.aaaa = function() {
+            alert("Google");
+        };
         
         </script>
 

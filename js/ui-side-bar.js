@@ -9,7 +9,7 @@ UI COMPONENT TEMPLATE
 Started Date: 22 February 2022
 Developer: Bugra Ozden
 Email: bugra.ozden@gmail.com
-Site: https://bug7a.github.io/cordova-mobile-app-ui-template/
+Site: https://bug7a.github.io/javascript-mobile-app-template/
 
 
 */
@@ -242,7 +242,7 @@ sideBar.setVisible = function(visible) {
 
             setTimeout(function() {
                 sideBar.box.visible = 0;
-            }, 200 + basic.motionController.WITH_MOTION_TIME);
+            }, 200 + 50);
 
         }
 

@@ -7,11 +7,11 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
 
-        <link rel="stylesheet" type="text/css" href="library/basic.min.css">
-        <script src="library/basic.min.js" type="text/javascript" charset="utf-8"></script>
+        <link rel="stylesheet" type="text/css" href="basic/basic.min.css">
+        <script src="basic/basic.min.js" type="text/javascript" charset="utf-8"></script>
 
-        <script src="js/component/tool.js" type="text/javascript" charset="utf-8"></script>
-        <script src="js/component/ui-notice.js" type="text/javascript" charset="utf-8"></script>
+        <script src="components/utils.js" type="text/javascript" charset="utf-8"></script>
+        <script src="components/ui-notice.js" type="text/javascript" charset="utf-8"></script>
 
         <script>
         
@@ -37,7 +37,7 @@
             //notice.default.textColor = "rgba(0, 0, 0, 0.8)";
             notice.default.displayTime = 2500;
             //notice.default.fontFamily = "opensans";
-            //notice.default.motionTime = 300 + basic.motionController.WITH_MOTION_TIME;
+            //notice.default.motionTime = 300 + 50;
 
             // BUTTON: Info message.
             createButton(30, 30, 250);
@@ -78,7 +78,7 @@
             // *** EXAMPLE 3:
 
             // Alert icon:
-            var alertIconAsText = tool.useImageAsText({
+            var alertIconAsText = Utils.useImageAsText({
                 fontSpace: 16,
                 outerSpaceRight: 20, 
                 outerSpaceLeft: 0 
@@ -92,7 +92,7 @@
 
             });
 
-            //print(alertIconAsText)
+            //console.log(alertIconAsText)
 
             // BUTTON: Error message.
             createButton(0, 0, 250);

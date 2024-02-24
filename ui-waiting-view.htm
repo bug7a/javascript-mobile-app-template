@@ -7,12 +7,15 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
 
-        <link rel="stylesheet" type="text/css" href="library/basic.min.css">
-        <script src="library/basic.min.js" type="text/javascript" charset="utf-8"></script>
+        <link rel="stylesheet" type="text/css" href="basic/basic.min.css">
+        <script src="basic/basic.min.js" type="text/javascript" charset="utf-8"></script>
 
-        <script src="js/component/ui-waiting-view.js" type="text/javascript" charset="utf-8"></script>
+        <script src="components/ui-core.js" type="text/javascript" charset="utf-8"></script>
+        <script src="components/ui-waiting-view.js" type="text/javascript" charset="utf-8"></script>
 
         <script>
+
+        let waitingView;
         
         var start = function() {
 
@@ -32,7 +35,7 @@
             });
 
             // UI WAITING VIEW: It prevents the user from touching the screen until the process is complete.
-            waitingView.create();
+            waitingView = WaitingView();
 
             page.btnAction.onClick(function(self) {
                 

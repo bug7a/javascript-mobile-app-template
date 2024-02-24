@@ -38,6 +38,6 @@ termsOfUsePage.openInSecondView = function() {
     });
 
     secondView.setVisible(1);
-    print("Opened page id: " + secondExamplePage.PAGE_ID);
+    console.log("Opened page id: " + secondExamplePage.PAGE_ID);
 
 }

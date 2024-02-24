@@ -54,6 +54,7 @@ homePage.openInDefaultView = function() {
 
         // #1
 
+        /*
         // UI TITLE: Default values.
         UITitle.resetDefault();
         //UITitle.default.title = "Title";
@@ -71,16 +72,18 @@ homePage.openInDefaultView = function() {
         //UITitle.default.rightInnerSpace = 20;
         //UITitle.default.titleFontSize = 28;
         //UITitle.default.titleTextColor = "rgba(0, 0, 0, 0.8)";
-        //UITitle.default.backButtonIconFile = "js/component/ui-title/arrow-blue.svg";
+        //UITitle.default.backButtonIconFile = "components/ui-title/arrow-blue.svg";
         //UITitle.default.backButtonHeight = 20;
         //UITitle.default.backButtonFontSize = 14;
         //UITitle.default.backButtonTextColor = "#689BD2";
         //UITitle.default.backButtonIconBackgroundColor = "rgba(0, 0, 0, 0.0)";
+        */
+
+        const uiTitleOptions = {};
+        uiTitleOptions.title = "Categories";
 
         // UI TITLE: Category title.
-        box.categoryUITitle = UITitle.create({ 
-            title: "Categories"
-        });
+        box.categoryUITitle = UITitle.create(uiTitleOptions);
         box.add(that);
         // Show object:
         that.position = "relative";
@@ -89,8 +92,8 @@ homePage.openInDefaultView = function() {
         UISearchBox.resetDefault();
         //UISearchBox.default.width = 300;
         //UISearchBox.default.height = 50;
-        //UISearchBox.default.searchIconFile = "js/component/ui-search-box/search.svg";
-        //UISearchBox.default.clearIconFile = "js/component/ui-search-box/clear.svg";
+        //UISearchBox.default.searchIconFile = "components/ui-search-box/search.svg";
+        //UISearchBox.default.clearIconFile = "components/ui-search-box/clear.svg";
         //UISearchBox.default.isCancelEnabled = 1;
         //UISearchBox.default.placeholderText = "Search";
         //UISearchBox.default.color = "whitesmoke";
@@ -139,7 +142,7 @@ homePage.openInDefaultView = function() {
         // #3
 
         // UI TITLE: Cards title
-        box.cardUITitle = UITitle.create({ 
+        box.cardUITitle = UITitle.create({
             title: "Cards",
             backgroundColor: "rgba(0, 0, 0, 0.02)"
         });
@@ -170,16 +173,16 @@ homePage.openInDefaultView = function() {
         that.position = "relative";
 
         // Olives card's stepper object global name
-        //print(homePage.box.cardUIItemList.getItemList()[3].uiStepper.connectedItemName);
+        //console.log(homePage.box.cardUIItemList.getItemList()[3].uiStepper.connectedItemName);
 
         // All selected items:
-        //print(homePage.box.cardUIItemList.getSelectedItemList());
+        //console.log(homePage.box.cardUIItemList.getSelectedItemList());
 
         /*
         // All items:
         homePage.box.cardUIItemList.forEach(function(item) {
-            print(item.uiStepper.connectedItemName);
-            print(item.getData());
+            console.log(item.uiStepper.connectedItemName);
+            console.log(item.getData());
         });
         */
 
@@ -187,7 +190,54 @@ homePage.openInDefaultView = function() {
         // NOTE: We connected them in homePage.selectClickedCategoryItem() function.
         box.categoryUIItemList.selectItemByIndex(0);
 
-        print("Opened page id: " + homePage.PAGE_ID);
+        box.grpLinkButton = startFlexBox({
+            width: box.width, 
+            height: 200,
+            position: "relative",
+            color: "transparent",
+        });
+        box.add(that);
+
+            startBox(20, 5, box.width - 40, 100, {
+                color: "rgba(0, 0, 0, 0.25)",
+                round: 8,
+            });
+            that.clickable = 1;
+            that.elem.style.cursor = "pointer";
+            that.onClick(() => {
+                window.open("https://bug7a.github.io/javascript-mobile-app-template/", "_blank");
+            });
+
+                Icon({
+                    right: -20,
+                    top: -20,
+                    width: 100,
+                    height: 100,
+                    opacity: 0.15,
+                });
+                that.load("assets/download.svg");
+
+                Label({
+                    left: 20,
+                    top: 15,
+                    text: "Download on Github",
+                    fontSize: 30,
+                    textColor: "#5ABB9F",
+                });
+                that.elem.style.fontFamily = "opensans-bold";
+
+                Label({
+                    left: 20,
+                    top: 50,
+                    text: "This is open-source javascript mobile app template.",
+                    textColor: "rgba(255, 255, 255, 0.5)",
+                });
+
+            endBox();
+
+        endFlexBox();
+
+        console.log("Opened page id: " + homePage.PAGE_ID);
         
         // Show view:
         defaultView.setVisible(1);
@@ -272,7 +322,7 @@ homePage.selectClickedCategoryItem = function(uiItemList, clickedItem, prevClick
         clickedItem.imgIcon.element.style.filter = "grayscale(30%)";
         uiItemList.addItemToSelectedList(clickedItem);
 
-        print("Selected category: " + clickedItem.getIndex() + "-" + clickedItem.getData().title);
+        console.log("Selected category: " + clickedItem.getIndex() + "-" + clickedItem.getData().title);
 
         // Filter cards by selected category id:
         if (homePage.box.cardUIItemList) {
@@ -349,7 +399,7 @@ homePage.createCardItem = function(itemData, uiItemList) {
     that.setValue(1);
     that.onChange(function(uiStepper) {
 
-        print("Stepper value (" + uiStepper.connectedItemName + "): " + uiStepper.getValue());
+        console.log("Stepper value (" + uiStepper.connectedItemName + "): " + uiStepper.getValue());
         item.lblPrice.text = "$" + (itemData.price * uiStepper.getValue());
 
     });
@@ -390,6 +440,6 @@ homePage.selectClickedCardItem = function(uiItemList, clickedItem, prevClickedIt
 
     }
 
-    print("Total selected cards: " + uiItemList.getSelectedItemList().length);
+    console.log("Total selected cards: " + uiItemList.getSelectedItemList().length);
 
 }

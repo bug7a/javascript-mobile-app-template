@@ -9,7 +9,7 @@ UI COMPONENT TEMPLATE
 Started Date: 2 November 2022
 Developer: Bugra Ozden
 Email: bugra.ozden@gmail.com
-Site: https://bug7a.github.io/cordova-mobile-app-ui-template/
+Site: https://bug7a.github.io/javascript-mobile-app-template/
 
 
 */
@@ -26,7 +26,6 @@ safeArea.resetDefault = function() {
     safeArea.default.backgroundColor = "transparent";
     safeArea.default.outerBackgroundColor = "white";
     safeArea.default.statusBarBackgroundColor = "rgba(0, 0, 0, 0.05)";
-    safeArea.default.statusBarBackgroundHeight = 0;
 
 };
 safeArea.resetDefault();
@@ -57,9 +56,13 @@ safeArea.create = function(parameters = {}) {
     // BOX: status bar background.
     box.boxStatusBarBackground = createBox();
     that.width = box.width;
-    that.height = safeArea.default.statusBarBackgroundHeight;
+    that.height = safeArea.default.topOuterSpace;
     that.color = safeArea.default.statusBarBackgroundColor;
     that.top = 0;
+
+    safeArea.getBackgroundColor = function() {
+        return safeArea.default.outerBackgroundColor;
+    };
 
     safeArea.setBackgroundColor = function(color) {
         safeArea.default.backgroundColor = color;
@@ -75,10 +78,6 @@ safeArea.create = function(parameters = {}) {
         page.color = color;
     };
 
-    safeArea.getBackgroundColor = function() {
-        return safeArea.default.outerBackgroundColor;
-    };
-
     safeArea.setStatusBarBackgroundColor = function(color) {
         safeArea.default.statusBarBackgroundColor = color;
         box.boxStatusBarBackground.color = color;
@@ -88,16 +87,12 @@ safeArea.create = function(parameters = {}) {
         return safeArea.default.statusBarBackgroundColor;
     };
 
-    safeArea.getWidth = function(width) {
+    safeArea.getWidth = function() {
         return box.width;
     };
 
-    safeArea.setWidth = function(width) {
-        box.width = width;
-    };
-
-    safeArea.getWidth = function(width) {
-        return box.width;
+    safeArea.getHeight = function() {
+        return box.height;
     };
 
     safeArea.getContainerBox = function() {
@@ -112,10 +107,6 @@ safeArea.create = function(parameters = {}) {
 
     // *** First run code:
     safeArea.reposition();
-    page.onResize(safeArea.reposition);
-    
-    //basic.setDefaultContainerBox(safeArea.getContainerBox());
-
-    // NOTE: You can get width as basic.getDefaultContainerBox().width
+    //page.onResize(safeArea.reposition);
 
 };

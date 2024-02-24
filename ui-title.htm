@@ -7,10 +7,10 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
 
-        <link rel="stylesheet" type="text/css" href="library/basic.min.css">
-        <script src="library/basic.min.js" type="text/javascript" charset="utf-8"></script>
+        <link rel="stylesheet" type="text/css" href="basic/basic.min.css">
+        <script src="basic/basic.min.js" type="text/javascript" charset="utf-8"></script>
 
-        <script src="js/component/ui-title.js" type="text/javascript" charset="utf-8"></script>
+        <script src="components/ui-title.js" type="text/javascript" charset="utf-8"></script>
 
         <script>
         
@@ -35,7 +35,7 @@
             //UITitle.default.rightInnerSpace = 30;
             //UITitle.default.titleFontSize = 30;
             //UITitle.default.titleTextColor = "rgba(0, 0, 0, 0.8)";
-            //UITitle.default.backButtonIconFile = "js/component/ui-title/arrow-blue.svg";
+            //UITitle.default.backButtonIconFile = "components/ui-title/arrow-blue.svg";
             //UITitle.default.backButtonHeight = 20;
             //UITitle.default.backButtonFontSize = 14;
             //UITitle.default.backButtonTextColor = "#689BD2";
@@ -45,7 +45,7 @@
             page.uiTitle = UITitle.create({ 
                 title: "Settings", 
                 backButtonVisible: 1, 
-                backButtonText: "Back" 
+                backButtonText: "Back", 
             });
             //boxContainer.add(that);
             that.left = 0;
@@ -54,7 +54,7 @@
             //that.backButton.setText("Settings");
             //that.backButton.setVisible(0);
             that.backButton.onClick(function(uiTitleBackButton) {
-                print("Go Back");
+                console.log("Go Back");
             });
             //that.add(basicObject);
             

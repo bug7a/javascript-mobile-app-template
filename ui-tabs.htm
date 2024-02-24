@@ -8,10 +8,10 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
 
         <!-- LIBRARY FILES -->
-        <link rel="stylesheet" type="text/css" href="library/basic.min.css">
-        <script src="library/basic.min.js" type="text/javascript" charset="utf-8"></script>
+        <link rel="stylesheet" type="text/css" href="basic/basic.min.css">
+        <script src="basic/basic.min.js" type="text/javascript" charset="utf-8"></script>
 
-        <script src="js/component/ui-tabs.js" type="text/javascript" charset="utf-8"></script>
+        <script src="components/ui-tabs.js" type="text/javascript" charset="utf-8"></script>
 
         <script>
 
@@ -62,7 +62,7 @@
             that.setItemsByDataList(itemDataList1);
             that.selectItemByIndex(1);
             that.onChange(function(selectedItem, selectedIndex) {
-                print("uiSegment1: " + selectedItem.getData().id);
+                console.log("uiSegment1: " + selectedItem.getData().id);
                 // selectedItem.getData().text;
             });
             that.onResize(function(self) {
@@ -83,7 +83,7 @@
             that.setItemsByDataList(itemDataList2);
             that.selectItemByIndex(2);
             that.onChange(function(selectedItem, selectedIndex) {
-                print("uiSegment2: " + selectedItem.getData().id);
+                console.log("uiSegment2: " + selectedItem.getData().id);
             });
             that.onResize(function(self) {
                 repositionComponents();
@@ -101,7 +101,7 @@
             uiSegment3 = UITabs.create();
             that.setItemsByDataList(itemDataList3);
             uiSegment3.onChange(function(selectedItem, selectedIndex) {
-                print("uiSegment3: " + selectedItem.getData().id);
+                console.log("uiSegment3: " + selectedItem.getData().id);
             });
             that.onResize(function(self) {
                 repositionComponents();
@@ -122,7 +122,7 @@
             that.setItemsByDataList(itemDataList4);
             that.selectItemByIndex(2);
             uiSegment4.onChange(function(selectedItem, selectedIndex) {
-                print("uiSegment4: " + selectedItem.getData().id);
+                console.log("uiSegment4: " + selectedItem.getData().id);
             });
             that.onResize(function(self) {
                 repositionComponents();

@@ -7,10 +7,10 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
 
-        <link rel="stylesheet" type="text/css" href="library/basic.min.css">
-        <script src="library/basic.min.js" type="text/javascript" charset="utf-8"></script>
+        <link rel="stylesheet" type="text/css" href="basic/basic.min.css">
+        <script src="basic/basic.min.js" type="text/javascript" charset="utf-8"></script>
 
-        <script src="js/component/ui-stepper.js" type="text/javascript" charset="utf-8"></script>
+        <script src="components/ui-stepper.js" type="text/javascript" charset="utf-8"></script>
 
         <script>
         
@@ -44,8 +44,8 @@
 
             //UIStepper.default.iconWidth = 32;
             //UIStepper.default.iconHeight = 32;
-            //UIStepper.default.iconFileDecrease = "js/component/ui-stepper/decrease.svg";
-            //UIStepper.default.iconFileIncrease = "js/component/ui-stepper/increase.svg";
+            //UIStepper.default.iconFileDecrease = "components/ui-stepper/decrease.svg";
+            //UIStepper.default.iconFileIncrease = "components/ui-stepper/increase.svg";
             //UIStepper.default.textColor = "rgba(0, 0, 0, 0.8)";
             //UIStepper.default.fontSize = 22;
 
@@ -68,7 +68,7 @@
             //let maximumNumber = that.getMaximumNumber();
 
             that.onChange(function(uiStepper) {
-                print(uiStepper.getValue());
+                console.log(uiStepper.getValue());
             });
             
         }

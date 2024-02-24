@@ -7,10 +7,10 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
 
-        <link rel="stylesheet" type="text/css" href="library/basic.min.css">
-        <script src="library/basic.min.js" type="text/javascript" charset="utf-8"></script>
+        <link rel="stylesheet" type="text/css" href="basic/basic.min.css">
+        <script src="basic/basic.min.js" type="text/javascript" charset="utf-8"></script>
 
-        <script src="js/component/ui-cells.js" type="text/javascript" charset="utf-8"></script>
+        <script src="components/ui-cells.js" type="text/javascript" charset="utf-8"></script>
 
         <script>
         
@@ -34,8 +34,8 @@
             box.cell(1).cell(2).color = "white";
 
             // Cells count:
-            print(box.cell.getCount());
-            print(box.cell(1).cell.getCount());
+            console.log(box.cell.getCount());
+            console.log(box.cell(1).cell.getCount());
 
             // IMAGE: 
             createImage(0, 0, 60, 60);

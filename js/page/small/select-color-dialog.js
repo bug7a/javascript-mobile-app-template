@@ -11,7 +11,7 @@ CUSTOM DIALOG TEMPLATE
 Started Date: 3 October 2022
 Developer: Bugra Ozden
 Email: bugra.ozden@gmail.com
-Site: https://bug7a.github.io/cordova-mobile-app-ui-template/
+Site: https://bug7a.github.io/javascript-mobile-app-template/
 
 
 */
@@ -34,18 +34,25 @@ selectColorDialog.openInSmallView = function(colorSelectedCallback = function() 
     box.height = 240;
 
     // LABEL: Title text.
-    box.lblTitle = createLabel(0, 60, app.usedWidth, "auto");
+    box.lblTitle = createLabel(0, 60, USED_WIDTH, "auto");
     box.add(that);
     that.text = "Select a Color";
     that.fontSize = 28;
     that.textAlign = "center";
 
-    // UI GROUP: Color items.
-    box.grpColor = UIGroup.create();
+    // GROUP: Color items (Autolayout)
+    box.grpColor = startFlexBox({
+        //left: 0,
+        //top: 0,
+        //width: "100%",
+        height: "auto",
+        //flexDirection: "row", // row, column
+        //flexWrap: "nowrap", // wrap, nowrap
+        //alignContent: "center", // flex-start, center, flex-end, space-between, space-around, stretch (up to down)
+        //justifyContent: "center", // flex-start, center, flex-end, space-between, space-around, space-evenly (left to right)
+        //alignItems: "center", // flex-start, flex-end, center, baseline, stretch
+    });
     box.add(that);
-    that.setInnerSpaces(0, 0, 0, 0);
-    that.setSpacesBetweenItems(20);
-    //that.setItemAlignment(UIGroup.alignType.HORIZONTAL, "center");
 
     for (let i = 0; i < selectColorDialog.colorList.length; i++) {
 
@@ -54,8 +61,8 @@ selectColorDialog.openInSmallView = function(colorSelectedCallback = function() 
             // COLOR ITEM:
             const colorItem = selectColorDialog.createColorItem(selectColorDialog.colorList[i]);
 
-            box.grpColor.addItem(colorItem);
             colorItem.colorData = selectColorDialog.colorList[i];
+            if (i != 0) colorItem.elem.style.marginLeft = "8px";
 
             colorItem.onClick(function(self) {
 
@@ -67,6 +74,8 @@ selectColorDialog.openInSmallView = function(colorSelectedCallback = function() 
         }
 
     };
+
+    endFlexBox();
 
     box.grpColor.onResize(function(self) {
 

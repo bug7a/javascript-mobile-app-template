@@ -11,7 +11,7 @@ DEFAULT PAGE TEMPLATE
 Started Date: 11 October 2022
 Developer: Bugra Ozden
 Email: bugra.ozden@gmail.com
-Site: https://bug7a.github.io/cordova-mobile-app-ui-template/
+Site: https://bug7a.github.io/javascript-mobile-app-template/
 
 
 */
@@ -70,6 +70,6 @@ defaultExamplePage.openInDefaultView = function(resultCallback = function() {}) 
         });
 
         defaultView.setVisible(1);
-        print("Opened page id: " + defaultExamplePage.PAGE_ID);
+        console.log("Opened page id: " + defaultExamplePage.PAGE_ID);
 
 }

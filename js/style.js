@@ -1,3 +1,4 @@
+// STYLE STANDARDS OF APP:
 
 // Standarts for design.
 const style = {};

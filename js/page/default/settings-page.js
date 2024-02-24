@@ -46,6 +46,7 @@ settingsPage.openInDefaultView = function() {
     defaultView.clear();
 
     const box = defaultView.getContainerBox();
+    basic.setDefaultContainerBox(box);
     // Out of this function, use "settingsPage.box" for "box".
     settingsPage.box = box;
 
@@ -74,7 +75,7 @@ settingsPage.openInDefaultView = function() {
 
     // UI SUB TITLE: APPEARANCE
     box.appearanceUISubTitle = settingsPage.createRelativeUISubTitle("APPEARANCE");
-    box.add(that);
+    //box.add(that);
 
 
     // A1. Dark Mode: global.settings.isDarkModeOn
@@ -87,7 +88,7 @@ settingsPage.openInDefaultView = function() {
         title: "Dark Mode", 
         description: "Use interface colors inverted." 
     });
-    box.add(that);
+    //box.add(that);
     // Show
     that.position = "relative";
 
@@ -105,7 +106,7 @@ settingsPage.openInDefaultView = function() {
         title: "Theme",
         description: "" 
     });
-    box.add(that);
+    //box.add(that);
     // Show
     that.position = "relative";
 
@@ -124,7 +125,7 @@ settingsPage.openInDefaultView = function() {
         title: "Menu Style", 
         description: "Choose how your navigation menu appears." 
     });
-    box.add(that);
+    //box.add(that);
     // Show
     that.position = "relative";
 
@@ -143,7 +144,7 @@ settingsPage.openInDefaultView = function() {
         title: "Primary Color", 
         description: "Choose a color for the colored interface buttons." 
     });
-    box.add(that);
+    //box.add(that);
     // Show
     that.position = "relative";
 
@@ -176,7 +177,7 @@ settingsPage.openInDefaultView = function() {
     
     // UI SUB TITLE: SYSTEM:
     box.systemUISubTitle = settingsPage.createRelativeUISubTitle("SYSTEM");
-    box.add(that);
+    //box.add(that);
 
 
     // B1. Update Status: global.settings.updateId
@@ -186,7 +187,7 @@ settingsPage.openInDefaultView = function() {
         title: "Update",
         description: "" 
     });
-    box.add(that);
+    //box.add(that);
     // Show
     that.position = "relative";
 
@@ -205,7 +206,7 @@ settingsPage.openInDefaultView = function() {
         title: "Only When Charging", 
         description: "The app only updates when plugged in." 
     });
-    box.add(that);
+    //box.add(that);
     that.position = "relative";
 
     // UI TOGGLE: Only when charging toggle.
@@ -222,7 +223,7 @@ settingsPage.openInDefaultView = function() {
         title: "Notifications",
         description: "" 
     });
-    box.add(that);
+    //box.add(that);
     that.position = "relative";
 
     // UI SELECT TEXT: notifications select text.
@@ -240,7 +241,7 @@ settingsPage.openInDefaultView = function() {
         title: "Font Size",
         description: "" 
     });
-    box.add(that);
+    //box.add(that);
     that.position = "relative";
 
     // UI STEPPER: Font size stepper.
@@ -271,7 +272,7 @@ settingsPage.openInDefaultView = function() {
         title: "Language",
         description: "" 
     });
-    box.add(that);
+    //box.add(that);
     that.position = "relative";
 
     // UI SELECT TEXT: Language.
@@ -296,7 +297,7 @@ settingsPage.openInDefaultView = function() {
         title: "Download Over Wi-Fi Only", 
         description: "" 
     });
-    box.add(that);
+    //box.add(that);
     that.position = "relative";
 
     // UI TOGGLE: Download over wi-fi only toggle.
@@ -315,7 +316,7 @@ settingsPage.openInDefaultView = function() {
         title: "Video Quality",
         description: "" 
     });
-    box.add(that);
+    //box.add(that);
     that.position = "relative";
 
     // UI SELECT TEXT: Video Quality.
@@ -341,7 +342,7 @@ settingsPage.openInDefaultView = function() {
         title: "Delete All Downloads",
         description: "Nothing will be deleted. It is a demo."
     });
-    box.add(that);
+    //box.add(that);
     that.position = "relative";
 
     // IMAGE: Trash icon.
@@ -361,7 +362,7 @@ settingsPage.openInDefaultView = function() {
 
     // UI SUB TITLE: OTHERS
     box.appearanceUISubTitle = settingsPage.createRelativeUISubTitle("OTHERS");
-    box.add(that);
+    //box.add(that);
 
 
     // D1. Security:
@@ -374,7 +375,7 @@ settingsPage.openInDefaultView = function() {
         title: "Security", 
         description: "" 
     });
-    box.add(that);
+    //box.add(that);
     that.position = "relative";
 
     // Right Arrow Image:
@@ -392,7 +393,7 @@ settingsPage.openInDefaultView = function() {
         title: "Privacy Policy and Terms of Use", 
         description: "" 
     });
-    box.add(that);
+    //box.add(that);
     that.position = "relative";
 
     // Right Arrow Image:
@@ -406,17 +407,19 @@ settingsPage.openInDefaultView = function() {
 
     // Relative space at bottom.
     box.bottomUISpace = settingsPage.createRelativeUISpace(120, "whitesmoke");
-    box.add(that);
+    //box.add(that);
+
+    basic.restoreDefaultContainerBox();
 
     defaultView.setVisible(1);
-    print("Opened page id: " + settingsPage.PAGE_ID);
+    console.log("Opened page id: " + settingsPage.PAGE_ID);
 
 }
 
 settingsPage.createRelativeUISubTitle = function(title, color = "whitesmoke") {
 
     // BOX: UI object container
-    const box = createBox(0, 0, app.usedWidth, 90);
+    const box = createBox(0, 0, USED_WIDTH, 90);
     that.color = color;
     that.borderColor = "rgba(0, 0, 0, 0.1)";
     that.element.style.borderBottomWidth = "3px";
@@ -436,7 +439,7 @@ settingsPage.createRelativeUISubTitle = function(title, color = "whitesmoke") {
 
 settingsPage.createRelativeUISpace = function(height = 100, color = "transparent") {
 
-    const box = createBox(0, 0, app.usedWidth, height);
+    const box = createBox(0, 0, USED_WIDTH, height);
     that.color = color;
     that.element.style.position = "relative";
 
@@ -448,7 +451,7 @@ settingsPage.setLeftTitleDefaultValues = function() {
 
     // UI LEFT TITLE: Default values.
     UILeftTitle.resetDefault();
-    UILeftTitle.default.width = app.usedWidth;
+    UILeftTitle.default.width = USED_WIDTH;
     UILeftTitle.default.height = 100;
     UILeftTitle.default.titleFontSize = 20;
     UILeftTitle.default.leftInnerSpace = 20;
@@ -461,7 +464,7 @@ settingsPage.setLeftTitleDefaultValues = function() {
 settingsPage.createRightArrowImage = function() {
 
     const imgIcon = createImage(0, 0, 36, 36);
-    that.load("js/component/ui-left-title/arrow.svg");
+    that.load("components/ui-left-title/arrow.svg");
     that.opacity = 0.8;
 
     return imgIcon;
@@ -574,7 +577,7 @@ settingsPage.createUIStepperInLeftTitle = function(parameters = {}, setCustomSty
 
 settingsPage.valueChanged_toggle = function(uiToggle) {
 
-    print("Toggle value (" + uiToggle.toggleId + "): " + uiToggle.getValue());
+    console.log("Toggle value (" + uiToggle.toggleId + "): " + uiToggle.getValue());
     settingsPage.setValue(uiToggle.toggleId, uiToggle.getValue());
 
     switch(uiToggle.toggleId) {
@@ -597,7 +600,7 @@ settingsPage.valueChanged_toggle = function(uiToggle) {
 
 settingsPage.valueChanged_selectText = function(uiSelectText) {
 
-    print("Selected name (" + uiSelectText.selectTextId + "): " + uiSelectText.getSelectedName());
+    console.log("Selected name (" + uiSelectText.selectTextId + "): " + uiSelectText.getSelectedName());
     settingsPage.setValue(uiSelectText.selectTextId + "Id", uiSelectText.getSelectedId());
     settingsPage.setValue(uiSelectText.selectTextId + "Name", uiSelectText.getSelectedName());
 
@@ -633,7 +636,7 @@ settingsPage.valueChanged_selectText = function(uiSelectText) {
 
 settingsPage.valueChanged_stepper = function(uiStepper) {
 
-    print("Stepper number (" + uiStepper.stepperId + "): " + uiStepper.getValue());
+    console.log("Stepper number (" + uiStepper.stepperId + "): " + uiStepper.getValue());
     settingsPage.setValue(uiStepper.stepperId, uiStepper.getValue());
 
     switch(uiStepper.stepperId) {
