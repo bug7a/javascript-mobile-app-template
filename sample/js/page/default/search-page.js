@@ -2,18 +2,18 @@ const searchPage = {};
 searchPage.PAGE_ID = "searchPage";
 
 searchPage.itemDataList = [
-    { title:"Broccoli", desc:"Vegetable", iconFile:"assets/fruids/brokoli.png", searchText: "Broccoli Vegetable" },
-    { title:"Strawberry", desc:"Fruit", iconFile:"assets/fruids/cilek.png", searchText: "Strawberry Fruit" },
-    { title:"Tomato", desc:"Vegetable", iconFile:"assets/fruids/domates.png", searchText: "Tomato Vegetable" },
-    { title:"Apple", desc:"Fruit", iconFile:"assets/fruids/elma.png", searchText: "Apple Fruit" },
-    { title:"Carrot", desc:"Vegetable", iconFile:"assets/fruids/havuc.png", searchText: "Carrot Vegetable" },
-    { title:"Watermelon", desc:"Fruit", iconFile:"assets/fruids/karpuz.png", searchText: "Watermelon Fruit" },
-    { title:"Lemon", desc:"Fruit", iconFile:"assets/fruids/limon.png", searchText: "Lemon Fruit" },
-    { title:"Banana", desc:"Fruit", iconFile:"assets/fruids/muz.png", searchText: "Banana Fruit" },
-    { title:"Pomegranate", desc:"Fruit", iconFile:"assets/fruids/nar.png", searchText: "Pomegranate Fruit" },
-    { title:"Eggplant", desc:"Vegetable", iconFile:"assets/fruids/patlican.png", searchText: "Eggplant Vegetable" },
-    { title:"Blueberry", desc:"Fruit", iconFile:"assets/fruids/yabanmersini.png", searchText: "Blueberry Fruit" },
-    { title:"Green Pepper", desc:"Vegetable", iconFile:"assets/fruids/yesilbiber.png", searchText: "Green Pepper Vegetable" }
+    { title:"Broccoli", desc:"Vegetable", iconFile:"assets/fruids/brokoli.png", searchText: "Broccoli Vegetable", price: 4, previousPrice: 3 },
+    { title:"Strawberry", desc:"Fruit", iconFile:"assets/fruids/cilek.png", searchText: "Strawberry Fruit", price: 8, previousPrice: 9 },
+    { title:"Tomato", desc:"Vegetable", iconFile:"assets/fruids/domates.png", searchText: "Tomato Vegetable", price: 3, previousPrice: 3 },
+    { title:"Apple", desc:"Fruit", iconFile:"assets/fruids/elma.png", searchText: "Apple Fruit", price: 2, previousPrice: 3 },
+    { title:"Carrot", desc:"Vegetable", iconFile:"assets/fruids/havuc.png", searchText: "Carrot Vegetable", price: 6, previousPrice: 6 },
+    { title:"Watermelon", desc:"Fruit", iconFile:"assets/fruids/karpuz.png", searchText: "Watermelon Fruit", price: 5, previousPrice: 3 },
+    { title:"Lemon", desc:"Fruit", iconFile:"assets/fruids/limon.png", searchText: "Lemon Fruit", price: 7, previousPrice: 6 },
+    { title:"Banana", desc:"Fruit", iconFile:"assets/fruids/muz.png", searchText: "Banana Fruit", price: 12, previousPrice: 12 },
+    { title:"Pomegranate", desc:"Fruit", iconFile:"assets/fruids/nar.png", searchText: "Pomegranate Fruit", price: 13, previousPrice: 13 },
+    { title:"Eggplant", desc:"Vegetable", iconFile:"assets/fruids/patlican.png", searchText: "Eggplant Vegetable", price: 5, previousPrice: 3 },
+    { title:"Blueberry", desc:"Fruit", iconFile:"assets/fruids/yabanmersini.png", searchText: "Blueberry Fruit", price: 17, previousPrice: 18 },
+    { title:"Green Pepper", desc:"Vegetable", iconFile:"assets/fruids/yesilbiber.png", searchText: "Green Pepper Vegetable", price: 6, previousPrice: 3 }
 ];
 
 searchPage.openInDefaultView = function() {
@@ -58,8 +58,8 @@ searchPage.openInDefaultView = function() {
     UISearchBox.resetDefault();
     //UISearchBox.default.width = 300;
     //UISearchBox.default.height = 50;
-    //UISearchBox.default.searchIconFile = "js/component/ui-search-box/search.svg"
-    //UISearchBox.default.clearIconFile = "js/component/ui-search-box/clear.svg"
+    //UISearchBox.default.searchIconFile = "components/ui-search-box/search.svg"
+    //UISearchBox.default.clearIconFile = "components/ui-search-box/clear.svg"
     //UISearchBox.default.isCancelEnabled = 1
     //UISearchBox.default.placeholderText = "Search"
     //UISearchBox.default.color = "whitesmoke"
@@ -109,7 +109,7 @@ searchPage.openInDefaultView = function() {
     that.border = 0;
     */
 
-    print("Opened page id: " + searchPage.PAGE_ID);
+    console.log("Opened page id: " + searchPage.PAGE_ID);
 
     // Show view:
     defaultView.setVisible(1);
@@ -154,6 +154,60 @@ searchPage.createItem = function(itemData, uiItemList) {
     that.textColor = "gray";
     that.fontSize = 14;
 
+    // GROUP (horizontal): item price
+    startFlexBox({
+        flexDirection: "row", // Default
+        justifyContent: "flex-end",
+        alignItems: "center", // Default.
+    });
+    that.right = 30;
+    that.width = 200;
+    item.add(that);
+
+        var isRised = null;
+        var priceTextColor = null;
+
+        if (itemData.price > itemData.previousPrice) {
+            isRised = 1;
+            priceTextColor = "#41AC9F";
+
+        } else if (itemData.price < itemData.previousPrice) {
+            isRised = 0;
+            priceTextColor = "#FE5D49";
+
+        } else {
+            isRised = 2;
+            priceTextColor = "#4A4A4A";
+        }
+
+        // LABEL: item price text:
+        item.lblPrice = createLabel();
+        that.textColor = priceTextColor;
+        that.text = "$" + itemData.price;
+        that.fontSize = 24;
+
+        // IMAGE: item price image:
+        item.imgPrice = createImage();
+        if (isRised) {
+            that.load("assets/search-page/arrow-rise.svg");
+        } else {
+            that.load("assets/search-page/arrow-drop.svg");
+        }        
+        that.width = 28;
+        that.height = 28;
+        that.opacity = 0.95;
+        if (isRised == 2) that.opacity = 0; // that.visible = 0;
+
+    endFlexBox();
+
+    item.setPriceIconVisible = function(visible) {
+        item.imgPrice.opacity = visible;
+    }
+
+    item.setPriceIconFileName = function(fileName) {
+        item.imgPrice.load("assets/search-page/" + fileName + ".svg");
+    }
+
     // NOTE: UIItemList will set item.position = "relative";
 
     makeBasicObject(item);
@@ -183,7 +237,7 @@ searchPage.selectedItemChanged = function(uiItemList, clickedItem, prevClickedIt
 
     }
 
-    print("Selected item: " + clickedItem.getIndex() + "-" + clickedItem.getData().title);
+    console.log("Selected item: " + clickedItem.getIndex() + "-" + clickedItem.getData().title);
 
     // Show details:
     searchPreviewPage.titleText = clickedItem.getData().title;

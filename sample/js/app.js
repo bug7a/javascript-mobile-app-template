@@ -1,9 +1,10 @@
+// SHARED FUNCTIONS OF APP:
 const app = {};
 
-// If you want bigger objects use smaller USED_WIDTH: 550, 600, 700
-app.usedWidth = 600;
-//app.usedWidth = 550;
-app.maxZoomableWidth = 1536;
+// app.safeAreaInsetTop 
+// app.safeAreaInsetBottom 
+// app.safeAreaInsetLeft 
+// app.safeAreaInsetRight
 
 app.isCordovaExist = 0;
 app.isCapacitorExist = 0;
@@ -36,7 +37,7 @@ app.onDeviceReady = function (callback) {
     });
     
     
-}
+};
 
 app.getPlatformId = function() {
 
@@ -50,21 +51,21 @@ app.getPlatformId = function() {
     }
 
     return result;
-}
+};
 
 app.calculateResolution = function() {
 
     if (page.width > 800) {
-        app.usedWidth = 700;
+        return 700;
 
-    } else if (page < 400) {
-        app.usedWidth = 550;
+    } else if (page.width < 400) {
+        return 550;
 
     } else {
-        app.usedWidth = 600;
+        return 600;
     }
 
-}
+};
 
 /*
 app.saveSelectedBox = function() {
@@ -83,12 +84,13 @@ app.checkPerformance = function(label) {
 
     var spendingTime = (Date.now() - app.lastPerformanceCheckTime);
     app.lastPerformanceCheckTime = Date.now();
-    print(label + ": " + spendingTime + "ms");
+    console.log(label + ": " + spendingTime + "ms");
     
-}
+};
 
+/*
 app.createSafeAreaBackground = function() {
-    page.boxBackground = createBox(0, 0, app.usedWidth, getDefaultContainerBox().height);
+    page.boxBackground = createBox(0, 0, USED_WIDTH, getDefaultContainerBox().height);
     that.color = "white";
 }
 
@@ -100,6 +102,7 @@ app.setBackgroundColorWithStatusBar = function(color) {
     page.color = color;
     // StatusBar.backgroundColorByHexString("#C0C0C0");
 }
+*/
 
 app.getSafeAreaOuterSpaces = function(callback) {
 
@@ -135,6 +138,11 @@ app.getSafeAreaOuterSpaces = function(callback) {
             spaces.left = parseInt(leftSpace);
             spaces.right = parseInt(rightSpace);
 
+            app.safeAreaInsetTop = basic.withPageZoom(spaces.top);
+            app.safeAreaInsetBottom = basic.withPageZoom(spaces.bottom);
+            app.safeAreaInsetLeft = basic.withPageZoom(spaces.left);
+            app.safeAreaInsetRight = basic.withPageZoom(spaces.right);
+
             return spaces;
 
         }
@@ -148,7 +156,7 @@ app.getSafeAreaOuterSpaces = function(callback) {
         }
 
         // Wait maximum 300ms for last value.
-        if (limitCount > 60) {
+        if (limitCount > 60 || app.getPlatformId() == "web") {
 
             // stop
             callback(createCallback());
@@ -158,4 +166,4 @@ app.getSafeAreaOuterSpaces = function(callback) {
 
     }, 5);
 
-}
+};

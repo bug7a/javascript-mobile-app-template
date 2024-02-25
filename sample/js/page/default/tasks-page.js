@@ -24,8 +24,10 @@ tasksPage.openInDefaultView = function() {
     box.webView = UIWebView.create(0, 0, box.width, box.height);
     box.add(that);
     that.loadHTMLFile("app-todo.htm");
+    //that.setCallback("aaaaa", window.tasksPageUpdateBarBudge);
+    //that.getContent().aaaa();
 
-    print("Opened page id: " + tasksPage.PAGE_ID);
+    console.log("Opened page id: " + tasksPage.PAGE_ID);
 
     defaultView.setVisible(1);
 

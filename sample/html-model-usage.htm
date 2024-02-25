@@ -7,11 +7,12 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
 
-        <link rel="stylesheet" type="text/css" href="library/basic.min.css">
-        <script src="library/basic.min.js" type="text/javascript" charset="utf-8"></script>
+        <link rel="stylesheet" type="text/css" href="basic/basic.min.css">
+        <script src="basic/basic.min.js" type="text/javascript" charset="utf-8"></script>
 
-        <script src="js/component/ui-item-list.js" type="text/javascript" charset="utf-8"></script>
-        <script src="js/component/ui-search-box.js" type="text/javascript" charset="utf-8"></script>
+        <script src="components/ui-core.js" type="text/javascript" charset="utf-8"></script>
+        <script src="components/ui-item-list.js" type="text/javascript" charset="utf-8"></script>
+        <script src="components/ui-search-box.js" type="text/javascript" charset="utf-8"></script>
 
         <style>
 
@@ -162,19 +163,22 @@
             const ITEM_HEIGHT = 94;
 
             // BOX: Item container.
-            const item = createBox(0, 0, ITEM_WIDTH, ITEM_HEIGHT);
-            that.color = "transparent";
+            const item = createBox();
+            item.color = "transparent";
+            item.width = ITEM_WIDTH;
+            item.height = ITEM_HEIGHT;
 
-            itemModelHTML = document.getElementById("item-model-num1").innerHTML;
-            
-            itemModelHTML = itemModelHTML.replace("{{iconFile}}", itemData.iconFile);
-            itemModelHTML = itemModelHTML.replace("{{title}}", itemData.title);
-            itemModelHTML = itemModelHTML.replace("{{description}}", itemData.desc);
-            
-            item.html = itemModelHTML;
+            item.html = `
+                <div class="item-model">
+                    <div class="item-model background"></div>
+                    <img class="item-model icon" src="${itemData.iconFile}">
+                    <div class="item-model title">${itemData.title}</div>
+                    <div class="item-model description">${itemData.desc}</div>
+                </div>
+                `;
 
-            //print(item.element.childNodes[1].outerHTML);
-            item.backgroundElement = item.element.childNodes[1];
+            //console.log(item.element.childNodes[1].outerHTML);
+            item.backgroundElement = item.element.childNodes[1].childNodes[1];
 
             // NOTE: check js/page/search-page.js file for using without HTML and CSS.
 
@@ -199,7 +203,7 @@
 
             }
 
-            print("Selected item: " + clickedItem.getIndex() + "-" + clickedItem.getData().title);
+            console.log("Selected item: " + clickedItem.getIndex() + "-" + clickedItem.getData().title);
 
         }
 
@@ -225,20 +229,5 @@
         </script>
 
     </head>
-    <body>
-        
-        <!-- HTML MODELS -->
-        <div style="display:none">
-
-            <!-- Alternative use to create repeating patterns  -->
-            <div id="item-model-num1" class="item-model">
-                <div class="item-model background"></div>
-                <img class="item-model icon" src="{{iconFile}}">
-                <div class="item-model title">{{title}}</div>
-                <div class="item-model description">{{description}}</div>
-            </div>
-
-        </div>
-        
-    </body>
+    <body></body>
 </html>

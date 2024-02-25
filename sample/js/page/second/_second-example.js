@@ -89,7 +89,7 @@ secondExamplePage.openInSecondView = function() {
     })
 
     secondView.setVisible(1)
-    print("Opened page id: " + secondExamplePage.ID)
+    console.log("Opened page id: " + secondExamplePage.ID)
 }
 
 secondExamplePage.refreshCircle = function(self) {
@@ -106,5 +106,5 @@ secondExamplePage.refreshCircle = function(self) {
 }
 
 secondExamplePage.writeMessage = function() {
-    print("Clicked on text.")
+    console.log("Clicked on text.")
 }

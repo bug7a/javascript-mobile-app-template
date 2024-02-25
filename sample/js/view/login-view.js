@@ -10,7 +10,7 @@ UI COMPONENT TEMPLATE
 Started Date: 22 February 2022
 Developer: Bugra Ozden
 Email: bugra.ozden@gmail.com
-Site: https://bug7a.github.io/cordova-mobile-app-ui-template/
+Site: https://bug7a.github.io/javascript-mobile-app-template/
 
 
 */
@@ -21,7 +21,7 @@ const loginView = {}
 loginView.create = function() {
 
     // BOX: Content container box.
-    loginView.box = createBox(0, 0, app.usedWidth, getDefaultContainerBox().height);
+    loginView.box = createBox(0, 0, USED_WIDTH, getDefaultContainerBox().height);
     that.border = 0;
     that.element.style.backgroundImage = "radial-gradient(white, white, lightgray)";
     //that.center("left");

@@ -46,7 +46,7 @@ myDocumentsPage.openInSecondView = function() {
 
     // UI ITEM LIST: Documents items in horizontal list
     box.documentsUIItemList = UIItemList.create({ 
-        width: app.usedWidth, 
+        width: USED_WIDTH, 
         height: documentsUIItemListHeight 
     });
     box.add(that);
@@ -64,7 +64,7 @@ myDocumentsPage.openInSecondView = function() {
         box.documentsUIItemList.searchItemByText(searchText);
     });
 
-    print("Opened page id: " + myDocumentsPage.PAGE_ID);
+    console.log("Opened page id: " + myDocumentsPage.PAGE_ID);
 
     secondView.setVisible(1);
     

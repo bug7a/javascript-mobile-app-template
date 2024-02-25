@@ -28,8 +28,8 @@ examplesPage.itemDataList = [
     { type: "normal", title:"Item List (Icons)", desc:"js/page/second/my-documents-page.js", actionType: "code", actionValue: myDocumentsPage.PAGE_ID, searchText: "title" },
     { type: "normal", title:"Template A", desc:"js/page/second/template-a-page.js", actionType: "code", actionValue: templateAPage.PAGE_ID, searchText: "title" },
     { type: "title", title: "TECHNIQUES", searchText: "*" },
+    { type: "normal", title:"Autolayout Group", desc:"ui-autolayout-group.htm", actionType: "url", actionValue: "ui-autolayout-group.htm", searchText: "group autolayout startFlexBox flex box" },
     { type: "normal", title:"Cells", desc:"ui-cells.htm", actionType: "url", actionValue: "ui-cells.htm", searchText: "cell cells" },
-    { type: "normal", title:"Group", desc:"ui-group.htm", actionType: "url", actionValue: "ui-group.htm", searchText: "group" },
     { type: "normal", title:"Scrolling Text", desc:"ui-scrolling-text.htm", actionType: "url", actionValue: "ui-scrolling-text.htm", searchText: "Scrolling Text" },
     { type: "normal", title:"HTML Model Usage", desc:"html-model-usage.htm", actionType: "url", actionValue: "html-model-usage.htm", searchText: "html model css htm" },
     { type: "title", title: "BONUS", searchText: "*" },
@@ -71,7 +71,7 @@ examplesPage.openInDefaultView = function() {
     // #1
 
     // BOX: Search container box
-    box.boxSearch = createBox(0, 0, app.usedWidth, 110);
+    box.boxSearch = createBox(0, 0, USED_WIDTH, 110);
     box.add(that);
     that.color = "transparent";
     //that.color = "whitesmoke";
@@ -80,8 +80,8 @@ examplesPage.openInDefaultView = function() {
     UISearchBox.resetDefault();
     //UISearchBox.default.width = 300;
     //UISearchBox.default.height = 50;
-    //UISearchBox.default.searchIconFile = "js/component/ui-search-box/search.svg";
-    //UISearchBox.default.clearIconFile = "js/component/ui-search-box/clear.svg";
+    //UISearchBox.default.searchIconFile = "components/ui-search-box/search.svg";
+    //UISearchBox.default.clearIconFile = "components/ui-search-box/clear.svg";
     //UISearchBox.default.isCancelEnabled = 1;
     //UISearchBox.default.placeholderText = "Search";
     UISearchBox.default.color = "rgba(0, 0, 0, 0.2)";
@@ -106,7 +106,7 @@ examplesPage.openInDefaultView = function() {
 
     // UI ITEM LIST: Category items (vertical)
     box.uiItemList = UIItemList.create({ 
-        width: app.usedWidth, 
+        width: USED_WIDTH, 
         height: box.height - box.boxSearch.height 
     });
     box.add(that);
@@ -125,7 +125,7 @@ examplesPage.openInDefaultView = function() {
         box.uiItemList.searchItemByText(searchText);
     })
 
-    print("Opened page id: " + examplesPage.PAGE_ID);
+    console.log("Opened page id: " + examplesPage.PAGE_ID);
 
     defaultView.setVisible(1);
     

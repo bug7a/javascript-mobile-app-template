@@ -1,5 +1,5 @@
-# Mobile App UI Template for Cordova or Ionic/Capacitor
-Simple and fully customizable user interface template. Design for mobile app development on Apache Cordova framework or Ionic / Capacitor Native Runtime. Platforms: iOS, Android
+# JavaScript Mobile App Template and UI Components
+Simple and fully customizable user interface template. Design for mobile app development on Capacitor or Cordova. Platforms: Web, iOS, Android
 
 - It reduces production costs and enables the project to be developed quickly.<br>
 - Developed project; It can run on Android, iOS, and the web.<br>
@@ -16,20 +16,20 @@ Simple and fully customizable user interface template. Design for mobile app dev
 Run following command to install this template in your current folder.
 
 ```bash
-npm i cordova-mobile-app-template
+npm i javascript-mobile-app-template
 ```
 
 ### LIVE PREVIEW:
 
-https://bug7a.github.io/cordova-mobile-app-ui-template/
+https://bug7a.github.io/javascript-mobile-app-template/
 
 ### SCREENSHOTS:
 
-![alt tag](https://bug7a.github.io/cordova-mobile-app-ui-template/mobile-app-ui-template-android-ios.png)
+![alt tag](https://bug7a.github.io/javascript-mobile-app-template/mobile-app-ui-template-android-ios.png)
 
-![alt tag](https://bug7a.github.io/cordova-mobile-app-ui-template/mobile-app-template-android.png)
+![alt tag](https://bug7a.github.io/javascript-mobile-app-template/mobile-app-template-android.png)
 
-![alt tag](https://bug7a.github.io/cordova-mobile-app-ui-template/mobile-app-template-ios.png)
+![alt tag](https://bug7a.github.io/javascript-mobile-app-template/mobile-app-template-ios.png)
 
 <br><br>
 
@@ -38,17 +38,11 @@ https://bug7a.github.io/cordova-mobile-app-ui-template/
 Started Date: 22 February 2022<br>
 Developer: Bugra Ozden<br>
 Email: bugra.ozden@gmail.com<br>
-Web Site: http://bugraozden.com<br><br>
-
-You can contact me for your mobile application projects.<br />
-Best regards,<br /><br />
+Web Site: https://bug7a.github.io/<br><br>
 
 ### LICENSE:
 
-You are free:<br />
+Copyright 2020-2024 Bugra Ozden <bugra.ozden@gmail.com><br />
+Licensed under the Apache License, Version 2.0<br /><br />
 
-to Share — to copy, distribute and transmit the work<br />
-to Remix — to adapt the work<br />
-to make commercial use of the work<br />
-
-<https://creativecommons.org/licenses/by/4.0/><br /><br />
+Have Fun.

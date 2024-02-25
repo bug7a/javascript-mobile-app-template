@@ -9,7 +9,7 @@ UI COMPONENT TEMPLATE
 Started Date: 22 February 2022
 Developer: Bugra Ozden
 Email: bugra.ozden@gmail.com
-Site: https://bug7a.github.io/cordova-mobile-app-ui-template/
+Site: https://bug7a.github.io/javascript-mobile-app-template/
 
 
 */
@@ -20,6 +20,8 @@ const defaultView = {};
 defaultView.default = {};
 defaultView.resetDefault = function() {
 
+    defaultView.default.width = "container-width";
+    defaultView.default.height = "container-height";
     defaultView.default.backgroundColor = "white";
     defaultView.default.scrollY = 1;
     defaultView.default.showWithMotion = 1;
@@ -29,12 +31,27 @@ defaultView.resetDefault();
 
 defaultView.onCloseFunc = function() {};
 
-defaultView.create = function() {
+defaultView.create = function(parameters = {}) {
 
     // BOX: Container.
     defaultView.box = createBox();
-    that.width = basic.getDefaultContainerBox().width;
-    that.height = basic.getDefaultContainerBox().height;
+
+    // Default values.
+    for (let parameterName in defaultView.default) {
+        defaultView.default[parameterName] = (parameters[parameterName] != undefined) ? parameters[parameterName] : defaultView.default[parameterName];
+    }
+
+    if (defaultView.default.width == "container-width") {
+        defaultView.default.width = basic.getDefaultContainerBox().width;
+    }
+
+    if (defaultView.default.height == "container-height") {
+        defaultView.default.height = basic.getDefaultContainerBox().height;
+    }
+
+    // *** OBJECT MODEL:
+    that.width = defaultView.default.width;
+    that.height = defaultView.default.height;
     that.visible = 0;
     that.top = 0;
     that.left = 0;
@@ -123,6 +140,7 @@ defaultView.setVisible = function(visible, finishedCallback = function() {}) {
     } else {
 
         if (visible) {
+            defaultView.box.dontMotion();
             defaultView.box.top = defaultView.tempTop || defaultView.box.top;
             defaultView.box.opacity = 1;
         }
@@ -135,8 +153,9 @@ defaultView.setVisible = function(visible, finishedCallback = function() {}) {
 
 defaultView.setTopAndBottomOuterSpaces = function(top, bottom) {
 
+    defaultView.box.dontMotion();
     defaultView.box.top = top;
-    defaultView.box.height = getDefaultContainerBox().height - top - bottom;
+    defaultView.box.height = defaultView.default.height - top - bottom;
 
 }
 

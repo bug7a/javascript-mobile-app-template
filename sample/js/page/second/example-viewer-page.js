@@ -39,6 +39,6 @@ exampleViewerPage.openInSecondView = function() {
     that.loadHTMLFile(exampleViewerPage.htmlFile);
 
     secondView.setVisible(1);
-    print("Opened page id: " + exampleViewerPage.PAGE_ID + ": " + exampleViewerPage.htmlFile);
+    console.log("Opened page id: " + exampleViewerPage.PAGE_ID + ": " + exampleViewerPage.htmlFile);
 
 }

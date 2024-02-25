@@ -7,10 +7,10 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
 
-        <link rel="stylesheet" type="text/css" href="library/basic.min.css">
-        <script src="library/basic.min.js" type="text/javascript" charset="utf-8"></script>
+        <link rel="stylesheet" type="text/css" href="basic/basic.min.css">
+        <script src="basic/basic.min.js" type="text/javascript" charset="utf-8"></script>
 
-        <script src="js/component/ui-left-title.js" type="text/javascript" charset="utf-8"></script>
+        <script src="components/ui-left-title.js" type="text/javascript" charset="utf-8"></script>
 
         <script>
 
@@ -47,7 +47,7 @@
             that.center();
 
             var uiComponent = createImage(0, 0, 36, 36);
-            that.load("js/component/ui-left-title/arrow.svg");
+            that.load("components/ui-left-title/arrow.svg");
             that.opacity = 0.8;
 
             uiLeftTitleItem1.addObject(uiComponent);
@@ -57,7 +57,7 @@
             //uiComponent.remove();
 
             uiLeftTitleItem1.onClick(function(self) {
-                print("uiLeftTitleItem1 clicked.");
+                console.log("uiLeftTitleItem1 clicked.");
             });
 
 

@@ -1,0 +1,12 @@
+/* app.getSafeAreaOuterSpaces() */
+:root {
+    --sat: env(safe-area-inset-top, 0px);
+    --sar: env(safe-area-inset-right, 0px);
+    --sab: env(safe-area-inset-bottom, 0px);
+    --sal: env(safe-area-inset-left, 0px);
+}
+
+/* Search box */
+.search-box::-webkit-input-placeholder {
+    color: rgba(0, 0, 0, 0.4);
+}

@@ -16,7 +16,7 @@ templateAPage.openInSecondView = function() {
 
         // UI TITLE: Default values.
         UITitle.resetDefault();
-        UITitle.default.backButtonIconFile = "js/component/ui-title/arrow.svg";
+        UITitle.default.backButtonIconFile = "components/ui-title/arrow.svg";
         UITitle.default.backButtonTextColor = "rgba(0, 0, 0, 0.8)";
 
         // CELLS: 4 vertical cells:
@@ -49,7 +49,7 @@ templateAPage.openInSecondView = function() {
         });
         box.cell(0).add(that);
         that.backButton.onClick(function(uiTitleBackButton) {
-            print("Go Back");
+            console.log("Go Back");
             secondView.onClose(function closed() {});
             secondView.close();
         });
@@ -79,46 +79,41 @@ templateAPage.openInSecondView = function() {
         });
 
         // GROUP: My documents item group.
-        box.boxUpLeft.grpMyDocuments = UIGroup.create();
-        box.boxUpLeft.add(that);
-        that.setInnerSpaces(0, 0, 0, 0);
-        that.setSpacesBetweenItems(8);
-        that.setItemAlignment(UIGroup.alignType.VERTICAL, "center");
-        
-        // IMAGE: My documents icon.
-        box.boxUpLeft.imgIcon = createImage();
-        that.width = 80;
-        that.height = 80;
-        that.load("assets/file-icons/folder.png");
-        that.opacity = 0.9;
-        that.element.style.filter = "grayscale(70%)";
-        that.border = 0;
-        that.borderColor = "rgba(0, 0, 0, 0.2)";
-        that.round = 8;
-        that.space = 10;
-        that.color = "rgba(0, 0, 0, 0.05)";
-
-        // LABEL: My documents title text.
-        box.boxUpLeft.lblTitle = createLabel();
-        that.width = "auto";
-        that.height = "auto";
-        that.text = "My Documents";
-        that.fontSize = 20;
-        that.textAlign = "center";
-        that.textColor = "rgba(0, 0, 0, 0.9)";
-        that.border = 0;
-        that.borderColor = "rgba(0, 0, 0, 0.2)";
-        that.round = 8;
-        that.spaceX = 8;
-        that.spaceY = 4;
-        that.color = "rgba(0, 0, 0, 0.05)";
-
-        // Add items into group.
-        box.boxUpLeft.grpMyDocuments.addItem(box.boxUpLeft.imgIcon);
-        box.boxUpLeft.grpMyDocuments.addItem(box.boxUpLeft.lblTitle);
-        box.boxUpLeft.grpMyDocuments.onResize(function(self) {
-            box.boxUpLeft.grpMyDocuments.center();
+        box.boxUpLeft.grpMyDocuments = startFlexBox({
+            flexDirection: "column",
         });
+        box.boxUpLeft.add(that);
+        
+            // IMAGE: My documents icon.
+            box.boxUpLeft.imgIcon = createImage();
+            that.width = 80;
+            that.height = 80;
+            that.load("assets/file-icons/folder.png");
+            that.opacity = 0.9;
+            that.element.style.filter = "grayscale(70%)";
+            that.border = 0;
+            that.borderColor = "rgba(0, 0, 0, 0.2)";
+            that.round = 8;
+            that.space = 10;
+            that.color = "rgba(0, 0, 0, 0.05)";
+
+            // LABEL: My documents title text.
+            box.boxUpLeft.lblTitle = createLabel();
+            that.width = "auto";
+            that.height = "auto";
+            that.text = "My Documents";
+            that.fontSize = 20;
+            that.textAlign = "center";
+            that.textColor = "rgba(0, 0, 0, 0.9)";
+            that.border = 0;
+            that.borderColor = "rgba(0, 0, 0, 0.2)";
+            that.round = 8;
+            that.spaceX = 8;
+            that.spaceY = 4;
+            that.color = "rgba(0, 0, 0, 0.05)";
+            that.elem.style.marginTop = "8px";
+
+        endFlexBox();
 
         // BOX: Up right background. 
         box.boxUpRight = createBox();
@@ -189,7 +184,7 @@ templateAPage.openInSecondView = function() {
 
             }
 
-            print("Lamp toggle value: " + self.getValue());
+            console.log("Lamp toggle value: " + self.getValue());
 
         });
 
@@ -200,35 +195,29 @@ templateAPage.openInSecondView = function() {
         // #3 Center content
 
         // GROUP: Group for buttons.
-        box.grpButtons = UIGroup.create();
+        box.grpButtons = startFlexBox({
+            flexDirection: "column",
+        });
         box.cell(2).add(that);
-        that.setInnerSpaces(0, 0, 0, 0);
-        that.setSpacesBetweenItems(2);
-        that.setItemAlignment(UIGroup.alignType.VERTICAL, "center");
 
-        // BUTTON: Button 1.
-        box.btn1 = createButton();
-        that.text = "Button 1";
-        templateAPage.buttonStyle(that);
-        that.onClick(function(self) {
-            print("Button 1 clicked.");
-        });
+            // BUTTON: Button 1.
+            box.btn1 = createButton();
+            that.text = "Button 1";
+            templateAPage.buttonStyle(that);
+            that.onClick(function(self) {
+                console.log("Button 1 clicked.");
+            });
 
-        // BUTTON: Button 2.
-        box.btn2 = createButton();
-        that.text = "Button 2";
-        templateAPage.buttonStyle(that);
-        that.onClick(function(self) {
-            print("Button 2 clicked.");
-        });
+            // BUTTON: Button 2.
+            box.btn2 = createButton();
+            that.text = "Button 2";
+            templateAPage.buttonStyle(that);
+            that.elem.style.marginTop = "2px";
+            that.onClick(function(self) {
+                console.log("Button 2 clicked.");
+            });
 
-        // Add items into group.
-        box.grpButtons.addItem(box.btn1);
-        box.grpButtons.addItem(box.btn2);
-        box.grpButtons.onResize(function(self) {
-            self.center();
-        });
-
+        endFlexBox();
 
         // #4 Bottom
 
@@ -260,7 +249,7 @@ templateAPage.openInSecondView = function() {
         })
         box.boxBottomLeft.onClick(function(self) {
             self.lblNumber.text = num(self.lblNumber.text) + 1;
-            print(self.lblNumber.text);
+            console.log(self.lblNumber.text);
         })
 
         // BOX: Bottom center background.
@@ -303,7 +292,7 @@ templateAPage.openInSecondView = function() {
                 lbl.rotate += 45;
             });
 
-            print(lbl.rotate);
+            console.log(lbl.rotate);
 
         })
 
@@ -329,7 +318,7 @@ templateAPage.openInSecondView = function() {
             box.boxBottomCenter.lblTitle.text = "caffee";
         })
 
-        print("Opened page id: " + templateAPage.PAGE_ID);
+        console.log("Opened page id: " + templateAPage.PAGE_ID);
         secondView.setVisible(1);
 
 }

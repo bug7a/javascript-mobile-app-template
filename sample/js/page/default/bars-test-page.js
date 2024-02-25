@@ -62,6 +62,6 @@ barsTestPage.openInDefaultView = function(resultCallback = function() {}) {
         });
 
         defaultView.setVisible(1);
-        print("Opened page id: " + barsTestPage.PAGE_ID);
+        console.log("Opened page id: " + barsTestPage.PAGE_ID);
 
 }

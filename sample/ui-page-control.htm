@@ -7,11 +7,11 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
 
-        <link rel="stylesheet" type="text/css" href="library/basic.min.css">
-        <script src="library/basic.min.js" type="text/javascript" charset="utf-8"></script>
+        <link rel="stylesheet" type="text/css" href="basic/basic.min.css">
+        <script src="basic/basic.min.js" type="text/javascript" charset="utf-8"></script>
 
-        <script src="js/component/ui-page-control.js" type="text/javascript" charset="utf-8"></script>
-        <script src="js/component/ui-tabs.js" type="text/javascript" charset="utf-8"></script>
+        <script src="components/ui-page-control.js" type="text/javascript" charset="utf-8"></script>
+        <script src="components/ui-tabs.js" type="text/javascript" charset="utf-8"></script>
 
         <script>
 
@@ -122,7 +122,7 @@
                 uiTabs1.aline(uiPageControl1, "top", 10, "center");
             })
             uiTabs1.onChange(function(selectedItem, selectedIndex) {
-                print("uiTabs1: " + selectedItem.getData().id);
+                console.log("uiTabs1: " + selectedItem.getData().id);
                 uiPageControl1.openPageById(selectedItem.getData().id);
             })
             that.setItemsByDataList(tabsDataList);
@@ -147,7 +147,7 @@
             })
             that.setItemsByDataList(itemDataList1)
             that.onChange(function(selectedItem, selectedIndex) {
-                print("uiTabs1: " + selectedItem.getData().id)
+                console.log("uiTabs1: " + selectedItem.getData().id)
                 // selectedItem.getData().text
             })
             that.selectItemByIndex(1)

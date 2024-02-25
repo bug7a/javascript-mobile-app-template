@@ -9,7 +9,7 @@ UI COMPONENT TEMPLATE
 Started Date: 22 February 2022
 Developer: Bugra Ozden
 Email: bugra.ozden@gmail.com
-Site: https://bug7a.github.io/cordova-mobile-app-ui-template/
+Site: https://bug7a.github.io/javascript-mobile-app-template/
 
 
 topBar.setTitleAlign("center"); // center, left
@@ -25,15 +25,28 @@ topBar.menuButton.onClickFunc = function() {};
 
 topBar.default = {};
 topBar.resetDefault = function() {
+    topBar.default.width = "container-width";
     topBar.default.height = 105;
+    topBar.default.showWithMotion = 0;
 }
 topBar.resetDefault();
 
-topBar.create = function() {
+topBar.create = function(parameters = {}) {
 
     // BOX: Object container.
     topBar.box = createBox();
-    that.width = basic.getDefaultContainerBox().width;
+
+    // Default values.
+    for (let parameterName in topBar.default) {
+        topBar.default[parameterName] = (parameters[parameterName] != undefined) ? parameters[parameterName] : topBar.default[parameterName];
+    }
+
+    if (topBar.default.width == "container-width") {
+        topBar.default.width = basic.getDefaultContainerBox().width;
+    }
+
+    // *** OBJECT MODEL:
+    that.width = topBar.default.width;
     that.height = topBar.default.height;
     that.border = 0;
     that.color = "white";
@@ -121,27 +134,48 @@ topBar.setVisible = function(visible) {
 
         topBar.box.visibleValue = visible;
 
-        if (visible) {
+        if (topBar.default.showWithMotion) {
 
-            clearTimeout(topBar.box.visibleTimeout);
+            if (visible) {
 
-            topBar.box.top = -1 * topBar.box.height;
-            topBar.box.opacity = 0;
-            topBar.box.visible = 1;
-            topBar.box.withMotion(function(self) {
-                self.top = 0;
-                self.opacity = 1;
-            });
+                clearTimeout(topBar.box.visibleTimeout);
+
+                topBar.box.top = -1 * topBar.box.height;
+                topBar.box.opacity = 0;
+                topBar.box.visible = 1;
+                topBar.box.withMotion(function(self) {
+                    self.top = 0;
+                    self.opacity = 1;
+                });
+
+            } else {
+
+                topBar.box.withMotion(function(self) {
+                    self.top = -1 * self.height;
+                    self.opacity = 0;
+                    topBar.box.visibleTimeout = setTimeout(function() {
+                        topBar.box.visible = 0;
+                    }, 250);
+                });
+
+            }
 
         } else {
 
-            topBar.box.withMotion(function(self) {
-                self.top = -1 * self.height;
-                self.opacity = 0;
-                topBar.box.visibleTimeout = setTimeout(function() {
-                    topBar.box.visible = 0;
-                }, 250);
-            });
+            if (visible) {
+
+                topBar.box.top = -1 * topBar.box.height;
+                topBar.box.top = 0;
+                topBar.box.opacity = 1;
+
+            } else {
+
+                topBar.box.top = -1 * self.height;
+                topBar.box.opacity = 0;
+
+            }
+
+            topBar.box.visible = visible;
 
         }
 

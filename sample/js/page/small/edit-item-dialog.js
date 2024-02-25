@@ -10,7 +10,7 @@ CUSTOM DIALOG TEMPLATE
 Started Date: 20 October 2022
 Developer: Bugra Ozden
 Email: bugra.ozden@gmail.com
-Site: https://bug7a.github.io/cordova-mobile-app-ui-template/
+Site: https://bug7a.github.io/javascript-mobile-app-template/
 
 
 */
