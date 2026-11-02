@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Privacy Policy and Terms of Use</title>
+    <!-- A plain HTML page: write it as usual. The app shows it in a WebView (pages/info-pages.js).
+         WHY the big text: the app is drawn 600 px wide and fitted to the screen, this page with it. -->
+    <style>
+        body {
+            margin: 0;
+            padding: 30px 20px 60px;
+            background: #F5F5F5;
+            color: rgba(0, 0, 0, 0.8);
+            font-family: -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+            font-size: 20px;
+            line-height: 1.5;
+        }
+        .card {
+            margin: 0 0 20px;
+            padding: 24px;
+            background: white;
+            border-radius: 13px;
+        }
+        h2 { margin: 0 0 10px; font-size: 24px; }
+        p { margin: 0 0 14px; color: rgba(0, 0, 0, 0.6); }
+        .button {
+            display: inline-block;
+            padding: 12px 22px;
+            border-radius: 8px;
+            background: #5ABB9F;
+            color: rgba(0, 0, 0, 0.65);
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <h2>Privacy Policy</h2>
+        <p>This app keeps its data (your tasks and your settings) only on this device. Nothing is sent to a server.</p>
+        <p>Write your own policy here: this page is a plain HTML file (html/privacy.htm).</p>
+    </div>
+    <div class="card">
+        <h2>Terms of Use</h2>
+        <p>The template is open source (Apache 2.0). Use it to make your own apps.</p>
+    </div>
+    <div class="card">
+        <p>A link in the page can call the app:</p>
+        <a class="button" href="#" onclick="openTasks(); return false;">Open the Tasks tab</a>
+    </div>
+    <script>
+        // The app is the parent page: window.parent.App (only when the page is in the app)
+        function openTasks() {
+            if (window.parent && window.parent.App) window.parent.App.open("tasks");
+        }
+    </script>
+</body>
+</html>

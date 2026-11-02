@@ -1,0 +1,26 @@
+# Made by _make-standalone.sh (repository root). Do not edit: run the script again.
+# <file in comp/> <- <its source in the repository>
+components.min.js <- comp/tooltip.js
+components.min.js <- comp/smart-button.js
+components.min.js <- comp/tap-effect.js
+components.min.js <- comp/app-bar.js
+components.min.js <- comp/page-header.js
+components.min.js <- comp/settings-row.js
+components.min.js <- comp/loading-screen.js
+components.min.js <- comp/notice.js
+components.min.js <- comp/badge-v2.js
+components.min.js <- comp/bottom-bar.js
+components.min.js <- comp/side-panel.js
+components.min.js <- comp/search-input-v2.js
+components.min.js <- comp/item-list.js
+components.min.js <- comp/full-screen-select.js
+components.min.js <- comp/toggle.js
+components.min.js <- comp/stepper.js
+components.min.js <- comp/page-control.js
+components.min.js <- comp/tabs.js
+components.min.js <- comp/action-tab-bar.js
+components.min.js <- comp/period-bar.js
+components.min.js <- comp/action-button.js
+components.min.js <- comp/progress-bar.js
+components.min.js <- comp/scrolling-text.js
+components.min.js <- comp/web-view.js

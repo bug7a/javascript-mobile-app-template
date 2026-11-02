@@ -1,0 +1,13 @@
+# Made by _make-standalone.sh (repository root). Do not edit: run the script again.
+# <file in comp/> <- <its source in the repository>
+components.min.js <- comp/tooltip.js
+components.min.js <- comp/smart-button.js
+components.min.js <- comp/loading-screen.js
+components.min.js <- comp/dialog.js
+components.min.js <- comp/toast.js
+components.min.js <- comp/badge-v2.js
+components.min.js <- comp/bottom-bar.js
+components.min.js <- comp/side-panel.js
+components.min.js <- comp/search-input-v2.js
+components.min.js <- comp/item-list.js
+components.min.js <- comp/input-b.js

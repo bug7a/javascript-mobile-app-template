@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About</title>
+    <!-- A plain HTML page: write it as usual. It is opened in the app by pages/about.js. -->
+    <style>
+        body {
+            margin: 0;
+            padding: 24px 20px 40px;
+            background: #F3F3F0;
+            color: #2B2B2A;
+            font-family: -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+            font-size: 16px;
+            line-height: 1.5;
+        }
+        .card {
+            max-width: 560px;
+            margin: 0 auto 16px;
+            padding: 18px;
+            background: white;
+            border-radius: 14px;
+        }
+        h1 { margin: 0 0 8px; font-size: 24px; }
+        p { margin: 0 0 12px; color: rgba(0, 0, 0, 0.6); }
+        .button {
+            display: inline-block;
+            padding: 10px 16px;
+            border-radius: 8px;
+            background: #2F8A91;
+            color: white;
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <h1>About</h1>
+        <p>This page is a plain HTML file (html/about.htm). Any HTML page can be a page of the app.</p>
+        <p>A link in the page can call the app:</p>
+        <a class="button" href="#" onclick="openTasks(); return false;">Open the Tasks tab</a>
+    </div>
+    <div class="card">
+        <p>Made with basic.js: the whole UI in plain JavaScript.</p>
+    </div>
+    <script>
+        // The app is the parent page: window.parent.App (only when the page is in the app)
+        function openTasks() {
+            if (window.parent && window.parent.App) window.parent.App.open("tasks");
+        }
+    </script>
+</body>
+</html>

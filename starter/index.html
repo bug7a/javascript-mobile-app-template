@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+
+        <title>My App</title>
+
+        <meta charset="UTF-8">
+        <!-- viewport-fit=cover: the app goes under the notch; App.safeArea keeps the header out of it -->
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+        <meta name="format-detection" content="telephone=no">
+        <meta name="theme-color" content="#F3F3F0">
+
+        <!-- MOBILE APP: Cordova adds cordova.js to the app: open its line. (Capacitor needs no line; only an old
+             project with bundledWebRuntime has a capacitor.js.) -->
+        <!-- <script src="capacitor.js" type="text/javascript" charset="utf-8"></script> -->
+        <!-- <script src="cordova.js" type="text/javascript" charset="utf-8"></script> -->
+
+        <!-- LIBRARY -->
+        <link rel="preload" href="basic/font/open-sans/OpenSans-Regular.ttf" as="font" crossorigin="anonymous">
+        <link rel="preload" href="basic/font/open-sans/OpenSans-Bold.ttf" as="font" crossorigin="anonymous">
+        <link rel="stylesheet" type="text/css" href="basic/basic.min.css">
+        <script src="basic/basic.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="basic/scroll-bar.min.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- COMPONENTS -->
+        <script src="comp/components.min.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- APP -->
+        <script src="app/settings.js" type="text/javascript" charset="utf-8"></script>
+        <script src="app/app.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- PAGES (a new page: a new file here, and its id in app/settings.js) -->
+        <script src="pages/home.js" type="text/javascript" charset="utf-8"></script>
+        <script src="pages/products.js" type="text/javascript" charset="utf-8"></script>
+        <script src="pages/product.js" type="text/javascript" charset="utf-8"></script>
+        <script src="pages/tasks.js" type="text/javascript" charset="utf-8"></script>
+        <script src="pages/settings.js" type="text/javascript" charset="utf-8"></script>
+        <script src="pages/about.js" type="text/javascript" charset="utf-8"></script>
+        <script src="pages/website.js" type="text/javascript" charset="utf-8"></script>
+
+    </head>
+    <body>
+    </body>
+</html>
