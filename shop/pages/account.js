@@ -150,7 +150,7 @@ App.addPage({
         const FOOTER_HEIGHT = 80;
 
         const createField = function (title, type = "text") {
-            return InputB({
+            return TextField({
                 styleName: "ozden",
                 width: "100%",
                 height: "auto",
@@ -161,17 +161,17 @@ App.addPage({
         };
 
         const saveAddress = function () {
-            const emptyField = [inputName, inputPhone, inputStreet, inputCity].find((field) => !field.getInputValue().trim());
+            const emptyField = [inputName, inputPhone, inputStreet, inputCity].find((field) => !field.getValue().trim());
             if (emptyField) {
-                Toast.show({ key: "address-form", type: "error", message: tx("Fill in every field.") });
+                Toast.show({ key: "address-form", type: "error", messageText: tx("Fill in every field.") });
                 emptyField.input.inputElement.focus(); // WHY: the toast may cover the field: the caret shows which one
                 return;
             }
             Store.addAddress({
-                name: inputName.getInputValue().trim(),
-                phone: inputPhone.getInputValue().trim(),
-                street: inputStreet.getInputValue().trim(),
-                city: inputCity.getInputValue().trim(),
+                name: inputName.getValue().trim(),
+                phone: inputPhone.getValue().trim(),
+                street: inputStreet.getValue().trim(),
+                city: inputCity.getValue().trim(),
             });
             App.goBack();
         };

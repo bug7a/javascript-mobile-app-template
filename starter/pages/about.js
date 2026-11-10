@@ -16,7 +16,7 @@ App.addPage({
 
     create: function (box) {
 
-        WebView({ width: "100%", height: "100%", url: "html/about.htm", title: "About" });
+        WebView({ width: "100%", height: "100%", url: "html/about.htm", ariaLabel: "About" });
 
     },
 

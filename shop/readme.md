@@ -1,6 +1,6 @@
 # Mobile App Template: Shop
 
-A complete mobile shop made with basic.js and the JS-Component Kit: a catalog with search, filters and sorting, a
+A complete mobile shop made with basic.js and OzdenUI: a catalog with search, filters and sorting, a
 product page with colors and sizes, favorites, a cart with discount codes, checkout, order tracking and an account
 page. English and Turkish. It runs without a server: the data is saved on the device, so you can try every step.
 

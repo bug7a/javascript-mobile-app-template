@@ -81,7 +81,7 @@ App.addPage({
                 ShopUI.row(tx("Shipping"), getShippingText(deliveryId));
                 ShopUI.row(tx("Total"), Store.money(Store.getTotal(deliveryId)), true);
             });
-            btnPlace.setText(tx("Place order") + "  ·  " + Store.money(Store.getTotal(deliveryId)));
+            btnPlace.setLabelText(tx("Place order") + "  ·  " + Store.money(Store.getTotal(deliveryId)));
         };
 
         const drawAll = function () {
@@ -92,7 +92,7 @@ App.addPage({
 
         const placeOrder = async function () {
             if (!Store.getSelectedAddress()) {
-                Toast.show({ key: "checkout", type: "error", message: tx("Add an address to go on.") });
+                Toast.show({ key: "checkout", type: "error", messageText: tx("Add an address to go on.") });
                 return;
             }
             // WHY the short wait: here a real shop waits for its server; the demo shows the same screen.

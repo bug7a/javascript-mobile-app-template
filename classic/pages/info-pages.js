@@ -52,7 +52,7 @@ App.addPage({
     backText: "Settings",
     scroll: 0, // WHY: The HTML page scrolls itself.
     create: function () {
-        WebView({ width: "100%", height: "100%", url: "html/privacy.htm", title: "Privacy Policy and Terms of Use" });
+        WebView({ width: "100%", height: "100%", url: "html/privacy.htm", ariaLabel: "Privacy Policy and Terms of Use" });
     },
 });
 
@@ -64,9 +64,9 @@ App.addPage({
     create: function () {
 
         const MENU_SIDES = [
-            { key: "right", title: "From the right", desc: "The menu slides in from the right side." },
-            { key: "left", title: "From the left", desc: "The menu slides in from the left side." },
-            { key: "bottom", title: "From the bottom", desc: "The menu rises from the bottom like a sheet." },
+            { key: "right", text: "From the right", description: "The menu slides in from the right side." },
+            { key: "left", text: "From the left", description: "The menu slides in from the left side." },
+            { key: "bottom", text: "From the bottom", description: "The menu rises from the bottom like a sheet." },
         ];
 
         Label({ text: "Choose how your navigation menu appears.", fontSize: 18, textColor: App.colors.softText, css: { margin: "30px 20px 10px" } });
@@ -87,7 +87,7 @@ App.addPage({
             },
             onChange: function (self, selectedItems) {
                 App.setMenuSide(selectedItems[0].key);
-                Notice.show({ messageText: "The menu opens " + selectedItems[0].title.toLowerCase() + ".", type: "success" });
+                Notice.show({ messageText: "The menu opens " + selectedItems[0].text.toLowerCase() + ".", type: "success" });
             },
         });
 

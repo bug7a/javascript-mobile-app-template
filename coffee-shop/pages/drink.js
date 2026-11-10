@@ -17,7 +17,7 @@ App.addPage({
 
         const refreshPrice = function () {
             stepper.lblValue.plainText = String(count);
-            btnAdd.setText(getButtonText());
+            btnAdd.setLabelText(getButtonText());
         };
 
         const createOption = function (title, texts, onSelect) {

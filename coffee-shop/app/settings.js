@@ -3,10 +3,10 @@ const AppSettings = {
     appName: "mola coffee", appIcon: "assets/coffee-art/latte.svg",
     storageKey: "mola-coffee-v1", startPage: "home", componentPath: "comp/",
     tabs: [
-        { pageId: "home", text: "Keşfet", icon: "assets/tabs/home.svg" },
-        { pageId: "menu", text: "Menü", icon: "assets/tabs/menu.svg" },
-        { pageId: "cart", text: "Sepet", icon: "assets/tabs/cart.svg" },
-        { pageId: "rewards", text: "Mola Club", icon: "assets/tabs/rewards.svg" },
+        { pageId: "home", text: "Keşfet", iconFile: "assets/tabs/home.svg" },
+        { pageId: "menu", text: "Menü", iconFile: "assets/tabs/menu.svg" },
+        { pageId: "cart", text: "Sepet", iconFile: "assets/tabs/cart.svg" },
+        { pageId: "rewards", text: "Mola Club", iconFile: "assets/tabs/rewards.svg" },
     ],
     menu: [],
     headingFont: "gelasio, Georgia, serif", // assets/fonts/gelasio.ttf: as wide as Georgia, also on Android

@@ -10,41 +10,41 @@ USAGE EXAMPLES (a tab): the components, the views and the page templates; each r
 
 const ExampleList = [
 
-    { type: "section", title: "UI COMPONENTS" },
-    { title: "Toggle", desc: "comp/toggle.js", example: "toggle" },
-    { title: "Page Control", desc: "comp/page-control.js", example: "page-control" },
-    { title: "Tabs", desc: "comp/tabs.js", example: "tabs" },
-    { title: "Title", desc: "comp/page-header.js", example: "page-header" },
-    { title: "Left Title", desc: "comp/settings-row.js", example: "settings-row" },
-    { title: "Search Input", desc: "comp/search-input-v2.js", example: "search-input" },
-    { title: "Action Button", desc: "comp/action-button.js", example: "action-button" },
-    { title: "Progress Bar", desc: "comp/progress-bar.js", example: "progress-bar" },
-    { title: "Notice", desc: "comp/notice.js", example: "notice" },
-    { title: "Stepper", desc: "comp/stepper.js", example: "stepper" },
-    { title: "Waiting View", desc: "comp/loading-screen.js", example: "waiting" },
-    { title: "Web View", desc: "comp/web-view.js", example: "web-view" },
+    { type: "section", text: "UI COMPONENTS" },
+    { text: "Toggle", description: "comp/toggle.js", example: "toggle" },
+    { text: "Page Control", description: "comp/page-control.js", example: "page-control" },
+    { text: "Tabs", description: "comp/tabs.js", example: "tabs" },
+    { text: "Title", description: "comp/page-header.js", example: "page-header" },
+    { text: "Left Title", description: "comp/settings-row.js", example: "settings-row" },
+    { text: "Search Input", description: "comp/search-input.js", example: "search-input" },
+    { text: "Action Button", description: "comp/action-button.js", example: "action-button" },
+    { text: "Progress Bar", description: "comp/progress-bar.js", example: "progress-bar" },
+    { text: "Notice", description: "comp/notice.js", example: "notice" },
+    { text: "Stepper", description: "comp/stepper.js", example: "stepper" },
+    { text: "Waiting View", description: "comp/loading-screen.js", example: "waiting" },
+    { text: "Web View", description: "comp/web-view.js", example: "web-view" },
 
-    { type: "section", title: "VIEWS" },
-    { title: "defaultView", desc: "pages/default-example.js", run: () => App.open("default-example") },
-    { title: "secondView", desc: "pages/second-example.js", run: () => App.open("second-example") },
-    { title: "smallView", desc: "App.openSheet()", run: () => ExampleActions.openSmallView() },
+    { type: "section", text: "VIEWS" },
+    { text: "defaultView", description: "pages/default-example.js", run: () => App.open("default-example") },
+    { text: "secondView", description: "pages/second-example.js", run: () => App.open("second-example") },
+    { text: "smallView", description: "App.openSheet()", run: () => ExampleActions.openSmallView() },
 
-    { type: "section", title: "PAGE TEMPLATES" },
-    { title: "Custom Tab Bar", desc: "comp/action-tab-bar.js", example: "action-tab-bar" },
-    { title: "Select Item Dialog", desc: "pages/color-dialog.js", run: () => ExampleActions.openColorDialog() },
-    { title: "Edit Item Dialog", desc: "pages/edit-item-dialog.js", run: () => ExampleActions.openEditItemDialog() },
-    { title: "Item List (Icons)", desc: "pages/my-documents.js", run: () => App.open("my-documents") },
-    { title: "Template A", desc: "pages/template-a.js", run: () => App.open("template-a") },
-    { title: "Lock Screen", desc: "pages/lock.js", run: () => App.lock() },
+    { type: "section", text: "PAGE TEMPLATES" },
+    { text: "Custom Tab Bar", description: "comp/action-tab-bar.js", example: "action-tab-bar" },
+    { text: "Select Item Dialog", description: "pages/color-dialog.js", run: () => ExampleActions.openColorDialog() },
+    { text: "Edit Item Dialog", description: "pages/edit-item-dialog.js", run: () => ExampleActions.openEditItemDialog() },
+    { text: "Item List (Icons)", description: "pages/my-documents.js", run: () => App.open("my-documents") },
+    { text: "Template A", description: "pages/template-a.js", run: () => App.open("template-a") },
+    { text: "Lock Screen", description: "pages/lock.js", run: () => App.lock() },
 
-    { type: "section", title: "TECHNIQUES" },
-    { title: "Autolayout Group", desc: "VGroup, HGroup", example: "autolayout" },
-    { title: "Scrolling Text", desc: "comp/scrolling-text.js", example: "scrolling-text" },
-    { title: "HTML Page", desc: "html/privacy.htm", run: () => App.open("privacy") },
-    { title: "Waiting for a Task", desc: "App.wait()", run: () => App.wait(basic.sleep(1500)) },
+    { type: "section", text: "TECHNIQUES" },
+    { text: "Autolayout Group", description: "VGroup, HGroup", example: "autolayout" },
+    { text: "Scrolling Text", description: "comp/scrolling-text.js", example: "scrolling-text" },
+    { text: "HTML Page", description: "html/privacy.htm", run: () => App.open("privacy") },
+    { text: "Waiting for a Task", description: "App.wait()", run: () => App.wait(basic.sleep(1500)) },
 
-    { type: "section", title: "BONUS" },
-    { title: "Period Bar", desc: "comp/period-bar.js", example: "period-bar" },
+    { type: "section", text: "BONUS" },
+    { text: "Period Bar", description: "comp/period-bar.js", example: "period-bar" },
 
 ];
 
@@ -96,6 +96,7 @@ App.addPage({
         startBox({ width: "100%", height: SEARCH_AREA_HEIGHT, color: "transparent" });
         that.shrink = 0;
             SearchInput({
+                styleName: "original", // the first look of SearchInput
                 left: App.BAR_SPACE,
                 top: 40,
                 width: App.DESIGN_WIDTH - App.BAR_SPACE * 2,
@@ -105,10 +106,10 @@ App.addPage({
                 placeholderColor: Black(0.4),
                 borderBottomStyle: "2px solid " + Black(0.2),
                 searchIconOpacity: 0.4,
-                placeholderText: "Search",
-                searchIconFile: AppSettings.componentPath + "search-input-v2/search.svg",
-                clearIconFile: AppSettings.componentPath + "search-input-v2/clear.svg",
-                onSearch: (text) => exampleList.search(text),
+                placeholder: "Search",
+                searchIconFile: AppSettings.componentPath + "search-input/search.svg",
+                clearIconFile: AppSettings.componentPath + "search-input/clear.svg",
+                onChange: (self) => exampleList.search(self.getSearchText()),
             });
         endBox();
 
@@ -123,7 +124,7 @@ App.addPage({
                 list: { gap: 4 },
                 row: { height: 50, padding: [20, 0], gap: 12, round: 13, color: "transparent", motion: "background-color 0.3s" },
                 section: { height: 50, padding: [20, 0], fontSize: 24, textColor: Black(0.35) },
-                hover: { color: Black(0.06) },
+                hover: { color: Black(0.06), lineColor: "" }, // WHY: "": no lines above and under the row (ozden has them).
                 pressed: { color: Black(0.2) },
             },
             createItemView: createRow,
@@ -131,8 +132,8 @@ App.addPage({
         });
 
         function createRow(item) {
-            Label({ text: item.title, fontSize: 24, textColor: White(0.75), grow: 1 });
-            Label({ text: item.desc, fontSize: 14, textColor: White(0.65) });
+            Label({ text: item.text, fontSize: 24, textColor: White(0.75), grow: 1 });
+            Label({ text: item.description, fontSize: 14, textColor: White(0.65) });
         }
 
         function runExample(item) {
@@ -140,7 +141,7 @@ App.addPage({
                 item.run();
                 return;
             }
-            App.open("example", { key: item.example, title: item.title });
+            App.open("example", { key: item.example, title: item.text });
         }
 
     },

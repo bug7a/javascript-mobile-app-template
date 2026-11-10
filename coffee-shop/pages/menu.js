@@ -16,13 +16,14 @@ App.addPage({
             height: 48,
             fontSize: 16, // WHY: Safari on an iPhone zooms the whole page into a field with a smaller text.
             searchIconSize: 20,
-            searchIconFile: AppSettings.componentPath + "search-input-v2/search.svg",
-            clearIconFile: AppSettings.componentPath + "search-input-v2/clear-round.svg",
-            placeholderText: "Bir kahve ara…",
+            searchIconFile: AppSettings.componentPath + "search-input/search.svg",
+            clearIconFile: AppSettings.componentPath + "search-input/clear-round.svg",
+            placeholder: "Bir kahve ara…",
             color: App.colors.surface,
             textColor: App.colors.text,
             borderColor: App.colors.line,
-            onSearch: function (text) {
+            onChange: function (self) {
+                const text = self.getSearchText();
                 searchText = normalize(text);
                 drawProducts();
             },

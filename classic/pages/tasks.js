@@ -131,6 +131,7 @@ App.addPage({
             // BOX: The tasks (each row stands at its own top)
             const listBox = Box(SPACE, LIST_TOP, BAR_WIDTH, "calc(100% - " + (LIST_TOP + SPACE) + "px)", { color: "white" });
             listBox.scrollY = 1;
+            if (typeof ScrollBar !== "undefined") ScrollBar({ scrollableBox: listBox });
 
         endBox();
 

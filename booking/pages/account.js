@@ -96,19 +96,19 @@ App.addPage({
         const FOOTER_HEIGHT = 80;
 
         const createField = function (title, value, type = "text") {
-            return InputB({ styleName: "ozden", width: "100%", height: "auto", type: type, titleText: title,
-                placeholder: "", inputValue: value });
+            return TextField({ styleName: "ozden", width: "100%", height: "auto", type: type, titleText: title,
+                placeholder: "", value: value });
         };
 
         const saveDetails = function () {
-            const emptyField = [inputName, inputPhone].find((field) => !field.getInputValue().trim());
+            const emptyField = [inputName, inputPhone].find((field) => !field.getValue().trim());
             if (emptyField) {
-                Toast.show({ key: "details-form", type: "error", message: tx("Fill in every field.") });
+                Toast.show({ key: "details-form", type: "error", messageText: tx("Fill in every field.") });
                 emptyField.input.inputElement.focus(); // WHY: the toast may cover the field: the caret shows which one
                 return;
             }
-            Store.saveCustomer({ name: inputName.getInputValue().trim(), phone: inputPhone.getInputValue().trim() });
-            Toast.show({ key: "details-form", type: "success", message: tx("Saved") });
+            Store.saveCustomer({ name: inputName.getValue().trim(), phone: inputPhone.getValue().trim() });
+            Toast.show({ key: "details-form", type: "success", messageText: tx("Saved") });
             App.goBack();
         };
 

@@ -10,7 +10,7 @@ A page file only says what is in its page (pages/*.js); this file shows it.
 THE DESIGN: the app is drawn 600 px wide (page.fit(600, 800)): every size in this template is a px of that design.
 On a phone the design fills the width; on a wider screen it is a column of at most 800 px.
 
-THE DESIGN: the components made for screen px (Tabs, Dialog, Toast, Tooltip, SelectBox, SelectDate) keep their size
+THE DESIGN: the components made for screen px (Tabs, Dialog, Toast, Tooltip, SelectBox, DatePicker) keep their size
 on the screen: basic.uiScale = 1 / page.zoom.
 
 THE VIEWS:
@@ -48,9 +48,11 @@ MORE:
 - App.colors: the colors of AppSettings.colors.
 
 Started Date: November 2026 (the frame of starter, the look of bug7a/javascript-mobile-app-template)
-Developer: Bugra Ozden
-Email: bugra.ozden@gmail.com
 Webpage: https://bug7a.github.io/js-components/
+
+Copyright 2020-2026 Bugra Ozden <bugra.ozden@gmail.com> (https://bug7a.github.io/)
+Licensed under the Apache License, Version 2.0
+SPDX-License-Identifier: Apache-2.0
 
 */
 
@@ -301,6 +303,8 @@ App.createPageView = function (appPage, params, kind) {
 
     endBox();
 
+    if (appPage.scroll !== 0 && typeof ScrollBar !== "undefined") ScrollBar({ scrollableBox: view.body });
+
     return view;
 
 };
@@ -432,8 +436,8 @@ App.createBottomBar = function () {
         height: App.BOTTOM_BAR_HEIGHT,
         hoverEffect: false,
         labelMode: "float",
-        items: AppSettings.tabs.map((tab) => ({ icon: tab.icon, text: tab.text, color: tab.color })),
-        onItemClick: (item, index) => App.open(AppSettings.tabs[index].pageId),
+        items: AppSettings.tabs.map((tab) => ({ iconFile: tab.iconFile, selectedIconFile: tab.selectedIconFile, text: tab.text, color: tab.color })),
+        onItemClick: (self, item, index) => App.open(AppSettings.tabs[index].pageId),
         // The number on a tab (App.setTabBadge): indianred with a white ring, 0 and 1 too
         badge: {
             showZero: 1,
@@ -523,14 +527,14 @@ App.createMenu = function () {
         App.menuList = ItemList({
             width: "100%",
             height: "auto",
-            items: AppSettings.menu.map((item, index) => ({ key: String(index), title: item.title, menuItem: item })),
+            items: AppSettings.menu.map((item, index) => ({ key: String(index), text: item.text, menuItem: item })),
             selectedKeys: ["0"],
-            styleName: "classic",
+            styleName: "ozden",
             style: {
                 box: { border: 0, padding: [4, 0] },
                 row: { height: 54, padding: [36, 0], gap: 10, color: "transparent", border: 1, borderColor: "transparent", round: 4 },
-                hover: { color: Black(0.06) },
-                selected: { color: "white", borderColor: Black(0.2), opacity: 1 },
+                hover: { color: Black(0.06), lineColor: "" }, // WHY: "": no lines above and under the row (ozden has them).
+                selected: { color: "white", borderColor: Black(0.2), opacity: 1, canSelectAgain: 1 }, // WHY: 1: the page of the menu opens again (and the menu closes)
             },
             createItemView: App.createMenuRow,
             onItemClick: function (self, item) {
@@ -555,7 +559,7 @@ App.createMenuRow = function (item) {
         that.load(menuItem.iconFile);
         that.css = { filter: "grayscale(50%)" };
     }
-    Label({ text: menuItem.title, fontSize: 26, textColor: App.colors.text, grow: 1 });
+    Label({ text: menuItem.text, fontSize: 26, textColor: App.colors.text, grow: 1 });
     if (menuItem.count !== undefined) {
         Label({ text: String(menuItem.count), fontSize: 20, padding: [14, 6], round: 13, color: Black(0.05), textColor: App.colors.text, css: { marginRight: "26px" } });
     }
@@ -566,7 +570,7 @@ App.createLockButton = function () {
     const BUTTON_SIZE = 50;
     const BUTTON_SPACE = 30;
     SmartButton({
-        styleName: "ozdenType4",
+        styleName: "ozden4",
         labelText: "",
         iconFile: App.ICONS.lock,
         ariaLabel: "Lock",

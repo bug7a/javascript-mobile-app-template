@@ -39,9 +39,11 @@ MORE:
 - App.makeIcon(App.ICON_PATHS.trash, color): a simple line icon (an SVG data URI) for Icon / SmartButton.
 
 Started Date: November 2026 (the new version of bug7a/web2app)
-Developer: Bugra Ozden
-Email: bugra.ozden@gmail.com
 Webpage: https://bug7a.github.io/js-components/
+
+Copyright 2020-2026 Bugra Ozden <bugra.ozden@gmail.com> (https://bug7a.github.io/)
+Licensed under the Apache License, Version 2.0
+SPDX-License-Identifier: Apache-2.0
 
 */
 
@@ -359,15 +361,16 @@ App.createButton = function (params = {}) {
         ...params,
     });
 };
-// USAGE: App.createButton({ labelText: "Save", styleName: "ozdenPrimary", onClick: save });
+// USAGE: App.createButton({ labelText: "Save", tone: "cyan", onClick: save });
 
 // A button with only an icon (the header, a row of a list)
 App.createIconButton = function (iconPath, ariaLabel, onClick) {
     return SmartButton({
-        styleName: "ozdenType4",
+        styleName: "ozden4",
         labelText: "",
         iconFile: App.makeIcon(iconPath, App.colors.text),
         ariaLabel: ariaLabel,
+        height: "auto", // WHY: as high as it is wide (10 + 24 + 10)
         style: { layout: { padding: [10, 10] } },
         onClick: onClick,
     });
@@ -497,9 +500,9 @@ App.createMenu = function () {
         ItemList({
             width: "100%",
             height: "auto",
-            items: AppSettings.menu.map((item) => ({ key: item.pageId, title: item.title, desc: item.desc, iconFile: item.iconFile })),
+            items: AppSettings.menu.map((item) => ({ key: item.pageId, text: item.text, description: item.description, iconFile: item.iconFile })),
             selection: "none",
-            styleName: "modern",
+            styleName: "light",
             style: { box: { border: 0 } },
             onItemClick: function (self, item) {
                 App.menu.close();
@@ -652,13 +655,13 @@ App.start = function () {
     App.tabBar = BottomBar({
         bottom: App.safeArea.bottom,
         height: App.TAB_BAR_HEIGHT,
-        items: AppSettings.tabs.map((tab) => ({ icon: tab.icon, text: tab.text })),
+        items: AppSettings.tabs.map((tab) => ({ iconFile: tab.iconFile, text: tab.text })),
         badge: {
             dotForOne: 0,
             style: { color: App.colors.sale, textColor: App.colors.white },
             numberStyle: { fontSize: 11, bold: 1, round: 10, padding: [5, 1], top: -2, right: -4 },
         },
-        onItemClick: function (item, index) {
+        onItemClick: function (self, item, index) {
             // WHY App.open: a tap on the tab that is seen keeps its scroll and its typed text.
             App.open(AppSettings.tabs[index].pageId);
         },

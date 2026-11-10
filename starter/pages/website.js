@@ -19,7 +19,7 @@ App.addPage({
             width: "100%",
             height: "100%",
             url: "https://bug7a.github.io/js-components/",
-            title: "Website",
+            ariaLabel: "Website",
             loadTimeout: 15,
             onTimeout: (self) => self.showError("The page could not be loaded."),
         });

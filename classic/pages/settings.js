@@ -31,14 +31,14 @@ App.addPage({
         const videoQuality = saved.videoQuality || "High";
 
         SettingsRow.createSection("APPEARANCE");
-        SettingsRow({ titleText: "Dark Mode", descText: "Use interface colors inverted.", control: () => createToggle("darkMode", 1) });
+        SettingsRow({ titleText: "Dark Mode", descriptionText: "Use interface colors inverted.", control: () => createToggle("darkMode", 1) });
         SettingsRow({ titleText: "Theme", control: () => createSelect("theme", ["Default", "StarWars", "Supernova", "Metro", "Flatty", "Material", "1990s"], "StarWars") });
-        SettingsRow({ titleText: "Menu Style", descText: "Choose how your navigation menu appears.", arrow: 1, onClick: () => App.open("menu-style") });
-        SettingsRow({ titleText: "Primary Color", descText: "Choose a color for the colored interface buttons.", control: createColorSquare });
+        SettingsRow({ titleText: "Menu Style", descriptionText: "Choose how your navigation menu appears.", arrow: 1, onClick: () => App.open("menu-style") });
+        SettingsRow({ titleText: "Primary Color", descriptionText: "Choose a color for the colored interface buttons.", control: createColorSquare });
 
         SettingsRow.createSection("SYSTEM");
         SettingsRow({ titleText: "Update", control: () => createSelect("update", ["Auto", "Ask to me", "Off"], "Auto") });
-        SettingsRow({ titleText: "Only When Charging", descText: "The app only updates when plugged in.", control: () => createToggle("onlyWhenCharging", 1) });
+        SettingsRow({ titleText: "Only When Charging", descriptionText: "The app only updates when plugged in.", control: () => createToggle("onlyWhenCharging", 1) });
         SettingsRow({ titleText: "Notifications", control: () => createSelect("notifications", ["On", "Friends only", "Off", "Do not disturb 1 hour", "Do not disturb 24 hours"], "Friends only") });
         SettingsRow({ titleText: "Font Size", control: createFontSizeStepper });
         SettingsRow({ titleText: "Language", control: () => createSelect("language", ["English", "Spanish", "French", "Türkçe"], "English") });
@@ -47,7 +47,7 @@ App.addPage({
         SettingsRow({ titleText: "Download Over Wi-Fi Only", control: () => createToggle("wifiOnly", 1, App.colors.danger) });
         const videoRow = SettingsRow({
             titleText: "Video Quality",
-            descText: getVideoTexts(videoQuality).desc,
+            descriptionText: getVideoTexts(videoQuality).desc,
             control: () => createSelect("videoQuality", ["Low", "Standard", "High"], videoQuality, paintVideoQuality),
         });
         createDeleteRow("Delete All Downloads", "Nothing will be deleted. It is a demo.", () => Notice.show({ messageText: "All downloads still exist." }));
@@ -63,10 +63,10 @@ App.addPage({
         // *** ROWS:
 
         // An orangered row with a trash icon; a tap on the row runs onClick
-        function createDeleteRow(titleText, descText, onClick) {
+        function createDeleteRow(titleText, descriptionText, onClick) {
             return SettingsRow({
                 titleText: titleText,
-                descText: descText,
+                descriptionText: descriptionText,
                 titleColor: DELETE_COLOR,
                 control: () => createRowIcon("assets/icons/trash.svg"),
                 onClick: onClick,
@@ -97,11 +97,11 @@ App.addPage({
                 autoWidth: 1,
                 items: names,
                 selectedKey: saved[key] || defaultName,
-                placeholderText: "Filter",
+                placeholder: "Filter",
                 arrowIconFile: AppSettings.componentPath + "full-screen-select/arrow.svg",
                 closeIconFile: AppSettings.componentPath + "full-screen-select/cancel.svg",
-                searchIconFile: AppSettings.componentPath + "search-input-v2/search.svg",
-                clearIconFile: AppSettings.componentPath + "search-input-v2/clear.svg",
+                searchIconFile: AppSettings.componentPath + "search-input/search.svg",
+                clearIconFile: AppSettings.componentPath + "search-input/clear.svg",
                 style: { box: { color: "white" }, itemSelected: { color: "#E1F0FF" } },
                 onChange: function (self) {
                     saveSetting(key, self.selectedKey);
@@ -139,8 +139,8 @@ App.addPage({
                 styleName: "ozden",
                 width: FONT_SIZE_STEPPER_WIDTH,
                 value: saved.fontSize || 18,
-                min: 18,
-                max: 24,
+                minValue: 18,
+                maxValue: 24,
                 unitText: "px",
                 ariaLabel: "Font size",
                 onChange: (self) => saveSetting("fontSize", self.value),
@@ -155,7 +155,7 @@ App.addPage({
 
         function paintVideoQuality(name) {
             const texts = getVideoTexts(name);
-            videoRow.setDescText(texts.desc);
+            videoRow.setDescriptionText(texts.desc);
             if (texts.notice === "") return;
             Notice.show({ messageText: texts.notice, type: "warning" });
         }

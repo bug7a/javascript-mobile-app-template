@@ -1,6 +1,6 @@
 # Mobile App Template: the starter template
 
-A mobile app made with basic.js and the JS-Component Kit: tabs at the bottom, a header, a side menu, pages that
+A mobile app made with basic.js and OzdenUI: tabs at the bottom, a header, a side menu, pages that
 slide in, sheets from the bottom, a waiting screen and HTML pages inside the app. It is the new version of
 [bug7a/web2app](https://github.com/bug7a/web2app) (2026-11-01). Copy this folder to start a more specific app.
 

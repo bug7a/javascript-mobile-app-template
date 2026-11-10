@@ -36,8 +36,8 @@ App.addPage({
             height: "100%",
             items: ProductData.map((product) => ({
                 key: product.key,
-                title: product.title,
-                desc: product.type + " · $" + product.price,
+                text: product.title,
+                description: product.type + " · $" + product.price,
                 iconFile: product.iconFile,
                 searchText: product.type,
                 product: product,
@@ -46,9 +46,9 @@ App.addPage({
             showSearch: 1,
             searchParams: {
                 styleName: "ozden",
-                placeholderText: "Search",
-                searchIconFile: AppSettings.componentPath + "search-input-v2/search.svg",
-                clearIconFile: AppSettings.componentPath + "search-input-v2/clear-round.svg",
+                placeholder: "Search",
+                searchIconFile: AppSettings.componentPath + "search-input/search.svg",
+                clearIconFile: AppSettings.componentPath + "search-input/clear-round.svg",
             },
             style: { box: { border: 0 } },
             onItemClick: function (self, item) {

@@ -35,10 +35,10 @@ const AppSettings = {
     weeksAhead: 4, // How far ahead a booking can be made
 
     tabs: [
-        { pageId: "home", text: tx("Home"), icon: "assets/tabs/home.svg" },
-        { pageId: "services", text: tx("Services"), icon: "assets/tabs/services.svg" },
-        { pageId: "appointments", text: tx("Bookings"), icon: "assets/tabs/appointments.svg" },
-        { pageId: "account", text: tx("Account"), icon: "assets/tabs/account.svg" },
+        { pageId: "home", text: tx("Home"), iconFile: "assets/tabs/home.svg" },
+        { pageId: "services", text: tx("Services"), iconFile: "assets/tabs/services.svg" },
+        { pageId: "appointments", text: tx("Bookings"), iconFile: "assets/tabs/appointments.svg" },
+        { pageId: "account", text: tx("Account"), iconFile: "assets/tabs/account.svg" },
     ],
     menu: [],
 

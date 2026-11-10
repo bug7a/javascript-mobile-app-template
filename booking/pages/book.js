@@ -175,7 +175,7 @@ App.addPage({
             // WHY the short wait: here a real business waits for its server; the demo shows the same screen.
             const appointment = await App.wait(basic.sleep(500).then(saveBooking));
             if (!appointment) {
-                Toast.show({ key: "booking", type: "error", message: tx("This time was just taken. Choose another one.") });
+                Toast.show({ key: "booking", type: "error", messageText: tx("This time was just taken. Choose another one.") });
                 selectedTime = null;
                 drawTimes();
                 refreshFooter();

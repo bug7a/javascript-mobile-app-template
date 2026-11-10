@@ -31,7 +31,7 @@ App.addPage({
 
         const refreshFooter = function () {
             stepper.lblValue.plainText = String(count);
-            btnAdd.setText(tx("Add to cart") + "  ·  " + Store.money(product.price * count));
+            btnAdd.setLabelText(tx("Add to cart") + "  ·  " + Store.money(product.price * count));
         };
 
         const paintSwatch = function (swatch) {
@@ -79,7 +79,7 @@ App.addPage({
             Toast.show({
                 key: "added-to-cart",
                 type: "success",
-                message: tx("Added to cart"),
+                messageText: tx("Added to cart"),
                 action: { text: tx("View"), onClick: () => App.open("cart") },
             });
         };

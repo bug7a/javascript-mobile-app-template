@@ -61,7 +61,7 @@ App.addPage({
                 height: 260,
                 content: function () {
                     App.createText("A panel from the bottom: for a short choice, a filter, a share menu...");
-                    App.createButton({ styleName: "ozdenPrimary", labelText: "Close", onClick: () => sheet.close() });
+                    App.createButton({ tone: "cyan", labelText: "Close", onClick: () => sheet.close() });
                 },
             });
         }
@@ -73,7 +73,7 @@ App.addPage({
                 confirmText: "Yes",
                 cancelText: "No",
             });
-            Toast.show({ type: "info", message: isOk ? "You said yes." : "You said no." });
+            Toast.show({ type: "info", messageText: isOk ? "You said yes." : "You said no." });
         }
 
     },

@@ -83,15 +83,16 @@ App.addPage({
         startBox({ width: "100%", height: SEARCH_AREA_HEIGHT, color: "transparent" });
         that.shrink = 0;
             SearchInput({
+                styleName: "original", // the first look of SearchInput
                 left: App.BAR_SPACE,
                 bottom: 20,
                 width: App.DESIGN_WIDTH - App.BAR_SPACE * 2,
                 height: 50,
                 searchIconOpacity: 0.4,
-                placeholderText: "Search",
-                searchIconFile: AppSettings.componentPath + "search-input-v2/search.svg",
-                clearIconFile: AppSettings.componentPath + "search-input-v2/clear.svg",
-                onSearch: (text) => productList.search(text),
+                placeholder: "Search",
+                searchIconFile: AppSettings.componentPath + "search-input/search.svg",
+                clearIconFile: AppSettings.componentPath + "search-input/clear.svg",
+                onChange: (self) => productList.search(self.getSearchText()),
             });
         endBox();
 
@@ -99,15 +100,15 @@ App.addPage({
         productList = ItemList({
             width: "100%",
             height: "calc(100% - " + SEARCH_AREA_HEIGHT + "px)",
-            items: ProductData.map((product) => ({ key: product.key, title: product.title, desc: product.type, product: product })),
+            items: ProductData.map((product) => ({ key: product.key, text: product.title, description: product.type, product: product })),
             selection: "single",
             scrollToSelected: 0,
             style: {
                 box: { color: "transparent", border: 0, padding: [App.BAR_SPACE, 10] },
                 list: { gap: 4 },
                 row: { height: 90, padding: [10, 0], gap: 20, round: 13, color: "transparent", motion: "background-color 0.3s" },
-                hover: { color: Black(0.04) },
-                selected: { color: App.colors.whitesmoke, opacity: 1 },
+                hover: { color: Black(0.04), lineColor: "" }, // WHY: "": no lines above and under the row (ozden has them).
+                selected: { color: App.colors.whitesmoke, opacity: 1, canSelectAgain: 1 }, // WHY: 1: the selected product opens again
             },
             createItemView: createRow,
             onItemClick: (self, item) => ProductPreview.open(item.product),

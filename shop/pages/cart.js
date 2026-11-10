@@ -64,7 +64,7 @@ App.addPage({
         const createDiscountRow = function () {
             const applyCode = function () {
                 if (Store.setDiscountCode(codeInput.text)) return;
-                Toast.show({ key: "discount-code", type: "error", message: tx("This code is not valid.") });
+                Toast.show({ key: "discount-code", type: "error", messageText: tx("This code is not valid.") });
             };
             HGroup({ width: "100%", height: "auto", gap: 8, align: "left center", clipContent: 0 });
                 const codeInput = Input({ width: "100%", height: 46, shrink: 1, placeholder: tx("Discount code"), fontSize: 16,

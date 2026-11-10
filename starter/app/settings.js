@@ -9,9 +9,11 @@ THE SETTINGS OF THE APP: change these first.
 - A page is a file in pages/ (App.addPage). Its id is used here.
 
 Started Date: November 2026
-Developer: Bugra Ozden
-Email: bugra.ozden@gmail.com
 Webpage: https://bug7a.github.io/js-components/
+
+Copyright 2020-2026 Bugra Ozden <bugra.ozden@gmail.com> (https://bug7a.github.io/)
+Licensed under the Apache License, Version 2.0
+SPDX-License-Identifier: Apache-2.0
 
 */
 
@@ -28,19 +30,20 @@ const AppSettings = {
     //      has its components in "comp/": change this line to "comp/" there.
     componentPath: "comp/",
 
-    // The tabs of the bottom bar. Each tab needs two icons: "home.png" and "homes.png" (selected).
+    // The tabs of the bottom bar: iconFile, and selectedIconFile for the selected tab ("": the same icon).
     tabs: [
-        { pageId: "home", text: "Home", icon: "assets/tabs/home.png" },
-        { pageId: "products", text: "Products", icon: "assets/tabs/grid.png" },
-        { pageId: "tasks", text: "Tasks", icon: "assets/tabs/tasks.png" },
-        { pageId: "settings", text: "Settings", icon: "assets/tabs/settings.png" },
+        { pageId: "home", text: "Home", iconFile: "assets/tabs/home.png", selectedIconFile: "assets/tabs/homes.png" },
+        { pageId: "products", text: "Products", iconFile: "assets/tabs/grid.png", selectedIconFile: "assets/tabs/grids.png" },
+        { pageId: "tasks", text: "Tasks", iconFile: "assets/tabs/tasks.png", selectedIconFile: "assets/tabs/taskss.png" },
+        { pageId: "settings", text: "Settings", iconFile: "assets/tabs/settings.png", selectedIconFile: "assets/tabs/settingss.png" },
     ],
 
-    // The side menu (the button at the top left of a tab page). A tab page opens as a tab, others over it.
+    // The side menu (the button at the top left of a tab page): { pageId, text, description, iconFile }. A tab page opens
+    // as a tab, others over it.
     menu: [
-        { pageId: "home", title: "Home", desc: "The first tab" },
-        { pageId: "about", title: "About", desc: "An HTML page in the app" },
-        { pageId: "website", title: "Website", desc: "A web page from the internet" },
+        { pageId: "home", text: "Home", description: "The first tab" },
+        { pageId: "about", text: "About", description: "An HTML page in the app" },
+        { pageId: "website", text: "Website", description: "A web page from the internet" },
     ],
 
     // The colors of the app. The pages take their colors from here (App.colors).

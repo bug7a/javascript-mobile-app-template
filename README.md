@@ -1,6 +1,6 @@
 # JavaScript Mobile App Templates
 
-Five mobile app templates for Android, iOS and the web, made with [basic.js](https://bug7a.github.io/basic.js/) and [JS Components](https://github.com/bug7a/js-components). Pick the one closest to your app and change its settings, data and pages. There is no build step: an app is plain HTML and JavaScript.
+Five mobile app templates for Android, iOS and the web, made with [basic.js](https://bug7a.github.io/basic.js/) and [OzdenUI](https://github.com/bug7a/js-components). Pick the one closest to your app and change its settings, data and pages. There is no build step: an app is plain HTML and JavaScript.
 
 **[See the live demos](https://bug7a.github.io/javascript-mobile-app-template/)**
 

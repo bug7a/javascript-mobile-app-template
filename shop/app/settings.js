@@ -28,10 +28,10 @@ const AppSettings = {
     discountCodes: { WELCOME10: 10 }, // code: percent
 
     tabs: [
-        { pageId: "home", text: tx("Home"), icon: "assets/tabs/home.svg" },
-        { pageId: "shop", text: tx("Shop"), icon: "assets/tabs/shop.svg" },
-        { pageId: "cart", text: tx("Cart"), icon: "assets/tabs/cart.svg" },
-        { pageId: "account", text: tx("Account"), icon: "assets/tabs/account.svg" },
+        { pageId: "home", text: tx("Home"), iconFile: "assets/tabs/home.svg" },
+        { pageId: "shop", text: tx("Shop"), iconFile: "assets/tabs/shop.svg" },
+        { pageId: "cart", text: tx("Cart"), iconFile: "assets/tabs/cart.svg" },
+        { pageId: "account", text: tx("Account"), iconFile: "assets/tabs/account.svg" },
     ],
     menu: [],
 

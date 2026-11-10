@@ -41,7 +41,7 @@ App.addPage({
 
     create: function (box) {
 
-        const FIELD_HEIGHT = 64; // The height of the InputB field: the button stands next to it
+        const FIELD_HEIGHT = 64; // The height of the TextField field: the button stands next to it
 
         // CARD: A new task
         App.startCard();
@@ -49,18 +49,18 @@ App.addPage({
             // GROUP: The field and the button
             HGroup({ width: "100%", height: "auto", gap: 10, align: "left bottom" });
 
-                const taskInput = InputB({
+                const taskInput = TextField({
                     styleName: "ozden",
                     width: "100%",
                     titleText: "NEW TASK",
                     placeholder: "Buy bread",
-                    isRequired: 0,
-                    maxChar: 80,
+                    required: 0,
+                    maxLength: 80,
                     grow: 1,
                 });
 
                 SmartButton({
-                    styleName: "ozdenPrimary",
+                    tone: "cyan",
                     labelText: "Add",
                     width: 80,
                     height: FIELD_HEIGHT,
@@ -86,10 +86,10 @@ App.addPage({
         // *** FUNCTIONS:
 
         function addTypedTask() {
-            const text = taskInput.getInputValue().trim();
+            const text = taskInput.getValue().trim();
             if (text === "") return;
             const tasks = TaskList.add(text);
-            taskInput.setInputValue("");
+            taskInput.setValue("");
             drawTasks(tasks);
         }
 
@@ -160,7 +160,7 @@ App.addPage({
             const tasks = TaskList.getAll();
             const doneCount = tasks.filter((task) => task.done).length;
             if (doneCount === 0) {
-                Toast.show({ type: "info", message: "There is no done task." });
+                Toast.show({ type: "info", messageText: "There is no done task." });
                 return;
             }
             const isSure = await Dialog.confirm({
